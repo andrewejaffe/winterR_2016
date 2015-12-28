@@ -30,7 +30,9 @@ Class:
 |---|---|---|---|---|
 | 1  | 2016-01-04  |   | [Try R](http://tryr.codeschool.com/)  | Finish all modules  |
 |---|---|---|---|---|
-<!-- | 1  | 2015-06-15  | Module 1  | [lecSlides](modules/module1.html), [lecNotes](modules/module1.pdf)  | Introduction to R  |
+
+<!--
+| 1  | 2015-06-15  | Module 1  | [lecSlides](modules/module1.html), [lecNotes](modules/module1.pdf)  | Introduction to R  |
 | 1  | 2015-06-15  | Module 2  | [lecSlides](modules/module2.html), [lecNotes](modules/module2.pdf), [code](https://github.com/andrewejaffe/summerR_2015/blob/gh-pages/modules/module2.R), [lab](labs/module2_lab.R), [key](labs/module2_lab_key.R)| R variables  |
 | 1  | 2015-06-15  | Module 3  | [lecSlides](modules/module3.html), [lecNotes](modules/module3.pdf), [code](https://github.com/andrewejaffe/summerR_2015/blob/gh-pages/modules/module3.R), [lab](labs/module3_lab.R), [key](labs/module3_lab_key.R)  | Data Classes  |
 |---|---|---|---|---|
