@@ -1,2 +1,1 @@
-# winterR_2016
-Introduction to R for Public Health Researcher - Winter 2016
+[Winter R 2016](http://www.aejaffe.com/winterR_2016/)
