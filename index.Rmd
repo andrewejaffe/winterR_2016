@@ -20,9 +20,7 @@ Class:
 
 # Important links
 
-<!--
-* [Syllabus](http://www.aejaffe.com/summerR_2015/docs/Syllabus-summerR-student.doc)
---> 
+* [Syllabus](http://www.aejaffe.com/winterR_2016/Syllabus-winterR-student.doc)
 
 # Schedule
 
