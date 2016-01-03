@@ -9,20 +9,20 @@ Winter R 2016
 
 <a href="http://www.jhsph.edu/"><img alt = "JHSPH" align="right" src="http://www.aejaffe.com/media/jhu-bloomberg-logo.jpg" width=295 height=172/></a>
 
-Instructors: 
+### Instructors: 
 
 * [Andrew Jaffe](http://www.aejaffe.com/)
 * [John Muschelli](http://biostat.jhsph.edu/~jmuschel/)
 
-Class:
+### Class:
 
 * 1/4-1/8, 8:30am - 12:00pm in room W4030
 
-# Important links
+### Important links
 
 * [Syllabus](http://www.aejaffe.com/winterR_2016/Syllabus-winterR-student.doc)
 
-# Schedule
+### Schedule
 
 | Day  | Date  |  Module  | Resources  |  Description |
 |---|---|---|---|---|
