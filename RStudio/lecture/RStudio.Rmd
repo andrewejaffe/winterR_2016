@@ -3,10 +3,9 @@ title: "RStudio"
 author: "John Muschelli"
 date: "January 4, 2016"
 output:
+  beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
-  pdf_document:
-    toc: false    
 ---
 
 ## RStudio
@@ -65,3 +64,12 @@ History
 * If they extend R, when you download R from CRAN, we (and others) refer to things as "base R"
     * We will show you how to do some things in base R, but also show you some newer (and more intuitive) ways to do things
     * You need base R, however, because when you Google for answers, they are commonly answered without any additional packages.
+
+## Hadey Wickham
+
+* Previous Assistant Professor of Statistics at Rice University
+* Writes many R packages
+* One authority on all things R
+* Employee and Developer at RStudio
+* I (John) trust almost all his packages
+    * How to trust an R package: http://simplystatistics.org/2015/11/06/how-i-decide-when-to-trust-an-r-package/
