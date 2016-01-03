@@ -202,3 +202,13 @@ For single worksheet .xlsx files, I often just save the spreadsheet as a .csv fi
 
 For an .xlsx file with multiple well-formated worksheets, I use the `xlsx` package for reading in the data.
 
+
+## Data Input - Other Software
+
+
+* **haven** package (https://cran.r-project.org/web/packages/haven/index.html) reads in SAS, SPSS, Stata formats
+* **readr** package - Has *read_csv*/*write_csv* and *read_table* functions similar to *read.csv*/*write.csv* and *read.table*.  Has different defaults, but can read **much faster** for very large data sets
+* **sas7bdat** reads .sas7bdat files
+* **foreign** package - can read all the formats as **haven**.  Around longer (aka more testing), but not as maintained (bad for future).
+
+
