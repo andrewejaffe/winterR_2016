@@ -133,13 +133,13 @@ getwd()
 
 <pre class = 'prettyprint lang-r'>dir(&quot;..&quot;)</pre>
 
-<pre >## [1] &quot;lab&quot;     &quot;lecture&quot;</pre>
+<pre >## [1] &quot;lecture&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Working Directory</h2></hgroup><article  id="working-directory-1">
 
 <ul>
 <li>Copy the code to set your working directory from the History tab in RStudio (top right)</li>
-<li>Confirm the directory contains &quot;day2.R&quot; using <code>dir()</code></li>
+<li>Confirm the directory contains &quot;day1.R&quot; using <code>dir()</code></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input">
@@ -202,6 +202,14 @@ read.table( file, # filename
 
 </article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-4">
 
+<p>R Studio features some nice &quot;drop down&quot; support, where you can run some tasks by selecting them from the toolbar.</p>
+
+<p>For example, you can easily import text datasets using the &quot;Tools &#8211;&gt; Import Dataset&quot; command. Selecting this will bring up a new screen that lets you specify the formatting of your text file.</p>
+
+<p>After importing a datatset, you get the corresponding R commands that you can enter in the console if you want to re-import data.</p>
+
+</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-5">
+
 <p>There is a &#39;wrapper&#39; function for reading CSV files:</p>
 
 <pre class = 'prettyprint lang-r'>read.csv</pre>
@@ -210,16 +218,12 @@ read.table( file, # filename
 ##     fill = TRUE, comment.char = &quot;&quot;, ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-<<<<<<< HEAD
-## &lt;bytecode: 0x0000000007d29da8&gt;
-=======
-## &lt;bytecode: 0x7f92ec4c6110&gt;
->>>>>>> origin/gh-pages
+## &lt;bytecode: 0x000000000a8c6c80&gt;
 ## &lt;environment: namespace:utils&gt;</pre>
 
 <p>Note: the <code>...</code> designates extra/optional arguments that can be passed to <code>read.table()</code> if needed</p>
 
-</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-5" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-6" class="smaller">
 
 <ul>
 <li>Starting out, you can use RStudio &#8211;&gt; Tools &#8211;&gt; Import Dataset &#8211;&gt; From Text File and select</li>
@@ -243,7 +247,7 @@ head(mon)</pre>
 ## 5        CENTRAL    50 MARKET PL\nBaltimore, MD\n
 ## 6        CENTRAL  100 CALVERT ST\nBaltimore, MD\n</pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-6" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-7" class="smaller">
 
 <pre class = 'prettyprint lang-r'>colnames(mon)</pre>
 
@@ -258,59 +262,7 @@ head(mon)</pre>
 
 <pre >## [1] &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot;</pre>
 
-<<<<<<< HEAD
-</article></slide><slide class=''><hgroup><h2>Aside: Working Directory</h2></hgroup><article  id="aside-working-directory">
-
-<ul>
-<li>R looks for files on your computer relative to the &quot;working&quot; directory</li>
-<li>It&#39;s always safer to set the working directory at the beginning of your script. Note that setting the working directory created the necessary code that you can copy into your script.</li>
-<li>Example of help file</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>## get the working directory
-getwd()
-# setwd(&quot;~/Dropbox/winterR_2016/Lectures&quot;)</pre>
-
-</article></slide><slide class=''><hgroup><h2>Aside: Working Directory</h2></hgroup><article  id="aside-working-directory-1">
-
-<ul>
-<li>Setting the directory can sometimes be finicky
-
-<ul>
-<li>Windows: Default directory structure involves single backslashes (&quot;&quot;), but R interprets these as &quot;escape&quot; characters. So you must replace the backslash with forward slashed (&quot;/&quot;) or two backslashes (&quot;\&quot;)</li>
-<li>Mac/Linux: Default is forward slashes, so you are okay</li>
-</ul></li>
-<li>Typical linux/DOS directory structure syntax applies
-
-<ul>
-<li>&quot;..&quot; goes up one level</li>
-<li>&quot;./&quot; is the current directory</li>
-<li>&quot;~&quot; is your home directory</li>
-</ul></li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Working Directory</h2></hgroup><article  id="working-directory">
-
-<p>Try some directory navigation:</p>
-
-<pre class = 'prettyprint lang-r'>dir(&quot;./&quot;) # shows directory contents</pre>
-
-<pre >## [1] &quot;Data_IO.html&quot; &quot;Data_IO.Rmd&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>dir(&quot;..&quot;)</pre>
-
-<pre >## [1] &quot;lecture&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Working Directory</h2></hgroup><article  id="working-directory-1">
-
-<ul>
-<li>Copy the code to set your working directory from the History tab in RStudio (top right)</li>
-<li>Confirm the directory contains &quot;day2.R&quot; using <code>dir()</code></li>
-</ul>
-
-=======
->>>>>>> origin/gh-pages
-</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-7">
+</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-8">
 
 <p>The <code>read.table()</code> function returns a <code>data.frame</code></p>
 
@@ -328,7 +280,7 @@ getwd()
 ##  $ policeDistrict : chr  &quot;CENTRAL&quot; &quot;CENTRAL&quot; &quot;CENTRAL&quot; &quot;CENTRAL&quot; ...
 ##  $ Location.1     : chr  &quot;408 CHARLES ST\nBaltimore, MD\n&quot; &quot;&quot; &quot;&quot; &quot;100 HOLLIDAY ST\nBaltimore, MD\n&quot; ...</pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-8">
+</article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-9">
 
 <p>Changing variable names in <code>data.frame</code>s works using the <code>names()</code> function, which is analagous to <code>colnames()</code> for data frames (they can be used interchangeably)</p>
 
@@ -342,131 +294,7 @@ names(mon)</pre>
 names(mon)</pre>
 
 <pre >## [1] &quot;name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
-## [5] &quot;policeDistrict&quot;  &quot;Location.1&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Subsetting</h2></hgroup><article  id="data-subsetting">
-
-<p>Now we will introduce subsetting rows/observations of data using logical statements. Recall that the <code>logical</code> class consists of either <code>TRUE</code> or <code>FALSE</code></p>
-
-<pre class = 'prettyprint lang-r'>z = c(TRUE,FALSE,TRUE,FALSE)
-class(z)</pre>
-
-<pre >## [1] &quot;logical&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>sum(z) # number of TRUEs</pre>
-
-<pre >## [1] 2</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Subsetting</h2></hgroup><article  id="data-subsetting-1">
-
-<p>And recall again that the logical class does NOT use quotes.</p>
-
-<pre class = 'prettyprint lang-r'>z2 = c(&quot;TRUE&quot;,&quot;FALSE&quot;,&quot;TRUE&quot;,&quot;FALSE&quot;)
-class(z2)</pre>
-
-<pre >## [1] &quot;character&quot;</pre>
-
-<pre class = 'prettyprint lang-r'># sum(z2)
-identical(z,z2)</pre>
-
-<pre >## [1] FALSE</pre>
-
-<p>Useful: <code>identical()</code> checks if two R objects are exactly identical/equal.</p>
-
-</article></slide><slide class=''><hgroup><h2>Logical Statements</h2></hgroup><article  id="logical-statements">
-
-<p>Almost every R object can be evaluated and converted to the <code>logical</code> class using different logical statements (this mirrors computer science/programming syntax)</p>
-
-<ul>
-<li>&#39;==&#39;: equal to</li>
-<li>&#39;!=&#39;: not equal to (it is NOT &#39;~&#39; in R, e.g. SAS)</li>
-<li>&#39;&gt;&#39;: greater than</li>
-<li>&#39;&lt;&#39;: less than</li>
-<li>&#39;&gt;=&#39;: greater than or equal to</li>
-<li>&#39;&lt;=&#39;: less than or equal to</li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Logical Statements</h2></hgroup><article  id="logical-statements-1">
-
-<pre class = 'prettyprint lang-r'>x = 1:6
-x &gt; 4</pre>
-
-<pre >## [1] FALSE FALSE FALSE FALSE  TRUE  TRUE</pre>
-
-<pre class = 'prettyprint lang-r'>x == 3</pre>
-
-<pre >## [1] FALSE FALSE  TRUE FALSE FALSE FALSE</pre>
-
-</article></slide><slide class=''><hgroup><h2>Logical Statements</h2></hgroup><article  id="logical-statements-2">
-
-<p>These logical statements can be then used to subset your data.</p>
-
-<pre class = 'prettyprint lang-r'>Index = (mon$zipCode == 21202)
-sum(Index)</pre>
-
-<pre >## [1] 16</pre>
-
-<pre class = 'prettyprint lang-r'>table(Index)</pre>
-
-<pre >## Index
-## FALSE  TRUE 
-##    68    16</pre>
-
-<pre class = 'prettyprint lang-r'>mon2 = mon[Index,] </pre>
-
-</article></slide><slide class=''><hgroup><h2>Logical Statements</h2></hgroup><article  id="logical-statements-3" class="smaller">
-
-<pre class = 'prettyprint lang-r'>dim(mon2)</pre>
-
-<pre >## [1] 16  6</pre>
-
-<pre class = 'prettyprint lang-r'>head(mon2)</pre>
-
-<pre >##                                      name zipCode neighborhood
-## 2                     The Battle Monument   21202     Downtown
-## 3        Negro Heroes of the U.S Monument   21202     Downtown
-## 4                     Star Bangled Banner   21202     Downtown
-## 5         Flame at the Holocaust Monument   21202     Downtown
-## 6                          Calvert Statue   21202     Downtown
-## 7 War Memorial Building/Aquatic Wa Horses   21202     Downtown
-##   councilDistrict policeDistrict                       Location.1
-## 2              11        CENTRAL                                 
-## 3              11        CENTRAL                                 
-## 4              11        CENTRAL 100 HOLLIDAY ST\nBaltimore, MD\n
-## 5              11        CENTRAL    50 MARKET PL\nBaltimore, MD\n
-## 6              11        CENTRAL  100 CALVERT ST\nBaltimore, MD\n
-## 7              11        CENTRAL      101 GAY ST\nBaltimore, MD\n</pre>
-
-</article></slide><slide class=''><hgroup><h2>Which</h2></hgroup><article  id="which">
-
-<p><code>which()</code>: &quot;Give the <code>TRUE</code> indices of a logical object, allowing for array indices.&quot;</p>
-
-<pre class = 'prettyprint lang-r'>mon$Location.1 != &quot;&quot;</pre>
-
-<pre >##  [1]  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE
-## [12] FALSE FALSE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE
-## [23]  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE
-## [34]  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE  TRUE  TRUE  TRUE
-## [45]  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE  TRUE
-## [56] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE FALSE
-## [67] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE FALSE
-## [78]  TRUE  TRUE  TRUE  TRUE FALSE FALSE  TRUE</pre>
-
-<pre class = 'prettyprint lang-r'>which(mon$Location.1 != &quot;&quot;)</pre>
-
-<pre >##  [1]  1  4  5  6  7  8  9 11 14 15 17 18 19 20 21 22 23 24 25 26 27 28 29
-## [24] 31 32 33 34 35 36 37 38 41 42 43 44 45 46 47 50 54 55 57 58 59 60 61
-## [47] 68 69 70 71 72 73 76 78 79 80 81 84</pre>
-
-</article></slide><slide class=''><hgroup><h2>Missing Data</h2></hgroup><article  id="missing-data">
-
-<ul>
-<li><p>In R, missing data is represented by the symbol <code>NA</code> (note that it is NOT a character, and therefore not in quotes, just like the <code>logical</code> class)</p></li>
-<li><p><code>is.na()</code> is a logical test for which variables are missing</p></li>
-<li><p>Many summarization functions do not the calculation you expect (e.g. they return <code>NA</code>) if there is ANY missing data, and these ofen have an argument <code>na.rm=FALSE</code>. Changing this to <code>na.rm=TRUE</code> will ignore the missing values in the calculation (i.e. <code>mean()</code>, <code>median()</code>, <code>max()</code>, <code>sum()</code>)</p></li>
-</ul>
-
-<p>Here is a good link with more information: <a href='http://www.statmethods.net/input/missingdata.html' title=''>http://www.statmethods.net/input/missingdata.html</a></p></article></slide>
+## [5] &quot;policeDistrict&quot;  &quot;Location.1&quot;</pre></article></slide>
 
 
   <slide class="backdrop"></slide>
