@@ -11,4 +11,12 @@ output:
 
 ## Overview
 
-* You can read data into R using *read.csv*
+You can read data into R using *read.csv*.  In this module, we will show you how to:
+
+1. Select specific elements of an object by an index or logical condition
+2. Subset rows of a `data.frame`
+3. Subset columns of a `data.frame`
+4. Add new columns to a `data.frame`
+5. Order the rows of a `data.frame`
+
+## Hadey Wickham
