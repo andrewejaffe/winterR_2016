@@ -19,7 +19,7 @@ output:
 ```{r workingDirectory,eval=FALSE}
 ## get the working directory
 getwd()
-# setwd("~/Dropbox/winterR_2016/Lectures")
+# setwd("~/winterR_2016/Lectures")
 ```
 
 ## Setting a Working Directory
@@ -34,7 +34,9 @@ getwd()
 
 ## Working Directory 
 
-Try some directory navigation: 
+Note that the `dir()` function interfaces with your operating system and can show you which files are in your current working directory. 
+
+You can try some directory navigation: 
 
 ```{r directoryNav}
 dir("./") # shows directory contents
@@ -57,7 +59,30 @@ dir("..")
     * comma separated (e.g. '.csv')
     * Microsoft excel (e.g. '.xlsx')
 
+## Data Aside
+
+* Everything we do in class will be using real publicly available data - there are few 'toy' example datasets and 'simulated' data
+* OpenBaltimore and Data.gov will be sources for the first few days
+
+## Data Input
+
+Monuments Dataset: "This data set shows the point location of Baltimore City monuments. However, the completness and currentness of these data are uncertain."
+
+* Download data from http://www.aejaffe.com/winterR_2016/data/Monuments.csv
+* Save it (or move it) to the same folder as your day1.R script
+* Within RStudio: Session --> Set Working Directory --> To Source File Location
+* (data downloaded from https://data.baltimorecity.gov/Community/Monuments/cpxf-kxp3)
+
+## Data Input
+R Studio features some nice "drop down" support, where you can run some tasks by selecting them from the toolbar.
+
+For example, you can easily import text datasets using the "Tools --> Import Dataset" command. Selecting this will bring up a new screen that lets you specify the formatting of your text file. 
+
+After importing a datatset, you get the corresponding R commands that you can enter in the console if you want to re-import data.
+
 ## Data Input {.smaller}
+
+So what is going on "behind the scenes"?
 
 `read.table()`: Reads a file in table format and creates a data frame from it, with cases corresponding to lines and variables to fields in the file.
 
@@ -82,26 +107,6 @@ read.table( file, # filename
 * The function will look in your "working directory" if no absolute file path is given
 * Note that the filename can also be a path to a file on a website (e.g. 'www.someurl.com/table1.txt')
 
-## Data Aside
-
-* Everything we do in class will be using real publicly available data - there are few 'toy' example datasets and 'simulated' data
-* OpenBaltimore and Data.gov will be sources for the first few days
-
-## Data Input
-
-Monuments Dataset: "This data set shows the point location of Baltimore City monuments. However, the completness and currentness of these data are uncertain."
-
-* Download data from http://www.aejaffe.com/winterR_2016/data/Monuments.csv
-* Save it (or move it) to the same folder as your day1.R script
-* Within RStudio: Session --> Set Working Directory --> To Source File Location
-* (data downloaded from https://data.baltimorecity.gov/Community/Monuments/cpxf-kxp3)
-
-## Data Input
-R Studio features some nice "drop down" support, where you can run some tasks by selecting them from the toolbar.
-
-For example, you can easily import text datasets using the "Tools --> Import Dataset" command. Selecting this will bring up a new screen that lets you specify the formatting of your text file. 
-
-After importing a datatset, you get the corresponding R commands that you can enter in the console if you want to re-import data.
 
 ## Data Input
 
@@ -115,7 +120,7 @@ Note: the `...` designates extra/optional arguments that can be passed to `read.
 
 ## Data Input {.smaller}
 
-* Starting out, you can use RStudio --> Tools --> Import Dataset --> From Text File and select
+* Here would be reading in the data from the command line, specifying the file path:
 
 ```{r readCSV2}
 mon = read.csv("../../data/Monuments.csv",header=TRUE,as.is=TRUE)
@@ -125,18 +130,16 @@ head(mon)
 ## Data Input {.smaller}
 
 ```{r subset5}
-colnames(mon)
-head(mon$zipCode)
-head(mon$neighborhood)
+colnames(mon) # column names
+head(mon$zipCode) # first few rows
 ```
 
 ## Data Input
 
-The `read.table()` function returns a `data.frame`
+The `read.table()` function returns a `data.frame`, which is the primary data format for most data cleaning and analyses
 
 ```{r readCSV3}
-class(mon)
-str(mon)
+str(mon) # structure of an R object
 ```
 
 ## Data Input
@@ -149,3 +152,53 @@ names(mon)
 names(mon)[1] = "name"
 names(mon)
 ```
+
+
+## Data Output {.smaller}
+
+While its nice to be able to read in a variety of data formats, it's equally important to be able to output data somewhere.
+
+`write.table()`: prints its required argument `x` (after converting it to a `data.frame` if it is not one nor a `matrix`) to a file or connection.
+
+```
+write.table(x,file = "", append = FALSE, quote = TRUE, sep = " ",
+            eol = "\n", na = "NA", dec = ".", row.names = TRUE,
+            col.names = TRUE, qmethod = c("escape", "double"),
+            fileEncoding = "")
+```
+
+## Data Output
+
+`x`: the R `data.frame` or `matrix` you want to write
+
+`file`: the file name where you want to R object written. It can be an absolute path, or a filename (which writes the file to your working directory)
+
+`sep`: what character separates the columns? 
+
+* "," = .csv - Note there is also a `write.csv()` function
+* "\t" = tab delimited
+
+`row.names`: I like setting this to FALSE because I email these to collaborators who open them in Excel
+
+## Data Output {.smaller}
+
+For example, we can write back out the Monuments dataset with the new column name:
+
+```{r writecsv}
+names(mon)[6] = "Location"
+write.csv(mon, file="monuments_newNames.csv", row.names=FALSE)
+```
+
+Note that `row.names=TRUE` would make the first column contain the row names, here just the numbers `1:nrow(mon)`, which is not very useful for Excel. Note that row names can be useful/informative in R if they contain information (but then they would just be a separate column). 
+
+## Data Input - Excel
+
+Many data analysts collaborate with researchers who use Excel to enter and curate their data. Often times, this is the input data for an analysis. You therefore have two options for getting this data into R:
+
+* Saving the Excel sheet as a .csv file, and using `read.csv()`
+* Using an add-on package called `xlsx`
+
+For single worksheet .xlsx files, I often just save the spreadsheet as a .csv file (because I often have to strip off additional summary data from the columns)
+
+For an .xlsx file with multiple well-formated worksheets, I use the `xlsx` package for reading in the data.
+
