@@ -53,10 +53,10 @@ read.table( file, # filename
 
 Monuments Dataset: "This data set shows the point location of Baltimore City monuments. However, the completness and currentness of these data are uncertain."
 
-* Navigate to: https://data.baltimorecity.gov/Community/Monuments/cpxf-kxp3
-* Export --> Download --> Download As: CSV
+* Download data from http://www.aejaffe.com/winterR_2016/data/Monuments.csv
 * Save it (or move it) to the same folder as your day1.R script
 * Within RStudio: Session --> Set Working Directory --> To Source File Location
+* (data downloaded from https://data.baltimorecity.gov/Community/Monuments/cpxf-kxp3)
 
 ## Data Input
 
