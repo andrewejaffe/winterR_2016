@@ -50,11 +50,18 @@ History
 
 ## Other Panes
 
-* **Packages** - list of R packages that are loaded in memory
-    * Packages are a set of functions written by R users
-    * We write packages - some are good, some are not so good
 * **Files** - shows the files on your computer of the directory you are working in
 * **Viewer** - can view data or R objects
 * **Help** - shows help of R commands
 * **Plots** - pretty pictures
 
+
+## Other Panes - packages
+
+* **Packages** - list of R packages that are loaded in memory
+    * Packages are a set of functions written by R users
+    * We write packages - some are good, some are not so good
+* Think of them as "R Extensions"
+* If they extend R, when you download R from CRAN, we (and others) refer to things as "base R"
+    * We will show you how to do some things in base R, but also show you some newer (and more intuitive) ways to do things
+    * You need base R, however, because when you Google for answers, they are commonly answered without any additional packages.

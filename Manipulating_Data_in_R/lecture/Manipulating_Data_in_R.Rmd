@@ -9,52 +9,6 @@ output:
     toc: false    
 ---
 
-## RStudio
+## Overview
 
-* "RStudio is an integrated development environment (IDE) for R."
-* It helps the user use R.
-* R, in essence is just the a console that takes commands from you typing into it
-* Is NOT dropdown statistical tools (such as Stata)
-* Snapshots taken from http://ayeimanol-r.net/2013/04/21/289/
-
-## RStudio/R Console ![Console](r-rstudio-1-3-console.png)
-
-## RStudio/R Console
-
-* Where code is executed (where things happen)
-* You can type here for things interactively
-* Code is **not saved** on your disk
-
-
-## Script/Editor ![Script](r-rstudio-1-3-script.png)
-
-## RStudio/R Script/Rmarkdown files
-
-* Where files open to
-* Have R code and comments in them
-* Can highlight and press (CMD+Enter (Mac) or Ctrl+Enter (Windows)) to run the code
-* Code is saved on your disk
-
-## Workspace/Environment ![Workspace](r-rstudio-1-ggplot-point-2.png)
-
-## Workspace/Environment
-
-Workspace/Environment
-
-* Tells you what **objects** are in R
-* What exists in memory
-
-History
-
-* Shows previous commands.  Good to look at for debugging, but **don't rely** on it as a script.  Make a script!
-
-## Other Panes
-
-* **Packages** - list of R packages that are loaded in memory
-    * Packages are a set of functions written by R users
-    * We write packages - some are good, some are not so good
-* **Files** - shows the files on your computer of the directory you are working in
-* **Viewer** - can view data or R objects
-* **Help** - shows help of R commands
-* **Plots** - pretty pictures
-
+* You can read data into R using *read.csv*
