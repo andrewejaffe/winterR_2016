@@ -1,7 +1,7 @@
 ---
 title: "Data Input/Output"
 author: "Andrew Jaffe"
-date: "June 15, 2016"
+date: "January 4, 2016"
 output:
   ioslides_presentation:
     css: ../../styles.css
@@ -57,6 +57,13 @@ Monuments Dataset: "This data set shows the point location of Baltimore City mon
 * Save it (or move it) to the same folder as your day1.R script
 * Within RStudio: Session --> Set Working Directory --> To Source File Location
 * (data downloaded from https://data.baltimorecity.gov/Community/Monuments/cpxf-kxp3)
+
+## Data Input
+R Studio features some nice "drop down" support, where you can run some tasks by selecting them from the toolbar.
+
+For example, you can easily import text datasets using the "Tools --> Import Dataset" command. Selecting this will bring up a new screen that lets you specify the formatting of your text file. 
+
+After importing a datatset, you get the corresponding R commands that you can enter in the console if you want to re-import data.
 
 ## Data Input
 
@@ -119,7 +126,7 @@ dir("..")
 ## Working Directory
 
 * Copy the code to set your working directory from the History tab in RStudio (top right)
-* Confirm the directory contains "day2.R" using `dir()`
+* Confirm the directory contains "day1.R" using `dir()`
 
 ## Data Input
 
@@ -140,81 +147,3 @@ names(mon)
 names(mon)[1] = "name"
 names(mon)
 ```
-
-## Data Subsetting
-
-Now we will introduce subsetting rows/observations of data using logical statements. Recall that the `logical` class consists of either `TRUE` or `FALSE`
-
-```{r logical1}
-z = c(TRUE,FALSE,TRUE,FALSE)
-class(z)
-sum(z) # number of TRUEs
-```
-
-## Data Subsetting
-
-And recall again that the logical class does NOT use quotes. 
-```{r logical2}
-z2 = c("TRUE","FALSE","TRUE","FALSE")
-class(z2)
-# sum(z2)
-identical(z,z2)
-```
-
-Useful: `identical()` checks if two R objects are exactly identical/equal. 
-
-## Logical Statements
-
-Almost every R object can be evaluated and converted to the `logical` class using different logical statements (this mirrors computer science/programming syntax)
-
-* '==': equal to
-* '!=': not equal to (it is NOT '~' in R, e.g. SAS)
-* '>': greater than
-* '<': less than
-* '>=': greater than or equal to 
-* '<=': less than or equal to
-
-## Logical Statements
-
-```{r logical3}
-x = 1:6
-x > 4
-x == 3
-```
-
-## Logical Statements
-
-These logical statements can be then used to subset your data.
-
-```{r logical4}
-Index = (mon$zipCode == 21202)
-sum(Index)
-table(Index)
-mon2 = mon[Index,] 
-```
-
-## Logical Statements {.smaller}
-
-```{r logical5}
-dim(mon2)
-head(mon2)
-```
-
-## Which
-
-`which()`: "Give the `TRUE` indices of a logical object, allowing for array indices."
-
-```{r which}
-mon$Location.1 != ""
-which(mon$Location.1 != "")
-```
-
-## Missing Data
-
-* In R, missing data is represented by the symbol `NA` (note that it is NOT a character, and therefore not in quotes, just like the `logical` class)
-
-* `is.na()` is a logical test for which variables are missing
-
-* Many summarization functions do not the calculation you expect (e.g. they return `NA`) if there is ANY missing data, and these ofen have an argument `na.rm=FALSE`. Changing this to `na.rm=TRUE` will ignore the missing values in the calculation (i.e. `mean()`, `median()`, `max()`, `sum()`)
-
-Here is a good link with more information: http://www.statmethods.net/input/missingdata.html
