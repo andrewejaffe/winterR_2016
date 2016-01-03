@@ -9,6 +9,44 @@ output:
     toc: false    
 ---
 
+
+## Before we get Started: Working Directories
+
+* R looks for files on your computer relative to the "working" directory
+* It's always safer to set the working directory at the beginning of your script. Note that setting the working directory created the necessary code that you can copy into your script.
+* Example of help file
+
+```{r workingDirectory,eval=FALSE}
+## get the working directory
+getwd()
+# setwd("~/Dropbox/winterR_2016/Lectures")
+```
+
+## Setting a Working Directory
+
+* Setting the directory can sometimes be finicky
+    * Windows: Default directory structure involves single backslashes ("\"), but R interprets these as "escape" characters. So you must replace the backslash with forward slashed ("/") or two backslashes ("\\")
+    * Mac/Linux: Default is forward slashes, so you are okay
+* Typical linux/DOS directory structure syntax applies
+    * ".." goes up one level
+    * "./" is the current directory
+    * "~" is your home directory
+
+## Working Directory 
+
+Try some directory navigation: 
+
+```{r directoryNav}
+dir("./") # shows directory contents
+dir("..")
+```
+
+## Working Directory
+
+* Copy the code to set your working directory from the History tab in RStudio (top right)
+* Confirm the directory contains "day2.R" using `dir()`
+
+
 ## Data Input
 
 * We used several pre-installed sample datasets during previous modules (`CO2`, `iris`) 
@@ -92,6 +130,7 @@ head(mon$zipCode)
 head(mon$neighborhood)
 ```
 
+<<<<<<< HEAD
 ## Aside: Working Directory
 
 * R looks for files on your computer relative to the "working" directory
