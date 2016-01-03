@@ -1,11 +1,10 @@
 ---
 title:  Introduction to R
-subtitle: Module 1
 author: Andrew Jaffe
 date: January 4, 2016
 output:
   ioslides_presentation:
-    css: styles.css
+    css: ../../styles.css
   pdf_document:
     toc: false
 --- 
@@ -161,6 +160,7 @@ update.packages(ask=FALSE)
 ## Useful (+Free) Resources
 
 * Homework will involve working through: http://tryr.codeschool.com/
+* DataCamp http://www.datacamp.com
 * UCLA Institute for Digital Research and Education: http://www.ats.ucla.edu/stat/r/
 * R reference card: http://cran.r-project.org/doc/contrib/Short-refcard.pdf
 * Undergrad Guide to R: https://sites.google.com/site/undergraduateguidetor/
