@@ -29,8 +29,8 @@ Add a comment header to day1.R :`#` is the comment symbol
 ```{r}
 #################
 # Title: Demo R Script
-# Author: Andrew Jaffe
-# Date: 6/15/2015
+# Author: John Muschelli
+# Date: 1/5/2016
 # Purpose: Demonstrate comments in R
 ###################
  
