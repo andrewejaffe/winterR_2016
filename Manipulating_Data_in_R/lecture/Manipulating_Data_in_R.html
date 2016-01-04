@@ -101,7 +101,8 @@
 <li>Select specific elements of an object by an index or logical condition</li>
 <li>Subset rows of a <code>data.frame</code></li>
 <li>Subset columns of a <code>data.frame</code></li>
-<li>Add new columns to a <code>data.frame</code></li>
+<li>Add/remove new columns to a <code>data.frame</code></li>
+<li>Order the columns of a <code>data.frame</code></li>
 <li>Order the rows of a <code>data.frame</code></li>
 </ol>
 
@@ -126,7 +127,7 @@
 <pre class = 'prettyprint lang-r'>x = c(1, 4, 2, 8, 10)
 x[2]</pre>
 
-<pre >## [1] 4</pre>
+<pre >[1] 4</pre>
 
 </article></slide><slide class=''><hgroup><h2>Select specific elements using an index</h2></hgroup><article  id="select-specific-elements-using-an-index-1">
 
@@ -135,11 +136,11 @@ x[2]</pre>
 <pre class = 'prettyprint lang-r'>x = c(1, 2, 4, 8, 10)
 x[5]</pre>
 
-<pre >## [1] 10</pre>
+<pre >[1] 10</pre>
 
 <pre class = 'prettyprint lang-r'>x[c(2,5)]</pre>
 
-<pre >## [1]  2 10</pre>
+<pre >[1]  2 10</pre>
 
 </article></slide><slide class=''><hgroup><h2>Subsetting by deletion of entries</h2></hgroup><article  id="subsetting-by-deletion-of-entries">
 
@@ -147,18 +148,18 @@ x[5]</pre>
 
 <pre class = 'prettyprint lang-r'>x[-2] # all but the second</pre>
 
-<pre >## [1]  1  4  8 10</pre>
+<pre >[1]  1  4  8 10</pre>
 
 <p>Note that you have to be careful with this syntax when dropping more than 1 element:</p>
 
 <pre class = 'prettyprint lang-r'>x[-c(1,2,3)] # drop first 3</pre>
 
-<pre >## [1]  8 10</pre>
+<pre >[1]  8 10</pre>
 
 <pre class = 'prettyprint lang-r'># x[-1:3] # shorthand. R sees as -1 to 3
 x[-(1:3)] # needs parentheses</pre>
 
-<pre >## [1]  8 10</pre>
+<pre >[1]  8 10</pre>
 
 </article></slide><slide class=''><hgroup><h2>Select specific elements using logical operators</h2></hgroup><article  id="select-specific-elements-using-logical-operators">
 
@@ -166,15 +167,15 @@ x[-(1:3)] # needs parentheses</pre>
 
 <pre class = 'prettyprint lang-r'>x</pre>
 
-<pre >## [1]  1  2  4  8 10</pre>
+<pre >[1]  1  2  4  8 10</pre>
 
 <pre class = 'prettyprint lang-r'>x &gt; 2</pre>
 
-<pre >## [1] FALSE FALSE  TRUE  TRUE  TRUE</pre>
+<pre >[1] FALSE FALSE  TRUE  TRUE  TRUE</pre>
 
 <pre class = 'prettyprint lang-r'>x[ x &gt; 2 ]</pre>
 
-<pre >## [1]  4  8 10</pre>
+<pre >[1]  4  8 10</pre>
 
 </article></slide><slide class=''><hgroup><h2>Select specific elements using logical operators</h2></hgroup><article  id="select-specific-elements-using-logical-operators-1">
 
@@ -187,11 +188,417 @@ x[-(1:3)] # needs parentheses</pre>
 
 <pre class = 'prettyprint lang-r'>x[ x &gt; 2 &amp; x &lt; 5 ]</pre>
 
-<pre >## [1] 4</pre>
+<pre >[1] 4</pre>
 
 <pre class = 'prettyprint lang-r'>x[ x &gt; 5 | x == 2 ]</pre>
 
-<pre >## [1]  2  8 10</pre></article></slide>
+<pre >[1]  2  8 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>which function</h2></hgroup><article  id="which-function">
+
+<p>The <code>which</code> functions takes in logical vectors and returns the index for the elements where the logical value is <code>TRUE</code>.</p>
+
+<pre class = 'prettyprint lang-r'>which(x &gt; 5 | x == 2) # returns index</pre>
+
+<pre >[1] 2 4 5</pre>
+
+<pre class = 'prettyprint lang-r'>x[ which(x &gt; 5 | x == 2) ]</pre>
+
+<pre >[1]  2  8 10</pre>
+
+<pre class = 'prettyprint lang-r'>x[ x &gt; 5 | x == 2 ]</pre>
+
+<pre >[1]  2  8 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Creating a <code>data.frame</code> to work with</h2></hgroup><article  id="creating-a-data.frame-to-work-with">
+
+<p>Here we create a toy data.frame named <code>df</code> using random data:</p>
+
+<pre class = 'prettyprint lang-r'>set.seed(2016) # reproducbility
+df = data.frame(x = c(1, 2, 4, 10, 10),
+                x2 = rpois(5, 10),
+                y = rnorm(5),
+                z = rpois(5, 6)
+                )</pre>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Subsetting Columns</h2></hgroup><article  id="subsetting-columns">
+
+</article></slide><slide class=''><hgroup><h2>Subset columns of a <code>data.frame</code>: Base R</h2></hgroup><article  id="subset-columns-of-a-data.frame-base-r">
+
+<p>We can grab the <code>x</code> column using the <code>$</code> operator.</p>
+
+<pre class = 'prettyprint lang-r'>df$x</pre>
+
+<pre >[1]  1  2  4 10 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subset columns of a <code>data.frame</code>: Base R</h2></hgroup><article  id="subset-columns-of-a-data.frame-base-r-1">
+
+<p>We can also subset a <code>data.frame</code> using the bracket <code>[, ]</code> subsetting.</p>
+
+<p>For <code>data.frame</code>s and matrices (2-dimensional objects), the brackets are <code>[rows, columns]</code> subsetting. We can grab the <code>x</code> column using the index of the column or the column name (&quot;<code>x</code>&quot;)</p>
+
+<pre class = 'prettyprint lang-r'>df[, 1]</pre>
+
+<pre >[1]  1  2  4 10 10</pre>
+
+<pre class = 'prettyprint lang-r'>df[, &quot;x&quot;]</pre>
+
+<pre >[1]  1  2  4 10 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subset columns of a <code>data.frame</code>: Base R</h2></hgroup><article  id="subset-columns-of-a-data.frame-base-r-2">
+
+<p>We can select multiple columns using multiple column names:</p>
+
+<pre class = 'prettyprint lang-r'>df[, c(&quot;x&quot;, &quot;y&quot;)]</pre>
+
+<pre >   x          y
+1  1 -0.2707606
+2  2 -1.1179372
+3  4 -1.3473558
+4 10  0.4832675
+5 10  0.1523950</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subset columns of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="subset-columns-of-a-data.frame-dplyr">
+
+<p>The <code>select</code> command from <code>dplyr</code> allows you to subset</p>
+
+<pre class = 'prettyprint lang-r'>library(dplyr)</pre>
+
+<pre >
+Attaching package: &#39;dplyr&#39;
+
+The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag
+
+The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</pre>
+
+<pre class = 'prettyprint lang-r'>select(df, x)</pre>
+
+<pre >   x
+1  1
+2  2
+3  4
+4 10
+5 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Select columns of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="select-columns-of-a-data.frame-dplyr">
+
+<p>The <code>select</code> command from <code>dplyr</code> allows you to subset columns of</p>
+
+<pre class = 'prettyprint lang-r'>select(df, x, x2)</pre>
+
+<pre >   x x2
+1  1  7
+2  2  6
+3  4 10
+4 10 13
+5 10 13</pre>
+
+<pre class = 'prettyprint lang-r'>select(df, starts_with(&quot;x&quot;))</pre>
+
+<pre >   x x2
+1  1  7
+2  2  6
+3  4 10
+4 10 13
+5 10 13</pre>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Subsetting Rows</h2></hgroup><article  id="subsetting-rows">
+
+</article></slide><slide class=''><hgroup><h2>Subset rows of a <code>data.frame</code> with indices: Base R</h2></hgroup><article  id="subset-rows-of-a-data.frame-with-indices-base-r">
+
+<p>Let&#39;s select <strong>rows</strong> 1 and 3 from <code>df</code> using brackets:</p>
+
+<pre class = 'prettyprint lang-r'>df[ c(1, 3), ]</pre>
+
+<pre >  x x2          y z
+1 1  7 -0.2707606 6
+3 4 10 -1.3473558 7</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subset rows of a <code>data.frame</code>: Base R</h2></hgroup><article  id="subset-rows-of-a-data.frame-base-r">
+
+<p>Let&#39;s select the rows of <code>df</code> where the <code>x</code> column is greater than 5 or is equal to 2. Without any index for columns, all columns are returned:</p>
+
+<pre class = 'prettyprint lang-r'>df[ df$x &gt; 5 | df$x == 2, ]</pre>
+
+<pre >   x x2          y  z
+2  2  6 -1.1179372  4
+4 10 13  0.4832675 10
+5 10 13  0.1523950  5</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subset rows of a <code>data.frame</code>: Base R</h2></hgroup><article  id="subset-rows-of-a-data.frame-base-r-1">
+
+<p>We can subset both rows and colums at the same time:</p>
+
+<pre class = 'prettyprint lang-r'>df[ df$x &gt; 5 | df$x == 2, c(&quot;y&quot;, &quot;z&quot;)]</pre>
+
+<pre >           y  z
+2 -1.1179372  4
+4  0.4832675 10
+5  0.1523950  5</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subset rows of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="subset-rows-of-a-data.frame-dplyr">
+
+<p>The command in <code>dplyr</code> for subsetting rows is <code>filter</code>. Try <code>?filter</code></p>
+
+<pre class = 'prettyprint lang-r'>filter(df, x &gt; 5 | x == 2)</pre>
+
+<pre >   x x2          y  z
+1  2  6 -1.1179372  4
+2 10 13  0.4832675 10
+3 10 13  0.1523950  5</pre>
+
+<p>Note, no <code>$</code> or subsetting is necessary. R &quot;knows&quot; <code>x</code> refers to a column of <code>df</code>.</p>
+
+</article></slide><slide class=''><hgroup><h2>Subset rows of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="subset-rows-of-a-data.frame-dplyr-1">
+
+<p>By default, you can separate conditions by commas, and <code>filter</code> assumes these statements are joined by <code>&amp;</code></p>
+
+<pre class = 'prettyprint lang-r'>filter(df, x &gt; 2 &amp; y &lt; 0)</pre>
+
+<pre >  x x2         y z
+1 4 10 -1.347356 7</pre>
+
+<pre class = 'prettyprint lang-r'>filter(df, x &gt; 2, y &lt; 0)</pre>
+
+<pre >  x x2         y z
+1 4 10 -1.347356 7</pre>
+
+</article></slide><slide class=''><hgroup><h2>Combining <code>filter</code> and <code>select</code></h2></hgroup><article  id="combining-filter-and-select">
+
+<p>You can combine <code>filter</code> and <code>select</code> to subset the rows and columns, respectively, of a <code>data.frame</code>:</p>
+
+<pre class = 'prettyprint lang-r'>select(filter(df, x &gt; 2 &amp; y &lt; 0), y, z)</pre>
+
+<pre >          y z
+1 -1.347356 7</pre>
+
+<p>In <code>R</code>, the common way to perform multiple operations is to wrap functions around each other in a nested way such as above</p>
+
+</article></slide><slide class=''><hgroup><h2>Assigning Temporary Objects</h2></hgroup><article  id="assigning-temporary-objects">
+
+<p>One can also create temporary objects and reassign them:</p>
+
+<pre class = 'prettyprint lang-r'>df2 = filter(df, x &gt; 2 &amp; y &lt; 0)
+df2 = select(df2, y, z)</pre>
+
+</article></slide><slide class=''><hgroup><h2>Piping - a new concept</h2></hgroup><article  id="piping---a-new-concept">
+
+<p>There is another (newer) way of performing these operations, called &quot;piping&quot;. It is becoming more popular as it&#39;s easier to read:</p>
+
+<pre class = 'prettyprint lang-r'>df %&gt;% filter(x &gt; 2 &amp; y &lt; 0) %&gt;% select(y, z)</pre>
+
+<pre >          y z
+1 -1.347356 7</pre>
+
+<p>It is read: &quot;take df, then filter the rows and then select <code>y</code>, <code>z</code>&quot;.</p>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Adding/Removing Columns</h2></hgroup><article  id="addingremoving-columns">
+
+</article></slide><slide class=''><hgroup><h2>Adding new columns to a <code>data.frame</code>: base R</h2></hgroup><article  id="adding-new-columns-to-a-data.frame-base-r">
+
+<p>You can add a new column, called <code>newcol</code> to <code>df</code>, using the <code>$</code> operator:</p>
+
+<pre class = 'prettyprint lang-r'>df$newcol = 5:1
+df$newcol = df$x + 2</pre>
+
+</article></slide><slide class=''><hgroup><h2>Removing columns to a <code>data.frame</code>: base R</h2></hgroup><article  id="removing-columns-to-a-data.frame-base-r">
+
+<p>You can remove a column by assigning to <code>NULL</code>:</p>
+
+<pre class = 'prettyprint lang-r'>df$newcol = NULL</pre>
+
+<p>or selecing only the columns that were not <code>newcol</code>:</p>
+
+<pre class = 'prettyprint lang-r'>df = df[, colnames(df) != &quot;newcol&quot;]</pre>
+
+</article></slide><slide class=''><hgroup><h2>Adding new columns to a <code>data.frame</code>: base R</h2></hgroup><article  id="adding-new-columns-to-a-data.frame-base-r-1">
+
+<p>You can also &quot;<strong>c</strong>olumn <strong>bind</strong>&quot; a <code>data.frame</code> with a vector (or series of vectors), using the <code>cbind</code> command:</p>
+
+<pre class = 'prettyprint lang-r'>cbind(df, newcol = 5:1)</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      5
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      3
+4 10 13  0.4832675 10      2
+5 10 13  0.1523950  5      1</pre>
+
+</article></slide><slide class=''><hgroup><h2>Adding columns to a <code>data.frame</code>: dplyr</h2></hgroup><article  id="adding-columns-to-a-data.frame-dplyr">
+
+<p>The <code>mutate</code> function in <code>dplyr</code> allows you to add or replace columns of a <code>data.frame</code>:</p>
+
+<pre class = 'prettyprint lang-r'>mutate(df, newcol = 5:1)</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      5
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      3
+4 10 13  0.4832675 10      2
+5 10 13  0.1523950  5      1</pre>
+
+<pre class = 'prettyprint lang-r'>print({df = mutate(df, newcol = x + 2)})</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      3
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      6
+4 10 13  0.4832675 10     12
+5 10 13  0.1523950  5     12</pre>
+
+</article></slide><slide class=''><hgroup><h2>Removing columns to a <code>data.frame</code>: dplyr</h2></hgroup><article  id="removing-columns-to-a-data.frame-dplyr">
+
+<p>The <code>NULL</code> method is still very common.</p>
+
+<p>The <code>select</code> function can remove a column with a minus (<code>-</code>), much like removing rows:</p>
+
+<pre class = 'prettyprint lang-r'>select(df, -newcol)</pre>
+
+<pre >   x x2          y  z
+1  1  7 -0.2707606  6
+2  2  6 -1.1179372  4
+3  4 10 -1.3473558  7
+4 10 13  0.4832675 10
+5 10 13  0.1523950  5</pre>
+
+</article></slide><slide class=''><hgroup><h2>Removing columns to a <code>data.frame</code>: dplyr</h2></hgroup><article  id="removing-columns-to-a-data.frame-dplyr-1">
+
+<p>Remove <code>newcol</code> and <code>y</code></p>
+
+<pre class = 'prettyprint lang-r'>select(df, -one_of(&quot;newcol&quot;, &quot;y&quot;))</pre>
+
+<pre >   x x2  z
+1  1  7  6
+2  2  6  4
+3  4 10  7
+4 10 13 10
+5 10 13  5</pre>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Ordering columns</h2></hgroup><article  id="ordering-columns">
+
+</article></slide><slide class=''><hgroup><h2>Ordering the columns of a <code>data.frame</code>: base R</h2></hgroup><article  id="ordering-the-columns-of-a-data.frame-base-r">
+
+<p>We can use the <code>colnames</code> function to get the column names of <code>df</code> and then put <code>newcol</code> first by subsetting <code>df</code> using brackets:</p>
+
+<pre class = 'prettyprint lang-r'>cn = colnames(df)
+df[, c(&quot;newcol&quot;, cn[cn != &quot;newcol&quot;]) ]</pre>
+
+<pre >  newcol  x x2          y  z
+1      3  1  7 -0.2707606  6
+2      4  2  6 -1.1179372  4
+3      6  4 10 -1.3473558  7
+4     12 10 13  0.4832675 10
+5     12 10 13  0.1523950  5</pre>
+
+</article></slide><slide class=''><hgroup><h2>Ordering the columns of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="ordering-the-columns-of-a-data.frame-dplyr">
+
+<p>The <code>select</code> function can reorder columns. Put <code>newcol</code> first, then select the rest of columns:</p>
+
+<pre class = 'prettyprint lang-r'>select(df, newcol, everything())</pre>
+
+<pre >  newcol  x x2          y  z
+1      3  1  7 -0.2707606  6
+2      4  2  6 -1.1179372  4
+3      6  4 10 -1.3473558  7
+4     12 10 13  0.4832675 10
+5     12 10 13  0.1523950  5</pre>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Ordering rows</h2></hgroup><article  id="ordering-rows">
+
+</article></slide><slide class=''><hgroup><h2>Ordering the rows of a <code>data.frame</code>: base R</h2></hgroup><article  id="ordering-the-rows-of-a-data.frame-base-r">
+
+<p>We use the <code>order</code> function on a vector or set of vectors, in increasing order:</p>
+
+<pre class = 'prettyprint lang-r'>df[ order(df$x), ]</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      3
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      6
+4 10 13  0.4832675 10     12
+5 10 13  0.1523950  5     12</pre>
+
+</article></slide><slide class=''><hgroup><h2>Ordering the rows of a <code>data.frame</code>: base R</h2></hgroup><article  id="ordering-the-rows-of-a-data.frame-base-r-1">
+
+<p>The <code>decreasing</code> argument will order it in decreasing order:</p>
+
+<pre class = 'prettyprint lang-r'>df[ order(df$x, decreasing = TRUE), ]</pre>
+
+<pre >   x x2          y  z newcol
+4 10 13  0.4832675 10     12
+5 10 13  0.1523950  5     12
+3  4 10 -1.3473558  7      6
+2  2  6 -1.1179372  4      4
+1  1  7 -0.2707606  6      3</pre>
+
+</article></slide><slide class=''><hgroup><h2>Ordering the rows of a <code>data.frame</code>: base R</h2></hgroup><article  id="ordering-the-rows-of-a-data.frame-base-r-2">
+
+<p>You can pass multiple vectors, and must use the negative (using <code>-</code>) to mix decreasing and increasing orderings (sort increasing on <code>x</code> and decreasing on <code>y</code>):</p>
+
+<pre class = 'prettyprint lang-r'>df[ order(df$x, -df$y), ]</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      3
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      6
+4 10 13  0.4832675 10     12
+5 10 13  0.1523950  5     12</pre>
+
+</article></slide><slide class=''><hgroup><h2>Ordering the rows of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="ordering-the-rows-of-a-data.frame-dplyr">
+
+<p>The <code>arrange</code> function can reorder rows By default, <code>arrange</code> orders in ascending order:</p>
+
+<pre class = 'prettyprint lang-r'>arrange(df, x)</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      3
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      6
+4 10 13  0.4832675 10     12
+5 10 13  0.1523950  5     12</pre>
+
+</article></slide><slide class=''><hgroup><h2>Ordering the rows of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="ordering-the-rows-of-a-data.frame-dplyr-1">
+
+<p>Use the <code>desc</code> to arrange the rows in descending order:</p>
+
+<pre class = 'prettyprint lang-r'>arrange(df, desc(x))</pre>
+
+<pre >   x x2          y  z newcol
+1 10 13  0.4832675 10     12
+2 10 13  0.1523950  5     12
+3  4 10 -1.3473558  7      6
+4  2  6 -1.1179372  4      4
+5  1  7 -0.2707606  6      3</pre>
+
+</article></slide><slide class=''><hgroup><h2>Ordering the rows of a <code>data.frame</code>: dplyr</h2></hgroup><article  id="ordering-the-rows-of-a-data.frame-dplyr-2">
+
+<p>It is a bit more straightforward to mix increasing and decreasing orderings:</p>
+
+<pre class = 'prettyprint lang-r'>arrange(df, x, desc(y))</pre>
+
+<pre >   x x2          y  z newcol
+1  1  7 -0.2707606  6      3
+2  2  6 -1.1179372  4      4
+3  4 10 -1.3473558  7      6
+4 10 13  0.4832675 10     12
+5 10 13  0.1523950  5     12</pre>
+
+</article></slide><slide class=''><hgroup><h2>Transmutation</h2></hgroup><article  id="transmutation">
+
+<p>The <code>transmute</code> function in <code>dplyr</code> combines both the <code>mutate</code> and <code>select</code> functions. One can create new columns and keep the only the columns wanted:</p>
+
+<pre class = 'prettyprint lang-r'>transmute(df, newcol2 = x * 3, x, y)</pre>
+
+<pre >  newcol2  x          y
+1       3  1 -0.2707606
+2       6  2 -1.1179372
+3      12  4 -1.3473558
+4      30 10  0.4832675
+5      30 10  0.1523950</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

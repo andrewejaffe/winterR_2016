@@ -1,0 +1,425 @@
+
+R version 3.2.2 (2015-08-14) -- "Fire Safety"
+Copyright (C) 2015 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+Loading required package: colorout
+> library(rmarkdown)
+> library(knitr)
+> files <- dir(pattern = '[.]Rmd$', recursive = TRUE)
+> files = files[ files != "index.Rmd" ]
+> 
+> 
+> renderFile <- function(file) {
++   output = gsub(".Rmd", ".R", file)
++   ## Extract R code
++   purl(file, output = output)
++   
++   ## Make presentation
++   render(file, output_format = 'all')
++ }
+> 
+> ## Render all Rmd files in this directory
+> for (file in files) {
++   renderFile(file)
++ }
+
+
+processing file: Basic_R.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   3%
+  ordinary text without R code
+
+  |                                                                         |....                                                             |   6%
+label: code
+  |                                                                         |......                                                           |   9%
+  ordinary text without R code
+
+  |                                                                         |........                                                         |  12%
+label: calcDemo
+  |                                                                         |..........                                                       |  15%
+  ordinary text without R code
+
+  |                                                                         |............                                                     |  18%
+label: calcDemo2
+  |                                                                         |..............                                                   |  21%
+  ordinary text without R code
+
+  |                                                                         |................                                                 |  24%
+label: assign
+  |                                                                         |..................                                               |  27%
+  ordinary text without R code
+
+  |                                                                         |....................                                             |  30%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                         |......................                                           |  33%
+  ordinary text without R code
+
+  |                                                                         |........................                                         |  36%
+label: df1 (with options) 
+List of 1
+ $ comment: chr ""
+
+  |                                                                         |..........................                                       |  39%
+  ordinary text without R code
+
+  |                                                                         |............................                                     |  42%
+label: assignClass
+  |                                                                         |..............................                                   |  45%
+  ordinary text without R code
+
+  |                                                                         |................................                                 |  48%
+label: myName
+  |                                                                         |.................................                                |  52%
+  ordinary text without R code
+
+  |                                                                         |...................................                              |  55%
+label: assign3a
+  |                                                                         |.....................................                            |  58%
+  ordinary text without R code
+
+  |                                                                         |.......................................                          |  61%
+label: myName2
+  |                                                                         |.........................................                        |  64%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
+label: assign3b
+  |                                                                         |.............................................                    |  70%
+  ordinary text without R code
+
+  |                                                                         |...............................................                  |  73%
+label: myName3
+  |                                                                         |.................................................                |  76%
+  ordinary text without R code
+
+  |                                                                         |...................................................              |  79%
+label: assign4
+  |                                                                         |.....................................................            |  82%
+  ordinary text without R code
+
+  |                                                                         |.......................................................          |  85%
+label: assign5
+  |                                                                         |.........................................................        |  88%
+  ordinary text without R code
+
+  |                                                                         |...........................................................      |  91%
+label: assign2
+  |                                                                         |.............................................................    |  94%
+  ordinary text without R code
+
+  |                                                                         |...............................................................  |  97%
+label: str_charm
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Basic_R.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Basic_R.utf8.md --to beamer --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Basic_R.pdf --highlight-style tango --latex-engine /usr/texbin/pdflatex 
+
+Output created: Basic_R.pdf
+
+
+processing file: Basic_R.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   3%
+  ordinary text without R code
+
+  |                                                                         |....                                                             |   6%
+label: code
+  |                                                                         |......                                                           |   9%
+  ordinary text without R code
+
+  |                                                                         |........                                                         |  12%
+label: calcDemo
+  |                                                                         |..........                                                       |  15%
+  ordinary text without R code
+
+  |                                                                         |............                                                     |  18%
+label: calcDemo2
+  |                                                                         |..............                                                   |  21%
+  ordinary text without R code
+
+  |                                                                         |................                                                 |  24%
+label: assign
+  |                                                                         |..................                                               |  27%
+  ordinary text without R code
+
+  |                                                                         |....................                                             |  30%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                         |......................                                           |  33%
+  ordinary text without R code
+
+  |                                                                         |........................                                         |  36%
+label: df1 (with options) 
+List of 1
+ $ comment: chr ""
+
+  |                                                                         |..........................                                       |  39%
+  ordinary text without R code
+
+  |                                                                         |............................                                     |  42%
+label: assignClass
+  |                                                                         |..............................                                   |  45%
+  ordinary text without R code
+
+  |                                                                         |................................                                 |  48%
+label: myName
+  |                                                                         |.................................                                |  52%
+  ordinary text without R code
+
+  |                                                                         |...................................                              |  55%
+label: assign3a
+  |                                                                         |.....................................                            |  58%
+  ordinary text without R code
+
+  |                                                                         |.......................................                          |  61%
+label: myName2
+  |                                                                         |.........................................                        |  64%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
+label: assign3b
+  |                                                                         |.............................................                    |  70%
+  ordinary text without R code
+
+  |                                                                         |...............................................                  |  73%
+label: myName3
+  |                                                                         |.................................................                |  76%
+  ordinary text without R code
+
+  |                                                                         |...................................................              |  79%
+label: assign4
+  |                                                                         |.....................................................            |  82%
+  ordinary text without R code
+
+  |                                                                         |.......................................................          |  85%
+label: assign5
+  |                                                                         |.........................................................        |  88%
+  ordinary text without R code
+
+  |                                                                         |...........................................................      |  91%
+label: assign2
+  |                                                                         |.............................................................    |  94%
+  ordinary text without R code
+
+  |                                                                         |...............................................................  |  97%
+label: str_charm
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Basic_R.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Basic_R.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Basic_R.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css ../../styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
+/usr/local/bin/pandoc +RTS -K512m -RTS Basic_R.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp4Ios4D/ioslides-output3a4845957950.html 
+
+Output created: Basic_R.html
+
+
+processing file: Data_IO.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |....                                                             |   6%
+  ordinary text without R code
+
+  |                                                                         |........                                                         |  12%
+label: workingDirectory (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |...........                                                      |  18%
+  ordinary text without R code
+
+  |                                                                         |...............                                                  |  24%
+label: directoryNav
+  |                                                                         |...................                                              |  29%
+  ordinary text without R code
+
+  |                                                                         |.......................                                          |  35%
+label: readCSV
+  |                                                                         |...........................                                      |  41%
+  ordinary text without R code
+
+  |                                                                         |...............................                                  |  47%
+label: readCSV2
+  |                                                                         |..................................                               |  53%
+  ordinary text without R code
+
+  |                                                                         |......................................                           |  59%
+label: subset5
+  |                                                                         |..........................................                       |  65%
+  ordinary text without R code
+
+  |                                                                         |..............................................                   |  71%
+label: readCSV3
+  |                                                                         |..................................................               |  76%
+  ordinary text without R code
+
+  |                                                                         |......................................................           |  82%
+label: names1
+  |                                                                         |.........................................................        |  88%
+  ordinary text without R code
+
+  |                                                                         |.............................................................    |  94%
+label: writecsv
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Data_IO.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Data_IO.utf8.md --to beamer --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Data_IO.pdf --highlight-style tango --latex-engine /usr/texbin/pdflatex 
+
+Output created: Data_IO.pdf
+
+
+processing file: Data_IO.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |....                                                             |   6%
+  ordinary text without R code
+
+  |                                                                         |........                                                         |  12%
+label: workingDirectory (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |...........                                                      |  18%
+  ordinary text without R code
+
+  |                                                                         |...............                                                  |  24%
+label: directoryNav
+  |                                                                         |...................                                              |  29%
+  ordinary text without R code
+
+  |                                                                         |.......................                                          |  35%
+label: readCSV
+  |                                                                         |...........................                                      |  41%
+  ordinary text without R code
+
+  |                                                                         |...............................                                  |  47%
+label: readCSV2
+  |                                                                         |..................................                               |  53%
+  ordinary text without R code
+
+  |                                                                         |......................................                           |  59%
+label: subset5
+  |                                                                         |..........................................                       |  65%
+  ordinary text without R code
+
+  |                                                                         |..............................................                   |  71%
+label: readCSV3
+  |                                                                         |..................................................               |  76%
+  ordinary text without R code
+
+  |                                                                         |......................................................           |  82%
+label: names1
+  |                                                                         |.........................................................        |  88%
+  ordinary text without R code
+
+  |                                                                         |.............................................................    |  94%
+label: writecsv
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Data_IO.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Data_IO.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Data_IO.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css ../../styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
+/usr/local/bin/pandoc +RTS -K512m -RTS Data_IO.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp4Ios4D/ioslides-output3a4868570895.html 
+
+Output created: Data_IO.html
+
+
+processing file: Intro.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |......................                                           |  33%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Intro.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Intro.utf8.md --to beamer --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Intro.pdf --highlight-style tango --latex-engine /usr/texbin/pdflatex 
+
+Output created: Intro.pdf
+
+
+processing file: Intro.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |......................                                           |  33%
+  ordinary text without R code
+
+  |                                                                         |...........................................                      |  67%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ eval: logi FALSE
+
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Intro.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Intro.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Intro.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css ../../styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
+/usr/local/bin/pandoc +RTS -K512m -RTS Intro.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//Rtmp4Ios4D/ioslides-output3a4835e26952.html 
+
+Output created: Intro.html
+
+
+processing file: Knitr/lecture/Knitr.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |.........                                                        |  14%  |                                                                         |...................                                              |  29%  |                                                                         |............................                                     |  43%  |                                                                         |.....................................                            |  57%  |                                                                         |..............................................                   |  71%  |                                                                         |........................................................         |  86%  |                                                                         |.................................................................| 100%
+output file: Knitr/lecture/Knitr.R
+
+
+
+processing file: Knitr.Rmd
+  |                                                                         |                                                                 |   0%  |                                                                         |.........                                                        |  14%
+  ordinary text without R code
+
+  |                                                                         |...................                                              |  29%
+label: unnamed-chunk-1 (with options) 
+List of 1
+ $ echo: logi FALSE
+
+  |                                                                         |............................                                     |  43%
+  ordinary text without R code
+
+  |                                                                         |.....................................                            |  57%
+label: sessionInfo
+  |                                                                         |..............................................                   |  71%
+  ordinary text without R code
+
+  |                                                                         |........................................................         |  86%
+label: session_info
+  |                                                                         |.................................................................| 100%
+  ordinary text without R code
+
+
+output file: Knitr.knit.md
+
+/usr/local/bin/pandoc +RTS -K512m -RTS Knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Knitr.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
+pandoc: Could not find data file styles.css
+Error: pandoc document conversion failed with error 97
+Execution halted

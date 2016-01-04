@@ -9,9 +9,14 @@ output:
 subtitle: Basic R
 ---
 
+```{r, echo = FALSE}
+library(knitr)
+opts_chunk$set(comment = "")
+```
+
 ## Getting Started
 
-* You should have the latest version of R installed (R 3.2.0 as of 6/15/2015)!
+* You should have the latest version of R installed!
 * Open R Studio
 * Files --> New --> R Script
 * Save the blank R script as "day1.R" in a directory of your choosing
@@ -21,7 +26,7 @@ subtitle: Basic R
 
 Add a comment header to day1.R :`#` is the comment symbol
 
-```
+```{r}
 #################
 # Title: Demo R Script
 # Author: Andrew Jaffe
@@ -55,7 +60,7 @@ So `print("I'm code")` is the code chunk and [1] "I'm code" is the output.
 ```{r calcDemo}
 2 + 2
 2 * 4
-2^3
+2 ^ 3
 ```
 
 Note, when you type your command, R inherently thinks you want to print the result. 
@@ -231,16 +236,6 @@ str(x)
 str(y)
 ```
 This tells you that `x` is a numeric vector and tells you the length.
-
-## Basic Summarization
-
-Here are some simple functions for making calculations on data.
-
-`sum()`: takes the sum of all numeric variables in a vector
-
-`mean()`: takes the mean of all numeric variables in a vector
-
-`median()`: takes the median of all numeric variables in a vector
 
 ## Back to our `data.frame` example {.smaller}
 
