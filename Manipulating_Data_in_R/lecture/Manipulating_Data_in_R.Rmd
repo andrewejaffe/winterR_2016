@@ -109,13 +109,37 @@ table(long$type)
 
 ## Reshaping data from long (tall) to wide (fat): tidyr
 
-In `tidyr`, the `spread` function spreads rows into columns.  Now we have a long data set, but we want to separate the Average, Alightings and Boardings into different columns
+In `tidyr`, the `spread` function spreads rows into columns.  Now we have a long data set, but we want to separate the Average, Alightings and Boardings into different columns:
 
 ```{r}
-wide = spread(long, key = type)
+# have to remove missing days
+wide = filter(long, !is.na(date))
+wide = spread(wide, type, number)
+head(wide)
 ```
 
 
+## Reshaping data from long (tall) to wide (fat): tidyr
+
+We can use `rowSums` to see if any values in the row is `NA` and keep if the row, which is a combination of date and line type has any non-missing data.
+
+```{r}
+# wide = wide %>%
+#     select(Alightings, Average, Boardings) %>%
+#     mutate(good = rowSums(is.na(.)) > 0)
+namat = !is.na(select(wide, Alightings, Average, Boardings))
+head(namat)
+wide$good = rowSums(namat) > 0
+head(wide, 3)
+```
+
+## Reshaping data from long (tall) to wide (fat): tidyr
+
+Now we can filter only the good rows and delete the `good` column.
+```{r}
+wide = filter(wide, good) %>% select(-good)
+head(wide)
+```
 
 
 # Perform Operations By Groups of Variables
@@ -129,29 +153,20 @@ The `tapply` command will take in a vector (`X`), perform a function
 args(tapply)
 ```
 
-## Perform Operations By Groups: base R
-
-The `tapply` command will take in a vector (`X`), perform a function
-(`FUN`) over an index (`INDEX`):
-
-```{r}
-args(tapply)
-```
-
 
 ## Perform Operations By Groups: base R
 
-Let's get the mean temperature by year:
+Let's get the mean Average ridership by line:
 ```{r}
-tapply(ex_data$temperature, ex_data$year, mean)
+tapply(wide$Average, wide$line, mean, na.rm = TRUE)
 ```
 
 ## Perform Operations By Groups: dplyr
 
-Let's get the mean temperature by year.  We will use `group_by` to group the data by temperature, then use `summarize` (or `summarise`) to get the mean temperature:
+Let's get the mean Average ridership by line  We will use `group_by` to group the data by line, then use `summarize` (or `summarise`) to get the mean Average ridership:
 ```{r}
-gb = group_by(ex_data, year)
-summarize(gb, mean_temp = mean(temperature))
+gb = group_by(wide, line)
+summarize(gb, mean_avg = mean(Average))
 ```
 
 ## Perform Operations By Groups: dplyr with piping
@@ -159,28 +174,64 @@ summarize(gb, mean_temp = mean(temperature))
 Using piping, this is:
 
 ```{r}
-ex_data %>% 
-  group_by(year) %>%
-  summarise(mean_temp = mean(temperature))
+wide %>% 
+  group_by(line) %>%
+  summarise(mean_avg = mean(Average))
 ```
 
 
 ## Perform Operations By Multiple Groups: dplyr 
 
-This can easily be extended using `group_by` with multiple groups:
+This can easily be extended using `group_by` with multiple groups.  Let's define the year of riding:
 
 ```{r}
-ex_data %>% 
-  group_by(year, month) %>%
-  summarise(mean_temp = mean(temperature))
+wide = wide %>% mutate(year = year(date),
+                       month = month(date))
+wide %>% 
+  group_by(line, year) %>%
+  summarise(mean_avg = mean(Average))
 ```
 
-## Perform Operations By Multiple Groups: dplyr 
+## Perform Operations By Multiple Groups: dplyr {.smaller}
 
-This can easily be extended using `group_by` with multiple groups:
+We can then easily plot each day over time:
 
 ```{r}
-ex_data %>% 
-  group_by(year, month) %>%
-  summarise(mean_temp = mean(temperature))
+library(ggplot2)
+ggplot(aes(x = date, y = Average, 
+               colour = line), data = wide) + geom_line()
+```
+
+## Perform Operations By Multiple Groups: dplyr {.smaller}
+
+Let's create the middle of the month (the 15th for example), and name it
+mon.
+
+```{r}
+mon = wide %>% 
+  group_by(line, month, year) %>%
+  summarise(mean_avg = mean(Average))
+mon = mutate(mon, 
+             mid_month = dmy(paste0("15-", month, "-", year)))
+head(mon)
+```
+
+
+## Perform Operations By Multiple Groups: dplyr {.smaller}
+
+We can then easily plot the mean of each month to see a smoother output:
+
+```{r}
+ggplot(aes(x = mid_month,
+               y = mean_avg, 
+               colour = line), data = mon) + geom_line()
+```
+
+
+
+## Bonus! Points with a smoother! {.smaller}
+```{r}
+ggplot(aes(x = date, y = Average, colour = line), 
+           data = wide) + geom_smooth(se = FALSE) + 
+  geom_point(size = .5)
 ```
