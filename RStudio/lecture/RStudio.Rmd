@@ -8,6 +8,11 @@ output:
     css: ../../styles.css
 ---
 
+```{r, echo = FALSE}
+library(knitr)
+opts_chunk$set(comment = "")
+```
+
 ## RStudio
 
 * "RStudio is an integrated development environment (IDE) for R."

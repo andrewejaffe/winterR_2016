@@ -8,6 +8,10 @@ output:
     css: ../../styles.css
 ---
 
+```{r, echo = FALSE}
+library(knitr)
+opts_chunk$set(comment = "")
+```
 
 ## Before we get Started: Working Directories
 

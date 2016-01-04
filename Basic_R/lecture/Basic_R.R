@@ -1,10 +1,32 @@
+## ---- echo = FALSE-------------------------------------------------------
+library(knitr)
+opts_chunk$set(comment = "")
+
+## ------------------------------------------------------------------------
+#################
+# Title: Demo R Script
+# Author: Andrew Jaffe
+# Date: 6/15/2015
+# Purpose: Demonstrate comments in R
+###################
+ 
+# nothing to its right is evaluated
+
+# this # is still a comment
+### you can use many #'s as you want
+
+# sometimes you have a really long comment,
+#    like explaining what you are doing 
+#    for a step in analysis. 
+# Take it to another line
+
 ## ----code----------------------------------------------------------------
 print("I'm code")
 
 ## ----calcDemo------------------------------------------------------------
 2 + 2
 2 * 4
-2^3
+2 ^ 3
 
 ## ----calcDemo2-----------------------------------------------------------
 2 + (2 * 3)^2

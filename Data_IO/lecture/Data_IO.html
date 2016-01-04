@@ -131,13 +131,13 @@ getwd()
 
 <pre class = 'prettyprint lang-r'>dir(&quot;./&quot;) # shows directory contents</pre>
 
-<pre >## [1] &quot;Data_IO.html&quot;           &quot;Data_IO.pdf&quot;           
-## [3] &quot;Data_IO.R&quot;              &quot;Data_IO.Rmd&quot;           
-## [5] &quot;monuments_newNames.csv&quot;</pre>
+<pre >[1] &quot;Data_IO.html&quot;           &quot;Data_IO.pdf&quot;           
+[3] &quot;Data_IO.R&quot;              &quot;Data_IO.Rmd&quot;           
+[5] &quot;monuments_newNames.csv&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>dir(&quot;..&quot;)</pre>
 
-<pre >## [1] &quot;lab&quot;     &quot;lecture&quot;</pre>
+<pre >[1] &quot;lab&quot;     &quot;lecture&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Working Directory</h2></hgroup><article  id="working-directory-1">
 
@@ -220,12 +220,12 @@ read.table( file, # filename
 
 <pre class = 'prettyprint lang-r'>read.csv</pre>
 
-<pre >## function (file, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;, dec = &quot;.&quot;, 
-##     fill = TRUE, comment.char = &quot;&quot;, ...) 
-## read.table(file = file, header = header, sep = sep, quote = quote, 
-##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## &lt;bytecode: 0x7f8646af7150&gt;
-## &lt;environment: namespace:utils&gt;</pre>
+<pre >function (file, header = TRUE, sep = &quot;,&quot;, quote = &quot;\&quot;&quot;, dec = &quot;.&quot;, 
+    fill = TRUE, comment.char = &quot;&quot;, ...) 
+read.table(file = file, header = header, sep = sep, quote = quote, 
+    dec = dec, fill = fill, comment.char = comment.char, ...)
+&lt;bytecode: 0x7fe4f7104038&gt;
+&lt;environment: namespace:utils&gt;</pre>
 
 <p>Note: the <code>...</code> designates extra/optional arguments that can be passed to <code>read.table()</code> if needed</p>
 
@@ -238,31 +238,31 @@ read.table( file, # filename
 <pre class = 'prettyprint lang-r'>mon = read.csv(&quot;../../data/Monuments.csv&quot;,header=TRUE,as.is=TRUE)
 head(mon)</pre>
 
-<pre >##                               name zipCode neighborhood councilDistrict
-## 1           James Cardinal Gibbons   21201     Downtown              11
-## 2              The Battle Monument   21202     Downtown              11
-## 3 Negro Heroes of the U.S Monument   21202     Downtown              11
-## 4              Star Bangled Banner   21202     Downtown              11
-## 5  Flame at the Holocaust Monument   21202     Downtown              11
-## 6                   Calvert Statue   21202     Downtown              11
-##   policeDistrict                       Location.1
-## 1        CENTRAL  408 CHARLES ST\nBaltimore, MD\n
-## 2        CENTRAL                                 
-## 3        CENTRAL                                 
-## 4        CENTRAL 100 HOLLIDAY ST\nBaltimore, MD\n
-## 5        CENTRAL    50 MARKET PL\nBaltimore, MD\n
-## 6        CENTRAL  100 CALVERT ST\nBaltimore, MD\n</pre>
+<pre >                              name zipCode neighborhood councilDistrict
+1           James Cardinal Gibbons   21201     Downtown              11
+2              The Battle Monument   21202     Downtown              11
+3 Negro Heroes of the U.S Monument   21202     Downtown              11
+4              Star Bangled Banner   21202     Downtown              11
+5  Flame at the Holocaust Monument   21202     Downtown              11
+6                   Calvert Statue   21202     Downtown              11
+  policeDistrict                       Location.1
+1        CENTRAL  408 CHARLES ST\nBaltimore, MD\n
+2        CENTRAL                                 
+3        CENTRAL                                 
+4        CENTRAL 100 HOLLIDAY ST\nBaltimore, MD\n
+5        CENTRAL    50 MARKET PL\nBaltimore, MD\n
+6        CENTRAL  100 CALVERT ST\nBaltimore, MD\n</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-7" class="smaller">
 
 <pre class = 'prettyprint lang-r'>colnames(mon) # column names</pre>
 
-<pre >## [1] &quot;name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
-## [5] &quot;policeDistrict&quot;  &quot;Location.1&quot;</pre>
+<pre >[1] &quot;name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
+[5] &quot;policeDistrict&quot;  &quot;Location.1&quot;     </pre>
 
 <pre class = 'prettyprint lang-r'>head(mon$zipCode) # first few rows</pre>
 
-<pre >## [1] 21201 21202 21202 21202 21202 21202</pre>
+<pre >[1] 21201 21202 21202 21202 21202 21202</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-8">
 
@@ -270,13 +270,13 @@ head(mon)</pre>
 
 <pre class = 'prettyprint lang-r'>str(mon) # structure of an R object</pre>
 
-<pre >## &#39;data.frame&#39;:    84 obs. of  6 variables:
-##  $ name           : chr  &quot;James Cardinal Gibbons&quot; &quot;The Battle Monument&quot; &quot;Negro Heroes of the U.S Monument&quot; &quot;Star Bangled Banner&quot; ...
-##  $ zipCode        : int  21201 21202 21202 21202 21202 21202 21202 21211 21213 21211 ...
-##  $ neighborhood   : chr  &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; ...
-##  $ councilDistrict: int  11 11 11 11 11 11 11 7 14 14 ...
-##  $ policeDistrict : chr  &quot;CENTRAL&quot; &quot;CENTRAL&quot; &quot;CENTRAL&quot; &quot;CENTRAL&quot; ...
-##  $ Location.1     : chr  &quot;408 CHARLES ST\nBaltimore, MD\n&quot; &quot;&quot; &quot;&quot; &quot;100 HOLLIDAY ST\nBaltimore, MD\n&quot; ...</pre>
+<pre >&#39;data.frame&#39;:   84 obs. of  6 variables:
+ $ name           : chr  &quot;James Cardinal Gibbons&quot; &quot;The Battle Monument&quot; &quot;Negro Heroes of the U.S Monument&quot; &quot;Star Bangled Banner&quot; ...
+ $ zipCode        : int  21201 21202 21202 21202 21202 21202 21202 21211 21213 21211 ...
+ $ neighborhood   : chr  &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; &quot;Downtown&quot; ...
+ $ councilDistrict: int  11 11 11 11 11 11 11 7 14 14 ...
+ $ policeDistrict : chr  &quot;CENTRAL&quot; &quot;CENTRAL&quot; &quot;CENTRAL&quot; &quot;CENTRAL&quot; ...
+ $ Location.1     : chr  &quot;408 CHARLES ST\nBaltimore, MD\n&quot; &quot;&quot; &quot;&quot; &quot;100 HOLLIDAY ST\nBaltimore, MD\n&quot; ...</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Input</h2></hgroup><article  id="data-input-9">
 
@@ -285,14 +285,14 @@ head(mon)</pre>
 <pre class = 'prettyprint lang-r'>names(mon)[1] = &quot;Name&quot;
 names(mon)</pre>
 
-<pre >## [1] &quot;Name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
-## [5] &quot;policeDistrict&quot;  &quot;Location.1&quot;</pre>
+<pre >[1] &quot;Name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
+[5] &quot;policeDistrict&quot;  &quot;Location.1&quot;     </pre>
 
 <pre class = 'prettyprint lang-r'>names(mon)[1] = &quot;name&quot;
 names(mon)</pre>
 
-<pre >## [1] &quot;name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
-## [5] &quot;policeDistrict&quot;  &quot;Location.1&quot;</pre>
+<pre >[1] &quot;name&quot;            &quot;zipCode&quot;         &quot;neighborhood&quot;    &quot;councilDistrict&quot;
+[5] &quot;policeDistrict&quot;  &quot;Location.1&quot;     </pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Output</h2></hgroup><article  id="data-output" class="smaller">
 

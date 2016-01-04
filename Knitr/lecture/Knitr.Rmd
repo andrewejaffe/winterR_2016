@@ -8,6 +8,11 @@ output:
     css: styles.css
 ---
 
+```{r, echo = FALSE}
+library(knitr)
+opts_chunk$set(comment = "")
+```
+
 ```{r echo = FALSE}
 library('devtools')
 ```

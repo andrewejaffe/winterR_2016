@@ -1,3 +1,7 @@
+## ---- echo = FALSE-------------------------------------------------------
+library(knitr)
+opts_chunk$set(comment = "")
+
 ## ----workingDirectory,eval=FALSE-----------------------------------------
 ## ## get the working directory
 ## getwd()
