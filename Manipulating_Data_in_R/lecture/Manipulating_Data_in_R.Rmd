@@ -20,7 +20,7 @@ You can read data into R using *read.csv*.  In this module, we will show you how
 
 ## Setup
 
-We will show you how to do each operation in base R then show you how to use the `dplyr` package to do the same operation (if applicable).
+We will show you how to do each operation in base R then show you how to use the `dplyr` package to do the same operation (if applicable).  
 
 Many resources on how to use `dplyr` exist and are straightforward: 
 
@@ -77,8 +77,13 @@ x > 2
 x[ x > 2 ]
 ```
 
-
-using the following
+## Select specific elements using logical operators
+You can have multiple logical conditions using the following:
 
 * `&` : AND
 * `|` : OR
+
+```{r}
+x[ x > 2 & x < 5 ]
+x[ x > 5 | x == 2 ]
+```
