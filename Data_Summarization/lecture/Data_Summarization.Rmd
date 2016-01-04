@@ -39,7 +39,7 @@ output:
 ## column and row means
 
 ```{r colMeans}
-circ2 = read.csv("../data/charmcitycirc_reduced.csv", 
+circ2 = read.csv("../../data/charmcitycirc_reduced.csv", 
             header=TRUE,as.is=TRUE)
 colMeans(circ2[,3:6],na.rm=TRUE)
 head(rowMeans(circ2[,3:6],na.rm=TRUE))
