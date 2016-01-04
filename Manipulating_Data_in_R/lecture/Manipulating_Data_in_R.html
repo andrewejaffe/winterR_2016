@@ -95,7 +95,7 @@
 
 <slide class=''><hgroup><h2>Overview</h2></hgroup><article  id="overview">
 
-<p>You can read data into R using <em>read.csv</em>. In this module, we will show you how to</p>
+<p>You can read data into R using <em>read.csv</em>. In this module, we will show you how to:</p>
 
 <ol>
 <li>Select specific elements of an object by an index or logical condition</li>
@@ -103,7 +103,85 @@
 <li>Subset columns of a <code>data.frame</code></li>
 <li>Add new columns to a <code>data.frame</code></li>
 <li>Order the rows of a <code>data.frame</code></li>
-</ol></article></slide>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>Setup</h2></hgroup><article  id="setup">
+
+<p>We will show you how to do each operation in base R then show you how to use the <code>dplyr</code> package to do the same operation (if applicable).</p>
+
+<p>Many resources on how to use <code>dplyr</code> exist and are straightforward:</p>
+
+<ul>
+<li><a href='https://cran.rstudio.com/web/packages/dplyr/vignettes/' title=''>https://cran.rstudio.com/web/packages/dplyr/vignettes/</a></li>
+<li><a href='https://stat545-ubc.github.io/block009_dplyr-intro.html' title=''>https://stat545-ubc.github.io/block009_dplyr-intro.html</a></li>
+<li><a href='https://www.datacamp.com/courses/dplyr-data-manipulation-r-tutorial' title=''>https://www.datacamp.com/courses/dplyr-data-manipulation-r-tutorial</a></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Select specific elements using an index</h2></hgroup><article  id="select-specific-elements-using-an-index">
+
+<p>Often you only want to look at subsets of a data set at any given time. As a review, elements of an R object are selected using the brackets (<code>[</code> and <code>]</code>).</p>
+
+<p>For example, <code>x</code> is a vector of numbers and we can select the second element of <code>x</code> using the brackets and an index (2):</p>
+
+<pre class = 'prettyprint lang-r'>x = c(1, 4, 2, 8, 10)
+x[2]</pre>
+
+<pre >## [1] 4</pre>
+
+</article></slide><slide class=''><hgroup><h2>Select specific elements using an index</h2></hgroup><article  id="select-specific-elements-using-an-index-1">
+
+<p>We can select the fifth or second AND fifth elements below:</p>
+
+<pre class = 'prettyprint lang-r'>x = c(1, 2, 4, 8, 10)
+x[5]</pre>
+
+<pre >## [1] 10</pre>
+
+<pre class = 'prettyprint lang-r'>x[c(2,5)]</pre>
+
+<pre >## [1]  2 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Subsetting by deletion of entries</h2></hgroup><article  id="subsetting-by-deletion-of-entries">
+
+<p>You can put a minus (<code>-</code>) before integers inside brackets to remove these indices from the data.</p>
+
+<pre class = 'prettyprint lang-r'>x[-2] # all but the second</pre>
+
+<pre >## [1]  1  4  8 10</pre>
+
+<p>Note that you have to be careful with this syntax when dropping more than 1 element:</p>
+
+<pre class = 'prettyprint lang-r'>x[-c(1,2,3)] # drop first 3</pre>
+
+<pre >## [1]  8 10</pre>
+
+<pre class = 'prettyprint lang-r'># x[-1:3] # shorthand. R sees as -1 to 3
+x[-(1:3)] # needs parentheses</pre>
+
+<pre >## [1]  8 10</pre>
+
+</article></slide><slide class=''><hgroup><h2>Select specific elements using logical operators</h2></hgroup><article  id="select-specific-elements-using-logical-operators">
+
+<p>What about selecting rows based on the values of two variables? We use logical statements. Here we select only elements of <code>x</code> greater than 2:</p>
+
+<pre class = 'prettyprint lang-r'>x</pre>
+
+<pre >## [1]  1  2  4  8 10</pre>
+
+<pre class = 'prettyprint lang-r'>x &gt; 2</pre>
+
+<pre >## [1] FALSE FALSE  TRUE  TRUE  TRUE</pre>
+
+<pre class = 'prettyprint lang-r'>x[ x &gt; 2 ]</pre>
+
+<pre >## [1]  4  8 10</pre>
+
+<p>using the following</p>
+
+<ul>
+<li><code>&amp;</code> : AND</li>
+<li><code>|</code> : OR</li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>

@@ -1,13 +1,12 @@
 ---
 title: "Variables"
-subtitle: Basic R 
 author: "Andrew Jaffe"
-date: 'January 4, 2016'
+date: "January 4, 2016"
 output:
+  beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
-  pdf_document:
-    toc: false
+subtitle: Basic R
 ---
 
 ## Getting Started

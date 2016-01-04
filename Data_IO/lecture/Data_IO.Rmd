@@ -3,10 +3,9 @@ title: "Data Input/Output"
 author: "Andrew Jaffe"
 date: "January 4, 2016"
 output:
+  beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
-  pdf_document:
-    toc: false    
 ---
 
 
@@ -207,6 +206,7 @@ For an .xlsx file with multiple well-formated worksheets, I use the `xlsx` packa
 
 
 * **haven** package (https://cran.r-project.org/web/packages/haven/index.html) reads in SAS, SPSS, Stata formats
+* **readxl** package - the `read_excel` function can read Excel sheets easily
 * **readr** package - Has *read_csv*/*write_csv* and *read_table* functions similar to *read.csv*/*write.csv* and *read.table*.  Has different defaults, but can read **much faster** for very large data sets
 * **sas7bdat** reads .sas7bdat files
 * **foreign** package - can read all the formats as **haven**.  Around longer (aka more testing), but not as maintained (bad for future).
