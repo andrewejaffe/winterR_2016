@@ -5,8 +5,8 @@ opts_chunk$set(comment = "")
 ## ------------------------------------------------------------------------
 #################
 # Title: Demo R Script
-# Author: Andrew Jaffe
-# Date: 6/15/2015
+# Author: John Muschelli
+# Date: 1/4/2016
 # Purpose: Demonstrate comments in R
 ###################
  
@@ -37,12 +37,6 @@ x = 2 # Same as: x <- 2
 x
 x * 4
 x + 2
-
-## ---- echo = FALSE-------------------------------------------------------
-Charm_City_Circulator_Ridership <- read.csv("http://www.aejaffe.com/summerR_2015/data/Charm_City_Circulator_Ridership.csv")
-
-## ----df1,  comment=""----------------------------------------------------
-head(Charm_City_Circulator_Ridership)
 
 ## ----assignClass---------------------------------------------------------
 class(x)
@@ -84,7 +78,4 @@ y
 ## ----assign2-------------------------------------------------------------
 str(x)
 str(y)
-
-## ----str_charm-----------------------------------------------------------
-str(Charm_City_Circulator_Ridership)
 

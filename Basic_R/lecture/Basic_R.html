@@ -110,8 +110,8 @@
 
 <pre class = 'prettyprint lang-r'>#################
 # Title: Demo R Script
-# Author: Andrew Jaffe
-# Date: 6/15/2015
+# Author: John Muschelli
+# Date: 1/4/2016
 # Purpose: Demonstrate comments in R
 ###################
  
@@ -209,50 +209,10 @@ x</pre>
 
 <ul>
 <li>The most comfortable and familiar class/data type for many of you will be <code>data.frame</code></li>
-<li><p>You can think of these as essentially Excel spreadsheets with rows (usually subjects or observations) and columns (usually variables)</p></li>
-<li><p>Go to RStudio &#8211;&gt; Tools &#8211;&gt; Import Dataset &#8211;&gt; From Web URL then paste</p></li>
+<li>You can think of these as essentially Excel spreadsheets with rows (usually subjects or observations) and columns (usually variables)</li>
 </ul>
 
-<p><a href='http://www.aejaffe.com/summerR_2015/data/Charm_City_Circulator_Ridership.csv' title=''>http://www.aejaffe.com/summerR_2015/data/Charm_City_Circulator_Ridership.csv</a></p>
-
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-1" class="smaller">
-
-<ul>
-<li>We can display the top of the data with <code>head</code>:</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>head(Charm_City_Circulator_Ridership)</pre>
-
-<pre >        day       date orangeBoardings orangeAlightings orangeAverage
-1    Monday 01/11/2010             877             1027         952.0
-2   Tuesday 01/12/2010             777              815         796.0
-3 Wednesday 01/13/2010            1203             1220        1211.5
-4  Thursday 01/14/2010            1194             1233        1213.5
-5    Friday 01/15/2010            1645             1643        1644.0
-6  Saturday 01/16/2010            1457             1524        1490.5
-  purpleBoardings purpleAlightings purpleAverage greenBoardings
-1              NA               NA            NA             NA
-2              NA               NA            NA             NA
-3              NA               NA            NA             NA
-4              NA               NA            NA             NA
-5              NA               NA            NA             NA
-6              NA               NA            NA             NA
-  greenAlightings greenAverage bannerBoardings bannerAlightings
-1              NA           NA              NA               NA
-2              NA           NA              NA               NA
-3              NA           NA              NA               NA
-4              NA           NA              NA               NA
-5              NA           NA              NA               NA
-6              NA           NA              NA               NA
-  bannerAverage  daily
-1            NA  952.0
-2            NA  796.0
-3            NA 1211.5
-4            NA 1213.5
-5            NA 1644.0
-6            NA 1490.5</pre>
-
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-2">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-1">
 
 <ul>
 <li><code>data.frame</code>s are somewhat advanced objects in R; we will start with simpler objects;</li>
@@ -273,11 +233,11 @@ print(y)</pre>
 
 <pre >[1] &quot;character&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-3">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-2">
 
 <p>Try assigning your full name to an R variable called <code>name</code></p>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-4">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-3">
 
 <p>Try assigning your full name to an R variable called <code>name</code></p>
 
@@ -312,7 +272,7 @@ name2</pre>
 
 <pre >[1] &quot;Andrew&quot; &quot;Jaffe&quot; </pre>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-5">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-4">
 
 <p><code>length()</code>: Get or set the length of vectors (including lists) and factors, and of any other R object for which a method has been defined.</p>
 
@@ -328,13 +288,13 @@ name2</pre>
 
 <pre >[1] 1</pre>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-6">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-5">
 
 <p>What do you expect for the length of the <code>name</code> variable? What about the <code>name2</code> variable?</p>
 
 <p>What are the lengths of each?</p>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-7">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-6">
 
 <p>What do you expect for the length of the <code>name</code> variable? What about the <code>name2</code> variable?</p>
 
@@ -348,7 +308,7 @@ name2</pre>
 
 <pre >[1] 2</pre>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-8">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-7">
 
 <p>You can perform functions to entire vectors of numbers very easily.</p>
 
@@ -364,7 +324,7 @@ name2</pre>
 
 <pre >[1]  2  6  9 12</pre>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-9">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-8">
 
 <p>But things like algebra can only be performed on numbers.</p>
 
@@ -372,7 +332,7 @@ name2</pre>
 [1] Error in name2 * 4 : non-numeric argument
  to binary operator</pre>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-10">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-9">
 
 <p>And save these modified vectors as a new vector.</p>
 
@@ -383,7 +343,7 @@ y </pre>
 
 <p>Note that the R object <code>y</code> is no longer &quot;Hello World!&quot; - It has effectively been overwritten by assigning new data to the variable</p>
 
-</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-11">
+</article></slide><slide class=''><hgroup><h2>R variables</h2></hgroup><article  id="r-variables-10">
 
 <ul>
 <li>You can get more attributes than just class. The function <code>str</code> gives you the structure of the object.</li>
@@ -398,31 +358,6 @@ y </pre>
 <pre > num [1:4] 2 6 9 12</pre>
 
 <p>This tells you that <code>x</code> is a numeric vector and tells you the length.</p>
-
-</article></slide><slide class=''><hgroup><h2>Back to our <code>data.frame</code> example</h2></hgroup><article  id="back-to-our-data.frame-example" class="smaller">
-
-<ul>
-<li>Let&#39;s see what the structure of our <code>data.frame</code> is:</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>str(Charm_City_Circulator_Ridership)</pre>
-
-<pre >&#39;data.frame&#39;:   1146 obs. of  15 variables:
- $ day             : Factor w/ 7 levels &quot;Friday&quot;,&quot;Monday&quot;,..: 2 6 7 5 1 3 4 2 6 7 ...
- $ date            : Factor w/ 1146 levels &quot;01/01/2011&quot;,&quot;01/01/2012&quot;,..: 31 35 39 43 47 51 55 59 63 67 ...
- $ orangeBoardings : int  877 777 1203 1194 1645 1457 839 999 1023 1375 ...
- $ orangeAlightings: int  1027 815 1220 1233 1643 1524 938 1000 1047 1416 ...
- $ orangeAverage   : num  952 796 1212 1214 1644 ...
- $ purpleBoardings : int  NA NA NA NA NA NA NA NA NA NA ...
- $ purpleAlightings: int  NA NA NA NA NA NA NA NA NA NA ...
- $ purpleAverage   : num  NA NA NA NA NA NA NA NA NA NA ...
- $ greenBoardings  : int  NA NA NA NA NA NA NA NA NA NA ...
- $ greenAlightings : int  NA NA NA NA NA NA NA NA NA NA ...
- $ greenAverage    : num  NA NA NA NA NA NA NA NA NA NA ...
- $ bannerBoardings : int  NA NA NA NA NA NA NA NA NA NA ...
- $ bannerAlightings: int  NA NA NA NA NA NA NA NA NA NA ...
- $ bannerAverage   : num  NA NA NA NA NA NA NA NA NA NA ...
- $ daily           : num  952 796 1212 1214 1644 ...</pre>
 
 </article></slide><slide class=''><hgroup><h2>Review</h2></hgroup><article  id="review">
 
