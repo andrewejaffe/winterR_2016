@@ -15,14 +15,16 @@ opts_chunk$set(comment = "")
 
 ## Overview
 
-You can read data into R using *read.csv*.  In this module, we will show you how to:
+We showed one way to read data into R using *read.csv*.  In this module, we will show you how to:
 
 1. Select specific elements of an object by an index or logical condition
-2. Subset rows of a `data.frame`
-3. Subset columns of a `data.frame`
-4. Add/remove new columns to a `data.frame`
-5. Order the columns of a `data.frame`
-5. Order the rows of a `data.frame`
+2. Renaming columns of a `data.frame`
+3. Subset rows of a `data.frame`
+4. Subset columns of a `data.frame`
+5. Add/remove new columns to a `data.frame`
+6. Order the columns of a `data.frame`
+7. Order the rows of a `data.frame`
+8. Perform operations by a grouping variable
 
 ## Setup
 
@@ -119,10 +121,75 @@ df = data.frame(x = c(1, 2, 4, 10, 10),
 ```
 
 
+# Renaming Columns
+
+## Renaming Columns of a `data.frame`: base R
+
+We can use the `colnames` function to directly reassign column names of `df`:
+```{r}
+colnames(df) = c("x", "X", "y", "z")
+head(df)
+colnames(df) = c("x", "x2", "y", "z") #reset
+```
+
+## Renaming Columns of a `data.frame`: base R
+
+We can assign the column names, change the ones we want, and then re-assign
+the column names:
+```{r}
+cn = colnames(df)
+cn[ cn == "x2"] = "X"
+colnames(df) = cn
+head(df)
+colnames(df) = c("x", "x2", "y", "z") #reset
+```
+
+## Renaming Columns of a `data.frame`: dplyr
+
+
+```{r}
+library(dplyr)
+```
+
+Note, when loading `dplyr`, it says objects can be "masked".  That means if you 
+use a function defined in 2 places, it uses the one that is loaded in **last**.
+
+## Renaming Columns of a `data.frame`: dplyr
+
+For example, if we print `filter`, then we see at the bottom `namespace:dplyr`, which
+means when you type `filter`, it will use the one from the `dplyr` package.
+
+```{r}
+filter
+```
+## Renaming Columns of a `data.frame`: dplyr
+
+A `filter` function exists by default in the `stats` package, however.  If you want
+to make sure you use that one, you use `PackageName::Function` with the colon-colon 
+("`::`") operator. 
+
+```{r}
+head(stats::filter,2)
+```
+
+This is important when loading many packages, and you may have
+some conflicts/masking:
+
+## Renaming Columns of a `data.frame`: dplyr
+
+To rename columns in `dplyr`, you use the `rename` command
+
+```{r}
+df = rename(df, X = x2)
+head(df)
+df = rename(df, x2 = X) # reset
+```
+
+
 # Subsetting Columns
 
 
-## Subset columns of a `data.frame`: Base R
+## Subset columns of a `data.frame`: 
 
 We can grab the `x` column using the `$` operator. 
 
@@ -130,7 +197,7 @@ We can grab the `x` column using the `$` operator.
 df$x
 ```
 
-## Subset columns of a `data.frame`: Base R
+## Subset columns of a `data.frame`: 
 
 We can also subset a `data.frame` using the bracket `[, ]` subsetting. 
 
@@ -141,7 +208,7 @@ df[, 1]
 df[, "x"]
 ```
 
-## Subset columns of a `data.frame`: Base R
+## Subset columns of a `data.frame`: 
 
 We can select multiple columns using multiple column names:
 
@@ -154,7 +221,6 @@ df[, c("x", "y")]
 
 The `select` command from `dplyr` allows you to subset
 ```{r}
-library(dplyr)
 select(df, x)
 ```
 
@@ -169,7 +235,7 @@ select(df, starts_with("x"))
 
 # Subsetting Rows
 
-## Subset rows of a `data.frame` with indices: Base R
+## Subset rows of a `data.frame` with indices: 
 
 Let's select **rows** 1 and 3 from `df` using brackets:
 
@@ -178,7 +244,7 @@ df[ c(1, 3), ]
 ```
 
 
-## Subset rows of a `data.frame`: Base R
+## Subset rows of a `data.frame`: 
 
 Let's select the rows of `df` where the `x` column is greater than 5 or is equal to 2.  Without any index for columns, all columns are returned:
 
@@ -186,7 +252,7 @@ Let's select the rows of `df` where the `x` column is greater than 5 or is equal
 df[ df$x > 5 | df$x == 2, ]
 ```
 
-## Subset rows of a `data.frame`: Base R
+## Subset rows of a `data.frame`: 
 
 We can subset both rows and colums at the same time:
 
@@ -368,4 +434,80 @@ transmute(df, newcol2 = x * 3, x, y)
 ```
 
 
+# Perform Operations By Groups of Variables
 
+## Perform Operations By Groups: base R
+
+The `tapply` command will take in a vector (`X`), perform a function
+(`FUN`) over an index (`INDEX`):
+
+```{r}
+args(tapply)
+```
+
+## Perform Operations By Groups: base R
+
+The `tapply` command will take in a vector (`X`), perform a function
+(`FUN`) over an index (`INDEX`):
+
+```{r}
+args(tapply)
+```
+
+## Perform Operations By Groups: base R
+
+See `?nasa` for description of the NASA spatio-temporal data, we will
+make a copy of it:
+
+```{r}
+# nasa is included in `dplyr` - converting to a data.frame
+ex_data = as.data.frame(nasa)
+```
+
+
+
+## Perform Operations By Groups: base R
+
+Let's get the mean temperature by year:
+```{r}
+tapply(ex_data$temperature, ex_data$year, mean)
+```
+
+## Perform Operations By Groups: dplyr
+
+Let's get the mean temperature by year.  We will use `group_by` to group the data by temperature, then use `summarize` (or `summarise`) to get the mean temperature:
+```{r}
+gb = group_by(ex_data, year)
+summarize(gb, mean_temp = mean(temperature))
+```
+
+## Perform Operations By Groups: dplyr with piping
+
+Using piping, this is:
+
+```{r}
+ex_data %>% 
+  group_by(year) %>%
+  summarise(mean_temp = mean(temperature))
+```
+
+
+## Perform Operations By Multiple Groups: dplyr 
+
+This can easily be extended using `group_by` with multiple groups:
+
+```{r}
+ex_data %>% 
+  group_by(year, month) %>%
+  summarise(mean_temp = mean(temperature))
+```
+
+## Perform Operations By Multiple Groups: dplyr 
+
+This can easily be extended using `group_by` with multiple groups:
+
+```{r}
+ex_data %>% 
+  group_by(year, month) %>%
+  summarise(mean_temp = mean(temperature))
+```
