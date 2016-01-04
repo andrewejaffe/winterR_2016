@@ -131,8 +131,9 @@ getwd()
 
 <pre class = 'prettyprint lang-r'>dir(&quot;./&quot;) # shows directory contents</pre>
 
-<pre >## [1] &quot;Data_IO.html&quot;           &quot;Data_IO.Rmd&quot;           
-## [3] &quot;monuments_newNames.csv&quot;</pre>
+<pre >## [1] &quot;Data_IO.html&quot;           &quot;Data_IO.pdf&quot;           
+## [3] &quot;Data_IO.R&quot;              &quot;Data_IO.Rmd&quot;           
+## [5] &quot;monuments_newNames.csv&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>dir(&quot;..&quot;)</pre>
 
@@ -223,7 +224,7 @@ read.table( file, # filename
 ##     fill = TRUE, comment.char = &quot;&quot;, ...) 
 ## read.table(file = file, header = header, sep = sep, quote = quote, 
 ##     dec = dec, fill = fill, comment.char = comment.char, ...)
-## &lt;bytecode: 0x7f8dfe2b9698&gt;
+## &lt;bytecode: 0x105a549f8&gt;
 ## &lt;environment: namespace:utils&gt;</pre>
 
 <p>Note: the <code>...</code> designates extra/optional arguments that can be passed to <code>read.table()</code> if needed</p>
@@ -334,17 +335,18 @@ write.csv(mon, file=&quot;monuments_newNames.csv&quot;, row.names=FALSE)</pre>
 
 <ul>
 <li>Saving the Excel sheet as a .csv file, and using <code>read.csv()</code></li>
-<li>Using an add-on package called <code>xlsx</code></li>
+<li>Using an add-on package, like <code>xlsx</code>, <code>readxl</code>, or <code>openxlsx</code></li>
 </ul>
 
 <p>For single worksheet .xlsx files, I often just save the spreadsheet as a .csv file (because I often have to strip off additional summary data from the columns)</p>
 
-<p>For an .xlsx file with multiple well-formated worksheets, I use the <code>xlsx</code> package for reading in the data.</p>
+<p>For an .xlsx file with multiple well-formated worksheets, I use the <code>xlsx</code>, <code>readxl</code>, or <code>openxlsx</code> package for reading in the data.</p>
 
 </article></slide><slide class=''><hgroup><h2>Data Input - Other Software</h2></hgroup><article  id="data-input---other-software">
 
 <ul>
 <li><strong>haven</strong> package (<a href='https://cran.r-project.org/web/packages/haven/index.html' title=''>https://cran.r-project.org/web/packages/haven/index.html</a>) reads in SAS, SPSS, Stata formats</li>
+<li><strong>readxl</strong> package - the <code>read_excel</code> function can read Excel sheets easily</li>
 <li><strong>readr</strong> package - Has <em>read_csv</em>/<em>write_csv</em> and <em>read_table</em> functions similar to <em>read.csv</em>/<em>write.csv</em> and <em>read.table</em>. Has different defaults, but can read <strong>much faster</strong> for very large data sets</li>
 <li><strong>sas7bdat</strong> reads .sas7bdat files</li>
 <li><strong>foreign</strong> package - can read all the formats as <strong>haven</strong>. Around longer (aka more testing), but not as maintained (bad for future).</li>

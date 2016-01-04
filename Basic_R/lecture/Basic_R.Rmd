@@ -1,6 +1,6 @@
 ---
 title: "Variables"
-author: "Andrew Jaffe"
+author: "John Muschelli"
 date: "January 4, 2016"
 output:
   beamer_presentation: default
