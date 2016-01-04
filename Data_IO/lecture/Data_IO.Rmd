@@ -195,11 +195,11 @@ Note that `row.names=TRUE` would make the first column contain the row names, he
 Many data analysts collaborate with researchers who use Excel to enter and curate their data. Often times, this is the input data for an analysis. You therefore have two options for getting this data into R:
 
 * Saving the Excel sheet as a .csv file, and using `read.csv()`
-* Using an add-on package called `xlsx`
+* Using an add-on package, like `xlsx`, `readxl`, or `openxlsx`
 
 For single worksheet .xlsx files, I often just save the spreadsheet as a .csv file (because I often have to strip off additional summary data from the columns)
 
-For an .xlsx file with multiple well-formated worksheets, I use the `xlsx` package for reading in the data.
+For an .xlsx file with multiple well-formated worksheets, I use the `xlsx`, `readxl`, or `openxlsx` package for reading in the data.
 
 
 ## Data Input - Other Software

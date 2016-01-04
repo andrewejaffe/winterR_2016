@@ -30,7 +30,7 @@ Winter R 2016
 | 1  | 2016-01-04  | Module 1  | [HTML](Intro/lecture/Intro.html), [PDF](Intro/lecture/Intro.pdf)  | Class Introduction  |
 | 1  | 2016-01-04  | Module 2  | [HTML](RStudio/lecture/RStudio.html), [PDF](RStudio/lecture/RStudio.pdf) | R Studio  |
 | 1  | 2016-01-04  | Module 3  | [HTML](Basic_R/lecture/Basic_R.html), [PDF](Basic_R/lecture/Basic_R.pdf), [Lab](Basic_R/lab/Basic_R_Lab.R) | Basic R  |
-| 1  | 2016-01-04  | Module 4  | [HTML](Data_IO/lecture/Data_IO.html), [PDF](Data_IO/lecture/Data_IO.pdf) | Data Import/Output  |
+| 1  | 2016-01-04  | Module 4  | [HTML](Data_IO/lecture/Data_IO.html), [PDF](Data_IO/lecture/Data_IO.pdf),[Lab](Data_IO/lab/Data_IO_Lab.R) | Data Import/Output  |
 |---|---|---|---|---|
 
 <!-- | 2  | 2016-06-16  | HW2  | [code](hw/Homework2.R)  |   |
