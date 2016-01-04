@@ -106,21 +106,6 @@ x + 2
 * The most comfortable and familiar class/data type for many of you will be `data.frame`
 * You can think of these as essentially Excel spreadsheets with rows (usually subjects or observations) and columns (usually variables)
 
-* Go to RStudio --> Tools --> Import Dataset --> From Web URL then paste
-
-http://www.aejaffe.com/summerR_2015/data/Charm_City_Circulator_Ridership.csv
-
-```{r, echo = FALSE}
-Charm_City_Circulator_Ridership <- read.csv("http://www.aejaffe.com/summerR_2015/data/Charm_City_Circulator_Ridership.csv")
-```
-
-## R variables {.smaller}
-* We can display the top of the data with `head`:
-
-```{r df1,  comment=""}
-head(Charm_City_Circulator_Ridership)
-```
-
 ## R variables
 * `data.frame`s are somewhat advanced objects in R; we will start with simpler objects;
 * Here we introduce "1 dimensional" classes; these are often referred to as 'vectors'
@@ -236,14 +221,6 @@ str(x)
 str(y)
 ```
 This tells you that `x` is a numeric vector and tells you the length.
-
-## Back to our `data.frame` example {.smaller}
-
-* Let's see what the structure of our `data.frame` is:
-
-```{r str_charm}
-str(Charm_City_Circulator_Ridership)
-```
 
 ## Review
 * Creating a new script
