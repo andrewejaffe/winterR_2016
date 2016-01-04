@@ -1,509 +1,0 @@
-
-R version 3.2.2 (2015-08-14) -- "Fire Safety"
-Copyright (C) 2015 The R Foundation for Statistical Computing
-Platform: x86_64-apple-darwin13.4.0 (64-bit)
-
-R is free software and comes with ABSOLUTELY NO WARRANTY.
-You are welcome to redistribute it under certain conditions.
-Type 'license()' or 'licence()' for distribution details.
-
-  Natural language support but running in an English locale
-
-R is a collaborative project with many contributors.
-Type 'contributors()' for more information and
-'citation()' on how to cite R or R packages in publications.
-
-Type 'demo()' for some demos, 'help()' for on-line help, or
-'help.start()' for an HTML browser interface to help.
-Type 'q()' to quit R.
-
-Loading required package: colorout
-> library(rmarkdown)
-> library(knitr)
-> files <- dir(pattern = '[.]Rmd$', recursive = TRUE)
-> files = files[ files != "index.Rmd" ]
-> 
-> 
-> renderFile <- function(file) {
-+   output = gsub(".Rmd", ".R", file)
-+   ## Extract R code
-+   purl(file, output = output)
-+   
-+   ## Make presentation
-+   render(file, output_format = 'all')
-+ }
-> 
-> ## Render all Rmd files in this directory
-> for (file in files) {
-+   renderFile(file)
-+ }
-
-
-processing file: Basic_R/lecture/Basic_R.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   3%  |                                                                         |....                                                             |   5%  |                                                                         |.....                                                            |   8%  |                                                                         |.......                                                          |  11%  |                                                                         |.........                                                        |  14%  |                                                                         |...........                                                      |  16%  |                                                                         |............                                                     |  19%  |                                                                         |..............                                                   |  22%  |                                                                         |................                                                 |  24%  |                                                                         |..................                                               |  27%  |                                                                         |...................                                              |  30%  |                                                                         |.....................                                            |  32%  |                                                                         |.......................                                          |  35%  |                                                                         |.........................                                        |  38%  |                                                                         |..........................                                       |  41%  |                                                                         |............................                                     |  43%  |                                                                         |..............................                                   |  46%  |                                                                         |................................                                 |  49%  |                                                                         |.................................                                |  51%  |                                                                         |...................................                              |  54%  |                                                                         |.....................................                            |  57%  |                                                                         |.......................................                          |  59%  |                                                                         |........................................                         |  62%  |                                                                         |..........................................                       |  65%  |                                                                         |............................................                     |  68%  |                                                                         |..............................................                   |  70%  |                                                                         |...............................................                  |  73%  |                                                                         |.................................................                |  76%  |                                                                         |...................................................              |  78%  |                                                                         |.....................................................            |  81%  |                                                                         |......................................................           |  84%  |                                                                         |........................................................         |  86%  |                                                                         |..........................................................       |  89%  |                                                                         |............................................................     |  92%  |                                                                         |.............................................................    |  95%  |                                                                         |...............................................................  |  97%  |                                                                         |.................................................................| 100%
-output file: Basic_R/lecture/Basic_R.R
-
-
-
-processing file: Basic_R.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   3%
-  ordinary text without R code
-
-  |                                                                         |....                                                             |   5%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |.....                                                            |   8%
-  ordinary text without R code
-
-  |                                                                         |.......                                                          |  11%
-label: unnamed-chunk-2
-  |                                                                         |.........                                                        |  14%
-  ordinary text without R code
-
-  |                                                                         |...........                                                      |  16%
-label: code
-  |                                                                         |............                                                     |  19%
-  ordinary text without R code
-
-  |                                                                         |..............                                                   |  22%
-label: calcDemo
-  |                                                                         |................                                                 |  24%
-  ordinary text without R code
-
-  |                                                                         |..................                                               |  27%
-label: calcDemo2
-  |                                                                         |...................                                              |  30%
-  ordinary text without R code
-
-  |                                                                         |.....................                                            |  32%
-label: assign
-  |                                                                         |.......................                                          |  35%
-  ordinary text without R code
-
-  |                                                                         |.........................                                        |  38%
-label: unnamed-chunk-3 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |..........................                                       |  41%
-  ordinary text without R code
-
-  |                                                                         |............................                                     |  43%
-label: df1 (with options) 
-List of 1
- $ comment: chr ""
-
-  |                                                                         |..............................                                   |  46%
-  ordinary text without R code
-
-  |                                                                         |................................                                 |  49%
-label: assignClass
-  |                                                                         |.................................                                |  51%
-  ordinary text without R code
-
-  |                                                                         |...................................                              |  54%
-label: myName
-  |                                                                         |.....................................                            |  57%
-  ordinary text without R code
-
-  |                                                                         |.......................................                          |  59%
-label: assign3a
-  |                                                                         |........................................                         |  62%
-  ordinary text without R code
-
-  |                                                                         |..........................................                       |  65%
-label: myName2
-  |                                                                         |............................................                     |  68%
-  ordinary text without R code
-
-  |                                                                         |..............................................                   |  70%
-label: assign3b
-  |                                                                         |...............................................                  |  73%
-  ordinary text without R code
-
-  |                                                                         |.................................................                |  76%
-label: myName3
-  |                                                                         |...................................................              |  78%
-  ordinary text without R code
-
-  |                                                                         |.....................................................            |  81%
-label: assign4
-  |                                                                         |......................................................           |  84%
-  ordinary text without R code
-
-  |                                                                         |........................................................         |  86%
-label: assign5
-  |                                                                         |..........................................................       |  89%
-  ordinary text without R code
-
-  |                                                                         |............................................................     |  92%
-label: assign2
-  |                                                                         |.............................................................    |  95%
-  ordinary text without R code
-
-  |                                                                         |...............................................................  |  97%
-label: str_charm
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Basic_R.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Basic_R.utf8.md --to beamer --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Basic_R.pdf --highlight-style tango --latex-engine /usr/texbin/pdflatex 
-
-Output created: Basic_R.pdf
-
-
-processing file: Basic_R.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |..                                                               |   3%
-  ordinary text without R code
-
-  |                                                                         |....                                                             |   5%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |.....                                                            |   8%
-  ordinary text without R code
-
-  |                                                                         |.......                                                          |  11%
-label: unnamed-chunk-2
-  |                                                                         |.........                                                        |  14%
-  ordinary text without R code
-
-  |                                                                         |...........                                                      |  16%
-label: code
-  |                                                                         |............                                                     |  19%
-  ordinary text without R code
-
-  |                                                                         |..............                                                   |  22%
-label: calcDemo
-  |                                                                         |................                                                 |  24%
-  ordinary text without R code
-
-  |                                                                         |..................                                               |  27%
-label: calcDemo2
-  |                                                                         |...................                                              |  30%
-  ordinary text without R code
-
-  |                                                                         |.....................                                            |  32%
-label: assign
-  |                                                                         |.......................                                          |  35%
-  ordinary text without R code
-
-  |                                                                         |.........................                                        |  38%
-label: unnamed-chunk-3 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |..........................                                       |  41%
-  ordinary text without R code
-
-  |                                                                         |............................                                     |  43%
-label: df1 (with options) 
-List of 1
- $ comment: chr ""
-
-  |                                                                         |..............................                                   |  46%
-  ordinary text without R code
-
-  |                                                                         |................................                                 |  49%
-label: assignClass
-  |                                                                         |.................................                                |  51%
-  ordinary text without R code
-
-  |                                                                         |...................................                              |  54%
-label: myName
-  |                                                                         |.....................................                            |  57%
-  ordinary text without R code
-
-  |                                                                         |.......................................                          |  59%
-label: assign3a
-  |                                                                         |........................................                         |  62%
-  ordinary text without R code
-
-  |                                                                         |..........................................                       |  65%
-label: myName2
-  |                                                                         |............................................                     |  68%
-  ordinary text without R code
-
-  |                                                                         |..............................................                   |  70%
-label: assign3b
-  |                                                                         |...............................................                  |  73%
-  ordinary text without R code
-
-  |                                                                         |.................................................                |  76%
-label: myName3
-  |                                                                         |...................................................              |  78%
-  ordinary text without R code
-
-  |                                                                         |.....................................................            |  81%
-label: assign4
-  |                                                                         |......................................................           |  84%
-  ordinary text without R code
-
-  |                                                                         |........................................................         |  86%
-label: assign5
-  |                                                                         |..........................................................       |  89%
-  ordinary text without R code
-
-  |                                                                         |............................................................     |  92%
-label: assign2
-  |                                                                         |.............................................................    |  95%
-  ordinary text without R code
-
-  |                                                                         |...............................................................  |  97%
-label: str_charm
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Basic_R.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Basic_R.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Basic_R.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css ../../styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
-/usr/local/bin/pandoc +RTS -K512m -RTS Basic_R.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpKPASFj/ioslides-output3fa97335cff.html 
-
-Output created: Basic_R.html
-
-
-processing file: Data_IO/lecture/Data_IO.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |...                                                              |   5%  |                                                                         |.......                                                          |  11%  |                                                                         |..........                                                       |  16%  |                                                                         |..............                                                   |  21%  |                                                                         |.................                                                |  26%  |                                                                         |.....................                                            |  32%  |                                                                         |........................                                         |  37%  |                                                                         |...........................                                      |  42%  |                                                                         |...............................                                  |  47%  |                                                                         |..................................                               |  53%  |                                                                         |......................................                           |  58%  |                                                                         |.........................................                        |  63%  |                                                                         |............................................                     |  68%  |                                                                         |................................................                 |  74%  |                                                                         |...................................................              |  79%  |                                                                         |.......................................................          |  84%  |                                                                         |..........................................................       |  89%  |                                                                         |..............................................................   |  95%  |                                                                         |.................................................................| 100%
-output file: Data_IO/lecture/Data_IO.R
-
-
-
-processing file: Data_IO.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |...                                                              |   5%
-  ordinary text without R code
-
-  |                                                                         |.......                                                          |  11%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |..........                                                       |  16%
-  ordinary text without R code
-
-  |                                                                         |..............                                                   |  21%
-label: workingDirectory (with options) 
-List of 1
- $ eval: logi FALSE
-
-  |                                                                         |.................                                                |  26%
-  ordinary text without R code
-
-  |                                                                         |.....................                                            |  32%
-label: directoryNav
-  |                                                                         |........................                                         |  37%
-  ordinary text without R code
-
-  |                                                                         |...........................                                      |  42%
-label: readCSV
-  |                                                                         |...............................                                  |  47%
-  ordinary text without R code
-
-  |                                                                         |..................................                               |  53%
-label: readCSV2
-  |                                                                         |......................................                           |  58%
-  ordinary text without R code
-
-  |                                                                         |.........................................                        |  63%
-label: subset5
-  |                                                                         |............................................                     |  68%
-  ordinary text without R code
-
-  |                                                                         |................................................                 |  74%
-label: readCSV3
-  |                                                                         |...................................................              |  79%
-  ordinary text without R code
-
-  |                                                                         |.......................................................          |  84%
-label: names1
-  |                                                                         |..........................................................       |  89%
-  ordinary text without R code
-
-  |                                                                         |..............................................................   |  95%
-label: writecsv
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Data_IO.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Data_IO.utf8.md --to beamer --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Data_IO.pdf --highlight-style tango --latex-engine /usr/texbin/pdflatex 
-
-Output created: Data_IO.pdf
-
-
-processing file: Data_IO.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |...                                                              |   5%
-  ordinary text without R code
-
-  |                                                                         |.......                                                          |  11%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |..........                                                       |  16%
-  ordinary text without R code
-
-  |                                                                         |..............                                                   |  21%
-label: workingDirectory (with options) 
-List of 1
- $ eval: logi FALSE
-
-  |                                                                         |.................                                                |  26%
-  ordinary text without R code
-
-  |                                                                         |.....................                                            |  32%
-label: directoryNav
-  |                                                                         |........................                                         |  37%
-  ordinary text without R code
-
-  |                                                                         |...........................                                      |  42%
-label: readCSV
-  |                                                                         |...............................                                  |  47%
-  ordinary text without R code
-
-  |                                                                         |..................................                               |  53%
-label: readCSV2
-  |                                                                         |......................................                           |  58%
-  ordinary text without R code
-
-  |                                                                         |.........................................                        |  63%
-label: subset5
-  |                                                                         |............................................                     |  68%
-  ordinary text without R code
-
-  |                                                                         |................................................                 |  74%
-label: readCSV3
-  |                                                                         |...................................................              |  79%
-  ordinary text without R code
-
-  |                                                                         |.......................................................          |  84%
-label: names1
-  |                                                                         |..........................................................       |  89%
-  ordinary text without R code
-
-  |                                                                         |..............................................................   |  95%
-label: writecsv
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Data_IO.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Data_IO.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Data_IO.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css ../../styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
-/usr/local/bin/pandoc +RTS -K512m -RTS Data_IO.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpKPASFj/ioslides-output3fa9713f8ed3.html 
-
-Output created: Data_IO.html
-
-
-processing file: Intro/lecture/Intro.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |.............                                                    |  20%  |                                                                         |..........................                                       |  40%  |                                                                         |.......................................                          |  60%  |                                                                         |....................................................             |  80%  |                                                                         |.................................................................| 100%
-output file: Intro/lecture/Intro.R
-
-
-
-processing file: Intro.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |.............                                                    |  20%
-  ordinary text without R code
-
-  |                                                                         |..........................                                       |  40%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |.......................................                          |  60%
-  ordinary text without R code
-
-  |                                                                         |....................................................             |  80%
-label: unnamed-chunk-2 (with options) 
-List of 1
- $ eval: logi FALSE
-
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Intro.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Intro.utf8.md --to beamer --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Intro.pdf --highlight-style tango --latex-engine /usr/texbin/pdflatex 
-
-Output created: Intro.pdf
-
-
-processing file: Intro.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |.............                                                    |  20%
-  ordinary text without R code
-
-  |                                                                         |..........................                                       |  40%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |.......................................                          |  60%
-  ordinary text without R code
-
-  |                                                                         |....................................................             |  80%
-label: unnamed-chunk-2 (with options) 
-List of 1
- $ eval: logi FALSE
-
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Intro.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Intro.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Intro.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css ../../styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
-/usr/local/bin/pandoc +RTS -K512m -RTS Intro.utf8.md --to ioslides_presentation.lua --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output /var/folders/1s/wrtqcpxn685_zk570bnx9_rr0000gr/T//RtmpKPASFj/ioslides-output3fa91f053aa2.html 
-
-Output created: Intro.html
-
-
-processing file: Knitr/lecture/Knitr.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |.......                                                          |  11%  |                                                                         |..............                                                   |  22%  |                                                                         |......................                                           |  33%  |                                                                         |.............................                                    |  44%  |                                                                         |....................................                             |  56%  |                                                                         |...........................................                      |  67%  |                                                                         |...................................................              |  78%  |                                                                         |..........................................................       |  89%  |                                                                         |.................................................................| 100%
-output file: Knitr/lecture/Knitr.R
-
-
-
-processing file: Knitr.Rmd
-  |                                                                         |                                                                 |   0%  |                                                                         |.......                                                          |  11%
-  ordinary text without R code
-
-  |                                                                         |..............                                                   |  22%
-label: unnamed-chunk-1 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |......................                                           |  33%
-  ordinary text without R code
-
-  |                                                                         |.............................                                    |  44%
-label: unnamed-chunk-2 (with options) 
-List of 1
- $ echo: logi FALSE
-
-  |                                                                         |....................................                             |  56%
-  ordinary text without R code
-
-  |                                                                         |...........................................                      |  67%
-label: sessionInfo
-  |                                                                         |...................................................              |  78%
-  ordinary text without R code
-
-  |                                                                         |..........................................................       |  89%
-label: session_info
-  |                                                                         |.................................................................| 100%
-  ordinary text without R code
-
-
-output file: Knitr.knit.md
-
-/usr/local/bin/pandoc +RTS -K512m -RTS Knitr.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output Knitr.html --smart --email-obfuscation none --self-contained --variable transition=0.4 --css styles.css --template /Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/default.html --mathjax --variable 'mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML' --variable ioslides-url=/Library/Frameworks/R.framework/Versions/3.2/Resources/library/rmarkdown/rmd/ioslides/ioslides-13.5.1 
-pandoc: Could not find data file styles.css
-Error: pandoc document conversion failed with error 97
-Execution halted
