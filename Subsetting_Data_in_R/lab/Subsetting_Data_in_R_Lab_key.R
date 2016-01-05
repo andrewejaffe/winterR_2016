@@ -15,6 +15,7 @@ head(mtcars)
 
 # 2. What class is `mtcars`?
 class(mtcars)
+
 # 3. How many observations (rows) and variables (columns) are in the `mtcars` dataset?
 dim(mtcars)
 nrow(mtcars)
@@ -34,15 +35,23 @@ length(which(mtcars$mpg > 20))
 #		100 horsepower (hp) - how many are there?
 mtcars %>% filter(mpg < 16 & hp > 100) %>% nrow
 
+
 # 6. Create a subset of the data that only contains the columns:
 #		wt, qsec, and hp for only the cars that have 8 cylinders 
 #		and assign this object to `carsSub` - 
 #		what are the dimensions of this dataset?
-carsSub = select(mtcars, wt, qsec, hp)
-carsSub = select_(mtcars, "wt", "qsec", "hp")
-carsSub = mtcars[, c("wt", "qsec", "hp")]
+carsSub = mtcars %>% 
+  filter(cyl == 8) %>% 
+  select(wt, qsec, hp)
+carsSub = mtcars[
+    mtcars$cyl == 8, c("wt", "qsec", "hp")]
 
 # 7. Convert the column names of `carsSub` to all upper case
+cn = colnames(carsSub)
+cn = toupper(cn)
+colnames(carsSub) = cn
+colnames(carsSub) = colnames(carsSub) %>% toupper
+
 colnames(carsSub) = toupper(colnames(carsSub))
 
 # 8. Re-order the rows of `carsSub` by weight in increasing order
