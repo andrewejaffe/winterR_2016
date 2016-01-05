@@ -1,7 +1,7 @@
 ---
 title: "Choose a title"
 author: "Your Name"
-date: "June 19, 2015"
+date: "January 5, 2016"
 output: word_document
 ---
 
@@ -112,7 +112,7 @@ w <- c(c - d, c - d + L, c + d, c + d - L)
 z <- c(0, L, 0, -L)
 ys <- seq(0, 1, length = ny)
 grid.rect(gp = gpar(fill = gray(0.5), col = NA))
-l_ply(1:ny, function(i) {
+plyr::l_ply(1:ny, function(i) {
     n
     if (i%%2 == 0) {
         co <- rev(col)

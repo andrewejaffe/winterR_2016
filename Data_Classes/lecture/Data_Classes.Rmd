@@ -1,11 +1,10 @@
 ---
 title: "Data Classes"
-subtitle: Module 3
 author: "Andrew Jaffe"
-date: "June 15, 2015"
+date: "January 6, 2016"
 output:
   ioslides_presentation:
-    css: styles.css
+    css: ../../styles.css
 ---
 
 ## Functions - Intro

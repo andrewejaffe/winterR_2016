@@ -37,15 +37,23 @@ library(tidyr)
 
 ## Data used: Charm City Circulator
 
+http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv
+
 Let's read in the Charm City Circulator data:
 
 ```{r}
-# nasa is included in `dplyr` - converting to a data.frame
-ex_data = read.csv("../../data/Charm_City_Circulator_Ridership.csv", 
-                   as.is = TRUE)
-library(lubridate) # great for dates!
-ex_data = mutate(ex_data, date = dmy(date))
+ex_data = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", as.is = TRUE)
 head(ex_data, 2)
+```
+
+## Creating a Date class from a character date
+
+The `lubridate` package is great for dates:
+
+```{r}
+library(lubridate) # great for dates!
+ex_data = mutate(ex_data, date = mdy(date))
+nrow(ex_data[ is.na(ex_data$date), ])
 ```
 
 ## Making column names a little more separated
@@ -209,8 +217,8 @@ mon.
 
 ```{r}
 mon = wide %>% 
-  group_by(line, month, year) %>%
-  summarise(mean_avg = mean(Average))
+  dplyr::group_by(line, month, year) %>%
+  dplyr::summarise(mean_avg = mean(Average))
 mon = mutate(mon, 
              mid_month = dmy(paste0("15-", month, "-", year)))
 head(mon)

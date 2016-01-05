@@ -7,6 +7,7 @@
 ### let's say we loaded some packages
 library(stringr)
 library(plyr)
+library(dplyr)
 fname <- "../../data/Bike_Lanes.csv"
 bike = read.csv(fname, as.is = TRUE)
 
@@ -15,7 +16,6 @@ no.missyear <- bike[ bike$dateInstalled != 0,]
 plot(no.missyear$dateInstalled, no.missyear$length)
 no.missyear$dateInstalled = factor(no.missyear$dateInstalled)
 boxplot(no.missyear$length ~ no.missyear$dateInstalled, main="Boxplots of Bike Lenght by Year", xlab="Year", ylab="Bike Length")
-
 
 ## ------------------------------------------------------------------------
 no.missyear$log.length <- log10(no.missyear$length)
@@ -48,9 +48,12 @@ aggregate(log.length ~ type, data=no.missyear, FUN=mean)
 ## then we'll use summarise to summarize whatever we want
 ## then returns a data.frame (the second d) - hence why it's ddply
 ## if we wanted to do it on a "list" thne return data.frame, it'd be ldply
-ddply(no.missyear, .(type), summarise,
+ddply(no.missyear, .(type), plyr::summarise,
       mean=mean(log.length)
       )
+
+no.missyear %>% group_by(type) %>% 
+  dplyr::summarise(mean=mean(log.length))
 
 ## ------------------------------------------------------------------------
 ### For going over 2 variables, we need to do it over a "list" of vectors

@@ -179,9 +179,9 @@ some conflicts/masking:
 To rename columns in `dplyr`, you use the `rename` command
 
 ```{r}
-df = rename(df, X = x2)
+df = dplyr::rename(df, X = x2)
 head(df)
-df = rename(df, x2 = X) # reset
+df = dplyr::rename(df, x2 = X) # reset
 ```
 
 
