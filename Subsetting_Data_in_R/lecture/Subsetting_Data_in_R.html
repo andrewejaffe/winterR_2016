@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Manipulating Data in R</title>
+  <title>Subsetting Data in R</title>
 
   <meta charset="utf-8">
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -25,7 +25,7 @@
     var SLIDE_CONFIG = {
       // Slide settings
       settings: {
-                title: 'Manipulating Data in R',
+                title: 'Subsetting Data in R',
                         useBuilds: true,
         usePrettify: true,
         enableSlideAreas: true,
@@ -89,7 +89,7 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">January 4, 2016</p>
+            <p style="margin-top: 6px; margin-left: -2px;">January 5, 2016</p>
           </hgroup>
   </slide>
 
@@ -105,7 +105,6 @@
 <li>Add/remove new columns to a <code>data.frame</code></li>
 <li>Order the columns of a <code>data.frame</code></li>
 <li>Order the rows of a <code>data.frame</code></li>
-<li>Perform operations by a grouping variable</li>
 </ol>
 
 </article></slide><slide class=''><hgroup><h2>Setup</h2></hgroup><article  id="setup">
@@ -680,130 +679,7 @@ df[, c(&quot;newcol&quot;, cn[cn != &quot;newcol&quot;]) ]</pre>
 2       6  2 -1.1179372
 3      12  4 -1.3473558
 4      30 10  0.4832675
-5      30 10  0.1523950</pre>
-
-</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Perform Operations By Groups of Variables</h2></hgroup><article  id="perform-operations-by-groups-of-variables">
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: base R</h2></hgroup><article  id="perform-operations-by-groups-base-r">
-
-<p>The <code>tapply</code> command will take in a vector (<code>X</code>), perform a function (<code>FUN</code>) over an index (<code>INDEX</code>):</p>
-
-<pre class = 'prettyprint lang-r'>args(tapply)</pre>
-
-<pre >function (X, INDEX, FUN = NULL, ..., simplify = TRUE) 
-NULL</pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: base R</h2></hgroup><article  id="perform-operations-by-groups-base-r-1">
-
-<p>The <code>tapply</code> command will take in a vector (<code>X</code>), perform a function (<code>FUN</code>) over an index (<code>INDEX</code>):</p>
-
-<pre class = 'prettyprint lang-r'>args(tapply)</pre>
-
-<pre >function (X, INDEX, FUN = NULL, ..., simplify = TRUE) 
-NULL</pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: base R</h2></hgroup><article  id="perform-operations-by-groups-base-r-2">
-
-<p>See <code>?nasa</code> for description of the NASA spatio-temporal data, we will make a copy of it:</p>
-
-<pre class = 'prettyprint lang-r'># nasa is included in `dplyr` - converting to a data.frame
-ex_data = as.data.frame(nasa)</pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: base R</h2></hgroup><article  id="perform-operations-by-groups-base-r-3">
-
-<p>Let&#39;s get the mean temperature by year:</p>
-
-<pre class = 'prettyprint lang-r'>tapply(ex_data$temperature, ex_data$year, mean)</pre>
-
-<pre >    1995     1996     1997     1998     1999     2000 
-297.2946 297.1005 297.9566 298.7028 298.1364 298.3358 </pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: dplyr</h2></hgroup><article  id="perform-operations-by-groups-dplyr">
-
-<p>Let&#39;s get the mean temperature by year. We will use <code>group_by</code> to group the data by temperature, then use <code>summarize</code> (or <code>summarise</code>) to get the mean temperature:</p>
-
-<pre class = 'prettyprint lang-r'>gb = group_by(ex_data, year)
-summarize(gb, mean_temp = mean(temperature))</pre>
-
-<pre >Source: local data frame [6 x 2]
-
-   year mean_temp
-  (int)     (dbl)
-1  1995  297.2946
-2  1996  297.1005
-3  1997  297.9566
-4  1998  298.7028
-5  1999  298.1364
-6  2000  298.3358</pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: dplyr with piping</h2></hgroup><article  id="perform-operations-by-groups-dplyr-with-piping">
-
-<p>Using piping, this is:</p>
-
-<pre class = 'prettyprint lang-r'>ex_data %&gt;% 
-  group_by(year) %&gt;%
-  summarise(mean_temp = mean(temperature))</pre>
-
-<pre >Source: local data frame [6 x 2]
-
-   year mean_temp
-  (int)     (dbl)
-1  1995  297.2946
-2  1996  297.1005
-3  1997  297.9566
-4  1998  298.7028
-5  1999  298.1364
-6  2000  298.3358</pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Multiple Groups: dplyr</h2></hgroup><article  id="perform-operations-by-multiple-groups-dplyr">
-
-<p>This can easily be extended using <code>group_by</code> with multiple groups:</p>
-
-<pre class = 'prettyprint lang-r'>ex_data %&gt;% 
-  group_by(year, month) %&gt;%
-  summarise(mean_temp = mean(temperature))</pre>
-
-<pre >Source: local data frame [72 x 3]
-Groups: year [?]
-
-    year month mean_temp
-   (int) (int)     (dbl)
-1   1995     1  295.1849
-2   1995     2  295.3175
-3   1995     3  296.3335
-4   1995     4  296.9587
-5   1995     5  297.7286
-6   1995     6  298.5809
-7   1995     7  299.1863
-8   1995     8  299.0660
-9   1995     9  298.4634
-10  1995    10  298.0564
-..   ...   ...       ...</pre>
-
-</article></slide><slide class=''><hgroup><h2>Perform Operations By Multiple Groups: dplyr</h2></hgroup><article  id="perform-operations-by-multiple-groups-dplyr-1">
-
-<p>This can easily be extended using <code>group_by</code> with multiple groups:</p>
-
-<pre class = 'prettyprint lang-r'>ex_data %&gt;% 
-  group_by(year, month) %&gt;%
-  summarise(mean_temp = mean(temperature))</pre>
-
-<pre >Source: local data frame [72 x 3]
-Groups: year [?]
-
-    year month mean_temp
-   (int) (int)     (dbl)
-1   1995     1  295.1849
-2   1995     2  295.3175
-3   1995     3  296.3335
-4   1995     4  296.9587
-5   1995     5  297.7286
-6   1995     6  298.5809
-7   1995     7  299.1863
-8   1995     8  299.0660
-9   1995     9  298.4634
-10  1995    10  298.0564
-..   ...   ...       ...</pre></article></slide>
+5      30 10  0.1523950</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

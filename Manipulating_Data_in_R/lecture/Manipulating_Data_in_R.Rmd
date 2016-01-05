@@ -37,6 +37,13 @@ library(tidyr)
 
 ## Data used: Charm City Circulator
 
+Please download the Charm City Circulator data:
+
+http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv
+
+
+## Data used: Charm City Circulator
+
 Let's read in the Charm City Circulator data:
 
 ```{r}
@@ -50,7 +57,7 @@ head(ex_data, 2)
 
 ## Making column names a little more separated
 
-We will use `str_replace` from `stringr` to put periods in the column names.
+We will use `str_replace` function from the `stringr` package to put periods in the column names.
 ```{r}
 library(stringr)
 cn = colnames(ex_data)
@@ -64,7 +71,7 @@ colnames(ex_data) = cn
 
 ## Removing the daily ridership
 
-We want to look at each ridership, and will removet the `daily` column:
+We want to look at each ridership, and will remove the `daily` column:
 ```{r}
 ex_data$daily = NULL
 ```
