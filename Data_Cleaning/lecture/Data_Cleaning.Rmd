@@ -174,7 +174,7 @@ plyr::revalue(x, c("M" = "Male", "m" = "Male",
                    "f" = "Female", "female" = "Female"))
 ```
 
-
+## Example of Cleaning:
 
 Sometimes though, it's not so simple.  That's where functions that find patterns come in very useful.
 
