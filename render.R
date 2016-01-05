@@ -15,7 +15,9 @@ renderFile <- function(file) {
   
   ## Make presentation
   render(file, output_format = 'all')
-  setwd(owd)
+  on.exit({ 
+    setwd(owd)
+  })
 }
 
 ## Render all Rmd files in this directory

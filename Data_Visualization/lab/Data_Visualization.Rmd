@@ -434,9 +434,11 @@ legend("topleft", paste("Diet",levels(ChickWeight$Diet)),
 destfile = tempfile(fileext = ".rda")
 download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
 load(destfile)
+dat = circ
+dat2 = circ2
 palette(brewer.pal(7,"Dark2"))
 dd = factor(dat$day)
-plot(orangeAverage ~ greenAverage,data=dat, 
+plot(orangeAverage ~ greenAverage, data=dat, 
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 ```
@@ -496,7 +498,7 @@ levelplot(t(mat), aspect = "fill")
 ## Lattice
 
 ```{r levelplot2, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=FALSE}
-theSeq = seq(0,max(mat), by=50)
+theSeq = seq(0,max(mat, na.rm = TRUE), by=50)
 my.col <- colorRampPalette(brewer.pal(5,"Greens"))(length(theSeq))
 levelplot(t(mat), aspect = "fill",at = theSeq,col.regions = my.col,xlab="Route",ylab="Date")
 ```

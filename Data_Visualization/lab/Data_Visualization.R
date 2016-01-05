@@ -1,6 +1,8 @@
 ## ----knit-setup, echo=FALSE, results='hide'------------------------------
 library(knitr)
-opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE,
+opts_chunk$set(echo = TRUE, 
+               message = FALSE, 
+               warning = FALSE,
                comment = "")
 
 ## ----seed, comment="",echo=FALSE,prompt=TRUE-----------------------------
@@ -76,7 +78,7 @@ boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
 points(ChickWeight$weight ~ jitter(as.numeric(ChickWeight$Diet),0.5))
 
 ## ----box_ex, eval=FALSE--------------------------------------------------
-## boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
+boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
 
 ## ----geoboxplot, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=FALSE----
 library(ggplot2)
@@ -90,11 +92,13 @@ qplot(factor(Diet), y= weight, data = ChickWeight, geom = c("boxplot", "point"),
 hist(ChickWeight$weight, breaks=20)
 
 ## ----ghist, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=TRUE----
-qplot(x= weight, fill = Diet, data = ChickWeight, geom = c("histogram"))
-
+qplot(x = weight, 
+      fill = factor(Diet),
+      data = ChickWeight, 
+      geom = c("histogram"))
 
 ## ----ghist_alpha, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=TRUE----
-qplot(x= weight, fill = Diet, data = ChickWeight, geom = c("histogram"), alpha=I(.7))
+qplot(x = weight, fill = Diet, data = ChickWeight, geom = c("histogram"), alpha=I(.7))
 
 ## ----gdens, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=TRUE----
 qplot(x= weight, fill = Diet, data = ChickWeight, geom = c("density"), alpha=I(.7))
@@ -102,8 +106,11 @@ qplot(x= weight, fill = Diet, data = ChickWeight, geom = c("density"), alpha=I(.
 ## ----gdens_alpha, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=TRUE----
 qplot(x= weight, colour = Diet, data = ChickWeight, geom = c("density"), alpha=I(.7))
 
+## ----gdens_alpha_gg, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=TRUE----
+ggplot(aes(x= weight, colour = Diet), data = ChickWeight) + geom_density(alpha=I(.7))
+
 ## ----gdens_line_alpha, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=TRUE----
-qplot(x= weight,  colour = Diet, data = ChickWeight, geom = c("line"), stat="density")
+ggplot(aes(x = weight, colour = Diet), data = ChickWeight) + geom_line(stat = "density")
 
 ## ----spaghetti, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=FALSE----
 qplot(x=Time, y=weight, colour = Chick, 
@@ -150,10 +157,14 @@ legend("topleft", paste("Diet",levels(ChickWeight$Diet)),
        lwd = 3, ncol = 2)
 
 ## ----circ, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=FALSE----
-load("data/charmcirc.rda")
+destfile = tempfile(fileext = ".rda")
+download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
+load(destfile)
+dat = circ
+dat2 = circ2
 palette(brewer.pal(7,"Dark2"))
 dd = factor(dat$day)
-plot(orangeAverage ~ greenAverage,data=dat, 
+plot(orangeAverage ~ greenAverage, data=dat, 
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 
@@ -177,7 +188,7 @@ mat = as.matrix(dat2[975:nrow(dat2),3:6])
 levelplot(t(mat), aspect = "fill")
 
 ## ----levelplot2, comment="",prompt=TRUE, fig.width=6,fig.height=6,fig.align='center', cache=FALSE----
-theSeq = seq(0,max(mat), by=50)
+theSeq = seq(0,max(mat, na.rm = TRUE), by=50)
 my.col <- colorRampPalette(brewer.pal(5,"Greens"))(length(theSeq))
 levelplot(t(mat), aspect = "fill",at = theSeq,col.regions = my.col,xlab="Route",ylab="Date")
 
