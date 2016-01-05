@@ -114,6 +114,13 @@
 <pre class = 'prettyprint lang-r'>library(dplyr)
 library(tidyr)</pre>
 
+<pre >
+Attaching package: &#39;tidyr&#39;
+
+The following object is masked from &#39;package:reshape&#39;:
+
+    expand</pre>
+
 </article></slide><slide class=''><hgroup><h2>Data used: Charm City Circulator</h2></hgroup><article  id="data-used-charm-city-circulator">
 
 <p><a href='http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv' title=''>http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv</a></p>
@@ -140,8 +147,26 @@ head(ex_data, 2)</pre>
 
 <p>The <code>lubridate</code> package is great for dates:</p>
 
-<pre class = 'prettyprint lang-r'>library(lubridate) # great for dates!
-ex_data = mutate(ex_data, date = mdy(date))
+<pre class = 'prettyprint lang-r'>library(lubridate) # great for dates!</pre>
+
+<pre >Warning: package &#39;lubridate&#39; was built under R version 3.2.3</pre>
+
+<pre >
+Attaching package: &#39;lubridate&#39;
+
+The following object is masked from &#39;package:reshape&#39;:
+
+    stamp
+
+The following objects are masked from &#39;package:chron&#39;:
+
+    days, hours, minutes, seconds, years
+
+The following object is masked from &#39;package:plyr&#39;:
+
+    here</pre>
+
+<pre class = 'prettyprint lang-r'>ex_data = mutate(ex_data, date = mdy(date))
 nrow(ex_data[ is.na(ex_data$date), ])</pre>
 
 <pre >[1] 0</pre>

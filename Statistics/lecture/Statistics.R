@@ -1,5 +1,7 @@
 ## ----cor1, comment="",prompt=TRUE----------------------------------------
-load("../data/charmcirc.rda")
+destfile = tempfile(fileext = ".rda")
+download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
+load(destfile)
 cor(circ2$orangeAverage, circ2$purpleAverage)
 cor(circ2$orangeAverage, circ2$purpleAverage, use="complete.obs")
 
@@ -35,7 +37,10 @@ tt
 names(tt)
 
 ## ----tt2, comment="",prompt=TRUE-----------------------------------------
-cars = read.csv("../data/kaggleCarAuction.csv",as.is=TRUE)
+http_data_dir = "http://www.aejaffe.com/winterR_2016/data/"
+
+cars = read.csv(paste0(http_data_dir, "kaggleCarAuction.csv"),
+                as.is=TRUE)
 tt2 = t.test(VehBCost~IsBadBuy, data=cars)
 tt2$estimate
 
