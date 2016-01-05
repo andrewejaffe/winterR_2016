@@ -32,7 +32,7 @@ length(which(mtcars$mpg > 20))
 # 5. Select the subset of rows that get less than 16 miles
 # 		per gallon (mpg) of fuel efficiency and have more than 
 #		100 horsepower (hp) - how many are there?
-mtcars %>% filter(mpg > 20 & hp > 100) %>% nrow
+mtcars %>% filter(mpg < 16 & hp > 100) %>% nrow
 
 # 6. Create a subset of the data that only contains the columns:
 #		wt, qsec, and hp for only the cars that have 8 cylinders 
