@@ -25,19 +25,96 @@ MOST IMPORTANT RULE - LOOK AT YOUR DATA!
 
 Again - `table`, `summarize`, `is.na`, `any`, `all` are useful.
 
-## Data Cleaning {.smaller}
+
+## Missing data
+One of the most important aspects of data cleaning is missing values.  
+
+Types of "missing" data:
+
+* `NA` - general missing data
+* `NaN` - stands for "**N**ot **a** **N**umber", happens when you do 0/0.
+* `Inf` and `-Inf` - Infinity, happens when you take a positive number (or negative number) by 0.
+
+## Finding Missing data
+
+Each missing data type has a function that returns `TRUE` if the data is missing:
+
+* `NA` - `is.na`
+* `NaN` - `is.nan`
+* `Inf` and `-Inf` - `is.infinite`
+* `is.finite` returns `FALSE` for all missing data and `TRUE` for non-missing
+* `complete.cases` on a `data.frame`/`matrix` returns `TRUE` if all values in that row of the object are not missing.
+
+## Missing Data with Logicals
+
+One important aspect (esp with subsetting) is that logical operations return `NA` for `NA` values.  Think about it, the data could be `> 2` or not we don't know, 
+so `R` says there is no `TRUE` or `FALSE`, so that is missing:
+```{r}
+x = c(0, 1, 2, 3, NA, 3, 3, 2,2, 3)
+x > 2
+```
+
+## Missing Data with Logicals
+
+What to do?  What if we want if `x > 2` and `x` isn't `NA`?  
+Don't do `x != NA`, do `x > 2` and `x` is NOT `NA`:
+
+```{r}
+x != NA
+x > 2 & !is.na(x)
+```
+
+## Missing Data with Logicals
+
+What about seeing if a value is equal to multiple values?  You can do `(x == 1 | x == 2) & !is.na(x)`, but that is not efficient.  Introduce the `%in%` operator:
+
+```{r}
+(x == 1 | x == 2) # has NA
+(x == 1 | x == 2) & !is.na(x) # No NA
+x %in% c(1, 2) # NEVER has NA and returns logical
+```
+
+## Creating One-way Tables {.smaller}
+
+Here we will use `table` to make tabulations of the data.   Look at `?table` to see options for missing data.
+
 ```{r table}
-table(c(0, 1, 2, 3, NA, 3, 3, 2,2, 3), 
-        useNA="ifany")
+table(x)
+table(x, 
+        useNA = "ifany")
+```
+
+
+## Creating One-way Tables {.smaller}
+
+You can set `useNA = "always"` to have it always have a column for `NA`
+```{r onetab}
 table(c(0, 1, 2, 3, 2, 3, 3, 2,2, 3), 
-        useNA="always")
+        useNA = "always")
+```
+
+## Data Cleaning {.smaller}
+
+A two-way table.  If you pass in 2 vectors, `table` creates a 2-dimensional table.
+
+```{r}
+
 tab <- table(c(0, 1, 2, 3, 2, 3, 3, 2,2, 3), 
              c(0, 1, 2, 3, 2, 3, 3, 4, 4, 3), 
-              useNA="always")
+              useNA = "always")
+```
+
+## Finding Row or Column Totals
+
+`margin.table` finds the marginal sums of the table.  `margin` is 1 for rows, 2 for columns in general in `R`.  Here is the column sums of the table:
+
+```{r margin}
 margin.table(tab, 2)
 ```
 
----
+## Data Cleaning {.smaller}
+
+`prop.table` finds the marginal proportions of the table. Think of it dividing the table by it's respective marginal totals.  If `margin` not set, divides by overall total.
 
 ```{r table2}
 prop.table(tab)
@@ -46,10 +123,10 @@ prop.table(tab,1)
 
 ## Download Salary FY2014 Data
 
-https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7
+From https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7
+http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv
 
-
-Download as a CSV and then read it into R as the variable `Sal`
+Read the CSV into R `Sal`
 
 ```{r readSal}
 Sal = read.csv("http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv",
@@ -57,12 +134,12 @@ Sal = read.csv("http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee
 ```
 
 ## Data Cleaning {.smaller}
-* `any()` - checks if there are any TRUES
+* `any()` - checks if there are any `TRUE`s
 * `all()` - checks if ALL are true
 
 ```{r isna}
 Sal[1:4,]
-any(is.na(Sal$Name))
+any(is.na(Sal$Name)) # are there any NAs?
 ```
 
 ## Example of Cleaning:
@@ -76,7 +153,28 @@ data$gender[data$gender %in%
     c("Male", "M", "m")] <- "Male"
 ```
 
----
+## Example of Cleaning:
+
+You can also `recode` a vector:
+
+```{r}
+library(car)
+x = rep(c("Male", "M", "m", "f", "Female", "female" ), each = 3)
+car::recode(x, "c('m', 'M', 'male') = 'Male';
+            c('f', 'F', 'female') = 'Female';")
+```
+
+## Example of Cleaning:
+
+You can also `revalue` a vector with the `revalue` command
+
+```{r}
+library(plyr)
+plyr::revalue(x, c("M" = "Male", "m" = "Male",
+                   "f" = "Female", "female" = "Female"))
+```
+
+
 
 Sometimes though, it's not so simple.  That's where functions that find patterns come in very useful.
 
@@ -153,7 +251,7 @@ length(grep("Jaffe",Sal$Name))
 grep("Payne.*", x=Sal$Name, value=TRUE)
 ```
 
----
+
 
 ```{r grepstar2}
 grep("Leonard.?S", x=Sal$Name, value=TRUE)
@@ -218,7 +316,7 @@ paste("To", "is going be the ", "we go to the store!", sep="day ")
 paste0("Visit",1:5)
 ```
 
----
+
 
 ```{r Paste2}
 paste(1:5, letters[1:5], sep="_")
@@ -255,7 +353,7 @@ visits <- data.frame(id=rep(1:8, 3), visit= rep(1:3, 8),
 visits[1:2,]
 ```
 
----
+
 
 ```{r merging2}
 merged.data <- merge(base, visits, by="id")
@@ -263,7 +361,7 @@ merged.data[1:5,]
 dim(merged.data)
 ```
 
----
+
 
 ```{r mergeall}
 all.data <- merge(base, visits, by="id", all=TRUE)
