@@ -32,12 +32,13 @@ Winter R 2016
 | 1  | 2016-01-04  | Module 3  | [HTML](Basic_R/lecture/Basic_R.html), [PDF](Basic_R/lecture/Basic_R.pdf), [Lab](Basic_R/lab/Basic_R_Lab.R), [Code](Basic_R/lecture/Basic_R.R) | Basic R  |
 | 1  | 2016-01-04  | Module 4  | [HTML](Data_IO/lecture/Data_IO.html), [PDF](Data_IO/lecture/Data_IO.pdf), [Lab](Data_IO/lab/Data_IO_Lab.R), [Code](Data_IO/lecture/Data_IO.R) | Data Import/Output  |
 | 2  | 2016-01-05  | Homework 2  | [HW ](HW/homework2.R)  |   |
+| 2  | 2016-01-05  | Module 5  | [HTML](Subsetting_Data_in_R/lecture/Subsetting_Data_in_R.html), [PDF](Subsetting_Data_in_R/lecture/Subsetting_Data_in_R.pdf), [Lab](Subsetting_Data_in_R/lab/Subsetting_Data_in_R
+_Lab.R), [Code](Subsetting_Data_in_R/lecture/Subsetting_Data_in_R.R) | Subsetting Data |
+| 2  | 2016-01-05 | Module 6  | [HTML](Data_Summarization/lecture/Data_Summarization.html), [PDF](Data_Summarization/lecture/Data_Summarization.pdf), [Lab](Data_Summarization/lab/Data_Summarization_Lab.R), [Code](Data_Summarization/lecture/Data_Summarization.R)  | Data Summarization |
+| 2  | 2016-01-05 | Module 7  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Lab](Knitr/lab/illusion.Rmd), [Code](Knitr/lecture/Knitr.Rmd) | Reproducible Research |
 |---|---|---|---|---|
 
 <!-- 
-| 2  | 2016-06-16  | Module 4  | [lecSlides](modules/module4.html), [lecNotes](modules/module4.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module4.R), [lab](labs/module4_lab.R), [key](labs/module4_lab_review.html)  | Data Input  |
-| 2  | 2016-06-16  | Module 5  | [lecSlides](modules/module5.html), [lecNotes](modules/module5.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module5.R), [lab](labs/module5_lab.txt)  | Data I/O + Subset |
-| 2  | 2016-06-16  | Module 6  | [lecSlides](modules/module6.html), [lecNotes](modules/module6.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module6.R), [lab](labs/module6_lab.R), [key](labs/module6_lab_key.R) | Manipulation |
 |---|---|---|---|---|
 | 3  | 2016-06-17  | Homework 3  | [HW](hw/homework3.R) | Homework |
 | 3  | 2016-06-17  | Module 7  | [lecSlides](modules/module7.html), [lecNotes](modules/module7.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module7.R), [lab](labs/module7_lab.R), [key](labs/module7_lab_key.R)  | Summarization |

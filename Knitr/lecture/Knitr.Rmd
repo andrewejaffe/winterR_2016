@@ -1,12 +1,12 @@
 ---
 title: "Title"
 author: "John Muschelli"
-date: "January 9, 2015"
-output: 
+date: "January 5, 2016"
+output:
   pdf_document:
-    toc: true
+    toc: yes
   html_document:
-    toc: true
+    toc: yes
 ---
 
 
@@ -208,7 +208,7 @@ daily <- charm[, c("day", "date", "daily")]
 
 ```{r}
 charm$daily <- NULL
-require(reshape2)
+require(reshape)
 long.charm <- melt(charm, id.vars = c("day", "date"))
 long.charm$type <- "Boardings"
 long.charm$type[ grepl("Alightings", long.charm$variable)] <- "Alightings"

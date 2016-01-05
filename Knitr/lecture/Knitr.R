@@ -125,7 +125,7 @@ daily <- charm[, c("day", "date", "daily")]
 
 ## ------------------------------------------------------------------------
 charm$daily <- NULL
-require(reshape2)
+require(reshape)
 long.charm <- melt(charm, id.vars = c("day", "date"))
 long.charm$type <- "Boardings"
 long.charm$type[ grepl("Alightings", long.charm$variable)] <- "Alightings"
