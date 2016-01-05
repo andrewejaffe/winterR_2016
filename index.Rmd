@@ -31,9 +31,10 @@ Winter R 2016
 | 1  | 2016-01-04  | Module 2  | [HTML](RStudio/lecture/RStudio.html), [PDF](RStudio/lecture/RStudio.pdf) | R Studio  |
 | 1  | 2016-01-04  | Module 3  | [HTML](Basic_R/lecture/Basic_R.html), [PDF](Basic_R/lecture/Basic_R.pdf), [Lab](Basic_R/lab/Basic_R_Lab.R), [Code](Basic_R/lecture/Basic_R.R) | Basic R  |
 | 1  | 2016-01-04  | Module 4  | [HTML](Data_IO/lecture/Data_IO.html), [PDF](Data_IO/lecture/Data_IO.pdf), [Lab](Data_IO/lab/Data_IO_Lab.R), [Code](Data_IO/lecture/Data_IO.R) | Data Import/Output  |
+| 2  | 2016-01-05  | Homework 2  | [HW ](HW/homework2.R)  |   |
 |---|---|---|---|---|
 
-<!-- | 2  | 2016-06-16  | HW2  | [code](hw/Homework2.R)  |   |
+<!-- 
 | 2  | 2016-06-16  | Module 4  | [lecSlides](modules/module4.html), [lecNotes](modules/module4.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module4.R), [lab](labs/module4_lab.R), [key](labs/module4_lab_review.html)  | Data Input  |
 | 2  | 2016-06-16  | Module 5  | [lecSlides](modules/module5.html), [lecNotes](modules/module5.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module5.R), [lab](labs/module5_lab.txt)  | Data I/O + Subset |
 | 2  | 2016-06-16  | Module 6  | [lecSlides](modules/module6.html), [lecNotes](modules/module6.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module6.R), [lab](labs/module6_lab.R), [key](labs/module6_lab_key.R) | Manipulation |
