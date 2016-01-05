@@ -3,7 +3,6 @@
 # 1/5/2016
 ####################
 
-
 ## In this lab you can use the interactive console to explore 
 ## 	  but please record your commands here.  
 ## Remember anything you type here can be "sent" to the console with 
