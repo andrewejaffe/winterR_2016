@@ -1,8 +1,11 @@
 ## ----loadData, comment="", prompt=TRUE, echo=FALSE-----------------------
 set.seed(123)
-Sal <- read.csv("../data/Baltimore_City_Employee_Salaries_FY2014.csv",as.is=TRUE)
-mon <- read.csv("../data/Monuments.csv",as.is=TRUE,na.strings="")
-circ <- read.csv("../data/charmcitycirc_reduced.csv",as.is=TRUE)
+http_data_dir = "http://www.aejaffe.com/winterR_2016/data/"
+Sal <- read.csv(paste0(http_data_dir, "Baltimore_City_Employee_Salaries_FY2014.csv"),as.is=TRUE)
+mon <- read.csv(paste0(http_data_dir, "Monuments.csv"),
+                as.is=TRUE,na.strings="")
+circ <- read.csv(paste0(http_data_dir, "charmcitycirc_reduced.csv"),
+                 as.is=TRUE)
 xx=runif(1)
 
 ## ----makeList, comment="", prompt=TRUE-----------------------------------
