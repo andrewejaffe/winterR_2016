@@ -1,8 +1,9 @@
 ---
 title: "Data Classes"
 author: "Andrew Jaffe"
-date: "January 6, 2016"
+date: "January 5, 2016"
 output:
+  beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
 ---
@@ -78,17 +79,6 @@ It makes consecutive integer sequence from `[num1]` to `[num2]` by 1
 1:5
 ```
 
-## Factor
-
-`factor` are special `character` vectors where the elements have pre-defined groups or 'levels'. You can think of these as qualitative or categorical variables:
-
-```{r factor1}
-x = factor(c("boy", "girl", "girl", "boy", "girl"))
-x 
-class(x)
-```
-
-Note that levels are, by default, alphabetical or alphanumerical order.
 
 ## Logical
 
@@ -108,6 +98,184 @@ Note that `logical` elements are NOT in quotes.
 z = c("TRUE", "FALSE", "TRUE", "FALSE")
 class(z)
 ```
+
+
+## Factor
+
+`factor` are special `character` vectors where the elements have pre-defined groups or 'levels'. You can think of these as qualitative or categorical variables:
+
+```{r factor1}
+x = factor(c("boy", "girl", "girl", "boy", "girl"))
+x 
+class(x)
+```
+
+Note that levels are, by default, alphabetical or alphanumerical order.
+
+
+## Factors
+
+Factors are used to represent categorical data, and can also be used for ordinal data (ie categories have an intrinsic ordering)
+
+Note that R reads in character strings as factors by default in functions like `read.table()`
+
+'The function factor is used to encode a vector as a factor (the terms 'category' and 'enumerated type' are also used for factors). If argument ordered is TRUE, the factor levels are assumed to be ordered.'
+
+```
+factor(x = character(), levels, labels = levels,
+       exclude = NA, ordered = is.ordered(x))
+```
+
+## Factors
+
+Suppose we have a vector of case-control status
+
+```{r factor2}
+cc = factor(c("case","case","case",
+        "control","control","control"))
+cc
+levels(cc) = c("control","case")
+cc
+```
+
+## Factors
+
+Note that the levels are alphabetically ordered by default. We can also specify the levels within the factor call
+
+```{r factor_cc_again}
+factor(c("case","case","case","control",
+          "control","control"), 
+        levels =c("control","case") )
+factor(c("case","case","case","control",
+            "control","control"), 
+        levels =c("control","case"), ordered=TRUE)
+```
+
+## Factors
+
+Factors can be converted to `numeric` or `character` very easily
+
+```{r factor3}
+x = factor(c("case","case","case","control",
+      "control","control"),
+        levels =c("control","case") )
+as.character(x)
+as.numeric(x)
+```
+
+
+## Creating categorical variables
+
+the `rep()` ["repeat"] function is useful for creating new variables 
+
+```{r rep1}
+bg = rep(c("boy","girl"),each=50)
+head(bg)
+bg2 = rep(c("boy","girl"),times=50)
+head(bg2)
+length(bg)==length(bg2)
+```
+
+## Creating categorical variables
+
+One frequently-used tool is creating categorical variables out of continuous variables, like generating quantiles of a specific continuously measured variable. 
+
+A general function for creating new variables based on existing variables is the `ifelse()` function, which "returns a value with the same shape as test which is filled with elements selected from either yes or no depending on whether the element of test is `TRUE` or `FALSE`."
+
+```
+ifelse(test, yes, no)
+
+# test: an object which can be coerced
+    to logical mode.
+# yes: return values for true elements of test.
+# no: return values for false elements of test.
+```
+
+## Charm City Circulator data
+
+Please download the Charm City Circulator data:
+
+http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv
+
+```{r}
+circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+            header=TRUE,as.is=TRUE)
+```
+
+## Creating categorical variables
+
+For example, we can create a new variable that records whether daily ridership on the Circulator was above 10,000.
+
+```{r ifelse1}
+
+hi_rider = ifelse(circ$daily > 10000, 1, 0)
+head(hi_rider)
+table(hi_rider)
+```
+
+## Creating categorical variables
+
+You can also nest `ifelse()` within itself to create 3 levels of a variable.
+
+```{r ifelse2}
+riderLevels = ifelse(circ$daily < 10000, "low", 
+                  ifelse(circ$daily > 20000,
+                  "high", "med"))
+head(riderLevels)
+table(riderLevels)
+```
+
+## Creating categorical variables
+
+However, it's much easier to use `cut()` to create categorical variables from continuous variables. 
+
+'cut divides the range of x into intervals and codes the values in x according to which interval they fall. The leftmost interval corresponds to level one, the next leftmost to level two and so on.'
+
+```
+cut(x, breaks, labels = NULL, include.lowest = FALSE, 
+  right = TRUE, dig.lab = 3,
+  ordered_result = FALSE, ...)
+```
+
+## Creating categorical variables
+
+`x`: a numeric vector which is to be converted to a factor by cutting.
+
+`breaks`: either a numeric vector of two or more unique cut points or a single number (greater than or equal to 2) giving the number of intervals into which x is to be cut.
+
+`labels`: labels for the levels of the resulting category. By default, labels are constructed using "(a,b]" interval notation. If `labels = FALSE`, simple integer codes are returned instead of a factor.
+
+
+## Cut
+
+Now that we know more about factors, `cut()` will make more sense:
+
+```{r cut1}
+x = 1:100
+cx = cut(x, breaks=c(0,10,25,50,100))
+head(cx)  
+table(cx)
+```
+
+
+We can also leave off the labels
+
+```{r cut2}
+cx = cut(x, breaks=c(0,10,25,50,100), labels=FALSE)
+head(cx)  
+table(cx)
+```
+
+Note that you have to specify the endpoints of the data, otherwise some of the categories will not be created
+
+```{r cut3}
+cx = cut(x, breaks=c(10,25,50), labels=FALSE)
+head(cx)  
+table(cx)
+table(cx,useNA="ifany")
+```
+
+
 
 ## Vector functions
 

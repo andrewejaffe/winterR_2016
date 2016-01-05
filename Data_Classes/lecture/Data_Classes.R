@@ -14,11 +14,6 @@ class(x)
 ## ----seqShort------------------------------------------------------------
 1:5
 
-## ----factor1-------------------------------------------------------------
-x = factor(c("boy", "girl", "girl", "boy", "girl"))
-x 
-class(x)
-
 ## ----logical1------------------------------------------------------------
 x = c(TRUE, FALSE, TRUE, TRUE, FALSE)
 class(x)
@@ -26,6 +21,74 @@ class(x)
 ## ----logical2------------------------------------------------------------
 z = c("TRUE", "FALSE", "TRUE", "FALSE")
 class(z)
+
+## ----factor1-------------------------------------------------------------
+x = factor(c("boy", "girl", "girl", "boy", "girl"))
+x 
+class(x)
+
+## ----factor2-------------------------------------------------------------
+cc = factor(c("case","case","case",
+        "control","control","control"))
+cc
+levels(cc) = c("control","case")
+cc
+
+## ----factor_cc_again-----------------------------------------------------
+factor(c("case","case","case","control",
+          "control","control"), 
+        levels =c("control","case") )
+factor(c("case","case","case","control",
+            "control","control"), 
+        levels =c("control","case"), ordered=TRUE)
+
+## ----factor3-------------------------------------------------------------
+x = factor(c("case","case","case","control",
+      "control","control"),
+        levels =c("control","case") )
+as.character(x)
+as.numeric(x)
+
+## ----rep1----------------------------------------------------------------
+bg = rep(c("boy","girl"),each=50)
+head(bg)
+bg2 = rep(c("boy","girl"),times=50)
+head(bg2)
+length(bg)==length(bg2)
+
+## ------------------------------------------------------------------------
+circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+            header=TRUE,as.is=TRUE)
+
+## ----ifelse1-------------------------------------------------------------
+
+hi_rider = ifelse(circ$daily > 10000, 1, 0)
+head(hi_rider)
+table(hi_rider)
+
+## ----ifelse2-------------------------------------------------------------
+riderLevels = ifelse(circ$daily < 10000, "low", 
+                  ifelse(circ$daily > 20000,
+                  "high", "med"))
+head(riderLevels)
+table(riderLevels)
+
+## ----cut1----------------------------------------------------------------
+x = 1:100
+cx = cut(x, breaks=c(0,10,25,50,100))
+head(cx)  
+table(cx)
+
+## ----cut2----------------------------------------------------------------
+cx = cut(x, breaks=c(0,10,25,50,100), labels=FALSE)
+head(cx)  
+table(cx)
+
+## ----cut3----------------------------------------------------------------
+cx = cut(x, breaks=c(10,25,50), labels=FALSE)
+head(cx)  
+table(cx)
+table(cx,useNA="ifany")
 
 ## ----head----------------------------------------------------------------
 z = 1:100 # recall a sequence from 1 to 100
