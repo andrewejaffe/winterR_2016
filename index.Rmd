@@ -37,6 +37,7 @@ Winter R 2016
 | 3  | 2016-01-06 | Module 7  | [HTML](Data_Classes/lecture/Data_Classes.html), [PDF](Data_Classes/lecture/Data_Classes.pdf), [Code](Data_Classes/lecture/Data_Classes.R) | Data Classes |
 | 3  | 2016-01-06 | Module 8  | [HTML](Data_Cleaning/lecture/Data_Cleaning.html), [PDF](Data_Cleaning/lecture/Data_Cleaning.pdf), [Code](Data_Cleaning/lecture/Data_Cleaning.R), [Lab](Data_Cleaning/lab/Data_Cleaning_Lab.R) | Data Cleaning |
 | 3  | 2016-01-06 | Module 9  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Code](Knitr/lecture/Knitr.Rmd), [Lab](Knitr/lab/illusion.Rmd) | Reproducible Research |
+| 3  | 2016-01-06  | Homework 3  | [HW ](HW/homework3.R)  |   |
 |---|---|---|---|---|
 
 <!-- 
