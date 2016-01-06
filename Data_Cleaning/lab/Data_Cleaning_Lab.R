@@ -4,8 +4,8 @@
 # 6/17/2015
 
 ## Download the "Real Property Taxes" Data from my website (via OpenBaltimore):
-## http://www.aejaffe.com/summerR_2015/data/Real_Property_Taxes.zip
-## and unzip it to a .csv file
+# www.aejaffe.com/winterR_2016/data/real_property_tax.csv.gz
+## note you don't need to unzip it to read it into R
 
 # 1. Read the Property Tax data into R and call it the variable `tax`
 
@@ -35,6 +35,7 @@
 # 8. Convert the 'lotSize' variable to a numeric square feet variable. 
 #	Tips: - Assume hyphens represent decimal places within measurements. 
 #		  - 1 acre = 43560 square feet
+#		  - The hyphens represent inches (not decimals)
 # 		  - Don't spend more than 5-10 minutes on this; stop and move on
 
 # 9.a) Plot your numeric lotSize versus cityTax on principal residences. 
@@ -42,7 +43,9 @@
 
 
 ################################
-## Read in the Salary FY2014 dataset
+## Read in the Salary FY2015 dataset
+
+# www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2015.csv
 
 # 10. Make an object called health.sal using the salaries data set, 
 #		with only agencies of those with "fire" (or any forms), if any, in the name
