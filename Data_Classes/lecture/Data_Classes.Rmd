@@ -1,33 +1,13 @@
 ---
 title: "Data Classes"
 author: "Andrew Jaffe"
-date: "January 5, 2016"
+date: "January 6, 2016"
 output:
-  beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
+  beamer_presentation: default
 ---
 
-## Functions - Intro
-
-* R revolves around functions: denoted by `[function name]()`
-* Every function takes an input, defined by arguments, often provided by the user
-* Many functions have default settings for these arguments
-* `example([function name])` shows you how it is used
-
-## R Help
-* If you know the name of a function, `?[function name]` or `help([function name])` will pop up the help menu
-
-```{r assign_help}
-## ?str
-## help("str")
-```
-
-## Functions - Intro
-
-For example, `length` is a function we briefly covered last module. You can try typing `?length` in the console and reading the help file.
-
-You can also see examples of running a function using `example()` [which is another function!]
 
 ## Data Classes:
 
@@ -37,24 +17,16 @@ You can also see examples of running a function using `example()` [which is anot
     * Integer: any integer(s)/whole numbers
     * Factor: categorical/qualitative variables
     * Logical: variables composed of TRUE or FALSE
-
-## Data Classes:
-
-* Two dimensional classes:
-    * `data.frame`: traditional 'Excel' spreadsheets
-        * Each column can have a different class, from above
-    * Matrix: two-dimensional data, composed of rows and columns. Unlike data frames, the entire matrix is composed of one R class, e.g. all numeric or all characters.
+    * Date/POSIXct: represents calendar dates and times
 
 ## Character and numeric
 
-We have already covered `character` and `numeric`
+We have already covered `character` and `numeric` classes.
 
 ```{r numChar}
 class(c("Andrew", "Jaffe"))
 class(c(1, 4, 7))
 ```
-
-Recall that `c()` and `class()` are both functions!
 
 ## Integer
 
@@ -78,7 +50,6 @@ It makes consecutive integer sequence from `[num1]` to `[num2]` by 1
 ```{r seqShort}
 1:5
 ```
-
 
 ## Logical
 
@@ -163,6 +134,17 @@ as.character(x)
 as.numeric(x)
 ```
 
+## Factors
+
+However, you need to be careful modifying the labels of existing factors, as its quite easy to alter the meaning of the underlying data. 
+
+```{r factorCheck}
+xCopy = x
+levels(xCopy) = c("case", "control") # wrong way
+xCopy        
+as.character(xCopy) # labels switched
+as.numeric(xCopy)
+```
 
 ## Creating categorical variables
 
@@ -207,8 +189,8 @@ circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_
 For example, we can create a new variable that records whether daily ridership on the Circulator was above 10,000.
 
 ```{r ifelse1}
-
-hi_rider = ifelse(circ$daily > 10000, 1, 0)
+hi_rider = ifelse(circ$daily > 10000, "high", "low")
+hi_rider = factor(hi_rider, levels = c("low","high"))
 head(hi_rider)
 table(hi_rider)
 ```
@@ -221,6 +203,8 @@ You can also nest `ifelse()` within itself to create 3 levels of a variable.
 riderLevels = ifelse(circ$daily < 10000, "low", 
                   ifelse(circ$daily > 20000,
                   "high", "med"))
+riderLevels = factor(riderLevels, 
+              levels = c("low","med","high"))
 head(riderLevels)
 table(riderLevels)
 ```
@@ -275,73 +259,54 @@ table(cx)
 table(cx,useNA="ifany")
 ```
 
+## Date
 
 
-## Vector functions
+You can convert date-like strings in the `Date` class (http://www.statmethods.net/input/dates.html for more info)
 
-Useful functions for exploring vectors (and other data types):
-
-* `length()` 
-* `head()` and `tail()`
-* `table()`
-* `subset()` and brackets (`[ ]`)
-* `unique()` 
-* `sum()`, `mean()`,`median()`, `min()`, `max()`
-
-## Head and Tail
-
-* `head()` shows the first 6 (default) elements of an R object
-* `tail()` shows the last 6 (default) elements of an R object
-* `str()` shows the structure of an R object
-
-## Head and Tail
- 
-```{r head}
-z = 1:100 # recall a sequence from 1 to 100
-head(z)
-tail(z)
-str(z)
+```{r date}
+head(sort(circ$date))
+circ$newDate <- as.Date(circ$date, "%m/%d/%Y") # creating a date for sorting
+head(circ$newDate)
+range(circ$newDate)
 ```
 
-These functions show a brief snapshot of the data which is useful for exploratory data analysis.
+## Date 
 
-## Table {.smaller}
+However, the `lubridate` package is much easier for generating explicit dates:
 
-`table()` is the basic tabulation function, which is often more useful for `character` and `factor` vectors
-
-From the manual: "table uses the cross-classifying factors to build a contingency table of the counts at each combination of factor level"
-
-```{r tab}
-x = c("boy", "girl", "girl", "boy", "girl")
-table(x)
-y = c(1, 2, 1, 2, 1)
-table(x,y)
+```{r}
+library(lubridate) # great for dates!
+suppressPackageStartupMessages(library(dplyr))
+circ = mutate(circ, newDate2 = mdy(date))
+head(circ$newDate2)
+range(circ$newDate2)
 ```
 
-## Data Subsetting
+## POSIXct
 
-Brackets are used to select/subset/extract data in R
+The `POSIXct` class can encode time information
 
-```{r subset1}
-x1 = 10:20
-x1
-length(x1)
+```{r}
+theTime = Sys.time()
+theTime
+class(theTime)
+theTime + 5000
 ```
 
-## Data Subsetting
+Note it's like a more general date format.
 
-```{r subset2}
-x1[1] # selecting first element
-x1[3:4] # selecting third and fourth elements
-x1[c(1, 5, 7)] # first, fifth, and seventh elements
-```
+## Data Classes:
 
-#### **This is probably the most powerful and useful function in R. If you master this, you can literally do anything with R. Everything in the 'data analysis pipeline' revolves around subsetting (as you will soon see)**
-
+* Two dimensional classes:
+    * `data.frame`: traditional 'Excel' spreadsheets
+        * Each column can have a different class, from above
+    * Matrix: two-dimensional data, composed of rows and columns. Unlike data frames, the entire matrix is composed of one R class, e.g. all numeric or all characters.
+    
 ## Matrices
 
 ```{r matrix}
-n = 1:9 # sequence from first number to second number incrementing by 1
+n = 1:9 
 n
 mat = matrix(n, nrow = 3)
 mat
@@ -358,7 +323,7 @@ These are in addition to the previous useful vector functions:
 
 ## Data Selection
 
-Matrices have two "slots" you can use to select data, which represent rows and columns, that are separated by a comma, so the syntax is `matrix[row,column]`.
+Matrices have two "slots" you can use to select data, which represent rows and columns, that are separated by a comma, so the syntax is `matrix[row,column]`. Note you cannot use `dplyr` functions on matrices.
 
 ```{r subset3}
 mat[1, 1] # individual entry: row 1, column 1
@@ -377,67 +342,25 @@ class(mat[, 1])
 
 ## Data Frames
 
-The `data.frame` is the other two dimensional variable class. 
+To review, the `data.frame` is the other two dimensional variable class. 
 
 Again, data frames are like matrices, but each column is a vector that can have its own class. So some columns might be `character` and others might be `numeric`, while others maybe a `factor`.
 
-We can look at some of the example data frames that come with R.
+## Data Frames versus Matrices
 
-## Data Frames {.smaller}
+You will likely use data.frame class for a lot of data cleaning and analysis. However, some operations that rely on matrix multiplication (like performing many linear regressions) are (much) faster with matrices. Also, as we will touch on later, some functions for iterating over data will return the matrix class, or will be placed in empty matrices that can then be converted to data.frames 
 
-```{r df1}
-data(iris) ## just use some data in R already
-names(iris) ## get the column names
-str(iris) # easy snapshot of data, like `describe` in Stata
-head(iris, 3) # get top 3 rows
+## Data Frames versus Matrices
+
+There is also additional summarization functions for matrices (and not data.frames) in the `matrixStats` package, like `rowMins()`, `colMaxs()`, etc.
+
+```{r}
+library(matrixStats,quietly = TRUE)
+avgs = select(circ, ends_with("Average"))
+rowMins(as.matrix(avgs),na.rm=TRUE)[500:510]
 ```
 
-## Data Selection
-
-Data frames have special ways to select data, specifically by a `$` and the column name.
-
-
-```{r df2}
-head(iris$Petal.Length)
-class(iris$Petal.Width)
-```
-
-## Data Selection
-
-You can also subset data frames like matrices, using row and column indices, but using column names is generally safer and more reproducible.
-
-```{r subset6}
-head(iris[, 2])
-```
-
-You can also use the bracket notation, but specify the name(s) in quotes if you want more than 1 column. This allows you to subset rows and columns at the same time
-```{r subset7}
-iris[1:3, c("Sepal.Width", "Species")]
-```
-
-## Data Frames
-
-You can make your own data frames from "scratch" too, either from a matrix or using the `data.frame` function:
-
-```{r df3}
-x = c("Andrew", "Leonardo", "Shaun")
-y = 1:3
-df = data.frame(name = x, id = y)
-df
-```
-
-## Data Frames {.smaller}
-
-You can add variables to a `data.frame` using `$` as well:
-
-```{r dfAdd}
-iris2 = iris # copy `iris` to a new df
-iris2$Index = 1:nrow(iris2)
-head(iris2)
-names(iris2)
-```
-
-## Data Classes: Extended
+## Data Classes
 
 Extensions of "normal" data classes:
 
@@ -445,4 +368,99 @@ Extensions of "normal" data classes:
     * Arrays: any extension of matrices with more than 2 dimensions, e.g. 3x3x3 cube
     * Lists: more flexible container for R objects. 
 
+## Arrays
+
+These are just more flexible matrices - you should just be made aware of them as some functions return objects of this class, for example, cross tabulating over more than 2 variables and the `tapply` function.
+
+## Arrays
+
+Selecting from arrays is similar to matrices, just with additional commas for the additional slots.
+
+```{r}
+ar = array(1:27, c(3,3,3))
+ar[,,1]
+ar[,1,]
+```
+
+
+## Lists
+
+* One other data type that is the most generic are `lists`.
+* Can be created using list()
+* Can hold vectors, strings, matrices, models, list of other list, lists upon lists!
+* Can reference data using $ (if the elements are named), or using [], or [[]]
+
+```{r makeList, comment="", prompt=TRUE}
+mylist <- list(letters=c("A", "b", "c"), 
+        numbers=1:3, matrix(1:25, ncol=5))
+```
+
+## List Structure
+```{r Lists, comment="", prompt=TRUE}
+head(mylist)
+```
+
+## List referencing
+```{r Listsref1, comment="", prompt=TRUE}
+mylist[1] # returns a list
+mylist["letters"] # returns a list
+```
+
+## List referencing
+  
+```{r Listsrefvec, comment="", prompt=TRUE}  
+mylist[[1]] # returns the vector 'letters'
+mylist$letters # returns vector
+mylist[["letters"]] # returns the vector 'letters'
+```
+
+## List referencing
+
+You can also select multiple lists with the single brackets. 
+
+```{r Listsref2, comment="", prompt=TRUE}
+mylist[1:2] # returns a list
+```
+
+## List referencing
+
+You can also select down several levels of a list at once
+
+```{r Listsref3, comment="", prompt=TRUE}
+mylist$letters[1]
+mylist[[2]][1]
+mylist[[3]][1:2,1:2]
+```
+
+## Splitting Data Frames
+
+The `split()` function is useful for splitting `data.frame`s
+
+"`split` divides the data in the vector x into the groups defined by `f`. The replacement forms replace values corresponding to such a division. `unsplit` reverses the effect of split."
+
+```{r split1, comment="", prompt=TRUE}
+dayList = split(circ,circ$day)
+```
+
+## Splitting Data Frames {.smaller}
+
+Here is a good chance to introduce `lapply`, which performs a function within each list element:
+
+```{r lapply1, comment="", prompt=TRUE}
+# head(dayList)
+lapply(dayList, head, n=2)
+```
+
+---
+
+```{r lapply2, comment="", prompt=TRUE}
+# head(dayList)
+lapply(dayList, dim)
+```
+
+## General Class Information
+
+There are two useful functions associated with practically all R classes, which relate to logically checking the underlying class (`is.CLASS_()`) and coercing between classes (`as.CLASS_()`).
+
+We saw some examples of coercion in the past, like `as.numeric()` and `as.character()` regarding the `factor` class and also `as.Date()` for the `date` class.
 

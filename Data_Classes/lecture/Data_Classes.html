@@ -89,35 +89,11 @@
       <h1 data-config-title><!-- populated from slide_config.json --></h1>
       <h2 data-config-subtitle><!-- populated from slide_config.json --></h2>
       <p data-config-presenter><!-- populated from slide_config.json --></p>
-            <p style="margin-top: 6px; margin-left: -2px;">January 5, 2016</p>
+            <p style="margin-top: 6px; margin-left: -2px;">January 6, 2016</p>
           </hgroup>
   </slide>
 
-<slide class=''><hgroup><h2>Functions - Intro</h2></hgroup><article  id="functions---intro">
-
-<ul>
-<li>R revolves around functions: denoted by <code>[function name]()</code></li>
-<li>Every function takes an input, defined by arguments, often provided by the user</li>
-<li>Many functions have default settings for these arguments</li>
-<li><code>example([function name])</code> shows you how it is used</li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>R Help</h2></hgroup><article  id="r-help">
-
-<ul>
-<li>If you know the name of a function, <code>?[function name]</code> or <code>help([function name])</code> will pop up the help menu</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>## ?str
-## help(&quot;str&quot;)</pre>
-
-</article></slide><slide class=''><hgroup><h2>Functions - Intro</h2></hgroup><article  id="functions---intro-1">
-
-<p>For example, <code>length</code> is a function we briefly covered last module. You can try typing <code>?length</code> in the console and reading the help file.</p>
-
-<p>You can also see examples of running a function using <code>example()</code> [which is another function!]</p>
-
-</article></slide><slide class=''><hgroup><h2>Data Classes:</h2></hgroup><article  id="data-classes">
+<slide class=''><hgroup><h2>Data Classes:</h2></hgroup><article  id="data-classes">
 
 <ul>
 <li>One dimensional classes (&#39;vectors&#39;):
@@ -128,27 +104,13 @@
 <li>Integer: any integer(s)/whole numbers</li>
 <li>Factor: categorical/qualitative variables</li>
 <li>Logical: variables composed of TRUE or FALSE</li>
-</ul></li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Data Classes:</h2></hgroup><article  id="data-classes-1">
-
-<ul>
-<li>Two dimensional classes:
-
-<ul>
-<li><code>data.frame</code>: traditional &#39;Excel&#39; spreadsheets
-
-<ul>
-<li>Each column can have a different class, from above</li>
-</ul></li>
-<li>Matrix: two-dimensional data, composed of rows and columns. Unlike data frames, the entire matrix is composed of one R class, e.g. all numeric or all characters.</li>
+<li>Date/POSIXct: represents calendar dates and times</li>
 </ul></li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>Character and numeric</h2></hgroup><article  id="character-and-numeric">
 
-<p>We have already covered <code>character</code> and <code>numeric</code></p>
+<p>We have already covered <code>character</code> and <code>numeric</code> classes.</p>
 
 <pre class = 'prettyprint lang-r'>class(c(&quot;Andrew&quot;, &quot;Jaffe&quot;))</pre>
 
@@ -157,8 +119,6 @@
 <pre class = 'prettyprint lang-r'>class(c(1, 4, 7))</pre>
 
 <pre >## [1] &quot;numeric&quot;</pre>
-
-<p>Recall that <code>c()</code> and <code>class()</code> are both functions!</p>
 
 </article></slide><slide class=''><hgroup><h2>Integer</h2></hgroup><article  id="integer">
 
@@ -282,6 +242,25 @@ as.character(x)</pre>
 
 <pre >## [1] 2 2 2 1 1 1</pre>
 
+</article></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors-4">
+
+<p>However, you need to be careful modifying the labels of existing factors, as its quite easy to alter the meaning of the underlying data.</p>
+
+<pre class = 'prettyprint lang-r'>xCopy = x
+levels(xCopy) = c(&quot;case&quot;, &quot;control&quot;) # wrong way
+xCopy        </pre>
+
+<pre >## [1] control control control case    case    case   
+## Levels: case control</pre>
+
+<pre class = 'prettyprint lang-r'>as.character(xCopy) # labels switched</pre>
+
+<pre >## [1] &quot;control&quot; &quot;control&quot; &quot;control&quot; &quot;case&quot;    &quot;case&quot;    &quot;case&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>as.numeric(xCopy)</pre>
+
+<pre >## [1] 2 2 2 1 1 1</pre>
+
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables">
 
 <p>the <code>rep()</code> [&quot;repeat&quot;] function is useful for creating new variables</p>
@@ -326,16 +305,18 @@ head(bg2)</pre>
 
 <p>For example, we can create a new variable that records whether daily ridership on the Circulator was above 10,000.</p>
 
-<pre class = 'prettyprint lang-r'>hi_rider = ifelse(circ$daily &gt; 10000, 1, 0)
+<pre class = 'prettyprint lang-r'>hi_rider = ifelse(circ$daily &gt; 10000, &quot;high&quot;, &quot;low&quot;)
+hi_rider = factor(hi_rider, levels = c(&quot;low&quot;,&quot;high&quot;))
 head(hi_rider)</pre>
 
-<pre >## [1] 0 0 0 0 0 0</pre>
+<pre >## [1] low low low low low low
+## Levels: low high</pre>
 
 <pre class = 'prettyprint lang-r'>table(hi_rider)</pre>
 
 <pre >## hi_rider
-##   0   1 
-## 740 282</pre>
+##  low high 
+##  740  282</pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables-3">
 
@@ -344,15 +325,18 @@ head(hi_rider)</pre>
 <pre class = 'prettyprint lang-r'>riderLevels = ifelse(circ$daily &lt; 10000, &quot;low&quot;, 
                   ifelse(circ$daily &gt; 20000,
                   &quot;high&quot;, &quot;med&quot;))
+riderLevels = factor(riderLevels, 
+              levels = c(&quot;low&quot;,&quot;med&quot;,&quot;high&quot;))
 head(riderLevels)</pre>
 
-<pre >## [1] &quot;low&quot; &quot;low&quot; &quot;low&quot; &quot;low&quot; &quot;low&quot; &quot;low&quot;</pre>
+<pre >## [1] low low low low low low
+## Levels: low med high</pre>
 
 <pre class = 'prettyprint lang-r'>table(riderLevels)</pre>
 
 <pre >## riderLevels
-## high  low  med 
-##    2  740  280</pre>
+##  low  med high 
+##  740  280    2</pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables-4">
 
@@ -421,97 +405,78 @@ head(cx)  </pre>
 ##    1    2 &lt;NA&gt; 
 ##   15   25   60</pre>
 
-</article></slide><slide class=''><hgroup><h2>Vector functions</h2></hgroup><article  id="vector-functions">
+</article></slide><slide class=''><hgroup><h2>Date</h2></hgroup><article  id="date">
 
-<p>Useful functions for exploring vectors (and other data types):</p>
+<p>You can convert date-like strings in the <code>Date</code> class (<a href='http://www.statmethods.net/input/dates.html' title=''>http://www.statmethods.net/input/dates.html</a> for more info)</p>
+
+<pre class = 'prettyprint lang-r'>head(sort(circ$date))</pre>
+
+<pre >## [1] &quot;01/01/2011&quot; &quot;01/01/2012&quot; &quot;01/01/2013&quot; &quot;01/02/2011&quot; &quot;01/02/2012&quot;
+## [6] &quot;01/02/2013&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>circ$newDate &lt;- as.Date(circ$date, &quot;%m/%d/%Y&quot;) # creating a date for sorting
+head(circ$newDate)</pre>
+
+<pre >## [1] &quot;2010-01-11&quot; &quot;2010-01-12&quot; &quot;2010-01-13&quot; &quot;2010-01-14&quot; &quot;2010-01-15&quot;
+## [6] &quot;2010-01-16&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>range(circ$newDate)</pre>
+
+<pre >## [1] &quot;2010-01-11&quot; &quot;2013-03-01&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Date</h2></hgroup><article  id="date-1">
+
+<p>However, the <code>lubridate</code> package is much easier for generating explicit dates:</p>
+
+<pre class = 'prettyprint lang-r'>library(lubridate) # great for dates!
+suppressPackageStartupMessages(library(dplyr))
+circ = mutate(circ, newDate2 = mdy(date))
+head(circ$newDate2)</pre>
+
+<pre >## [1] &quot;2010-01-11 UTC&quot; &quot;2010-01-12 UTC&quot; &quot;2010-01-13 UTC&quot; &quot;2010-01-14 UTC&quot;
+## [5] &quot;2010-01-15 UTC&quot; &quot;2010-01-16 UTC&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>range(circ$newDate2)</pre>
+
+<pre >## [1] &quot;2010-01-11 UTC&quot; &quot;2013-03-01 UTC&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>POSIXct</h2></hgroup><article  id="posixct">
+
+<p>The <code>POSIXct</code> class can encode time information</p>
+
+<pre class = 'prettyprint lang-r'>theTime = Sys.time()
+theTime</pre>
+
+<pre >## [1] &quot;2016-01-05 22:09:48 EST&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>class(theTime)</pre>
+
+<pre >## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>theTime + 5000</pre>
+
+<pre >## [1] &quot;2016-01-05 23:33:08 EST&quot;</pre>
+
+<p>Note it&#39;s like a more general date format.</p>
+
+</article></slide><slide class=''><hgroup><h2>Data Classes:</h2></hgroup><article  id="data-classes-1">
 
 <ul>
-<li><code>length()</code></li>
-<li><code>head()</code> and <code>tail()</code></li>
-<li><code>table()</code></li>
-<li><code>subset()</code> and brackets (<code>[ ]</code>)</li>
-<li><code>unique()</code></li>
-<li><code>sum()</code>, <code>mean()</code>,<code>median()</code>, <code>min()</code>, <code>max()</code></li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Head and Tail</h2></hgroup><article  id="head-and-tail">
+<li>Two dimensional classes:
 
 <ul>
-<li><code>head()</code> shows the first 6 (default) elements of an R object</li>
-<li><code>tail()</code> shows the last 6 (default) elements of an R object</li>
-<li><code>str()</code> shows the structure of an R object</li>
+<li><code>data.frame</code>: traditional &#39;Excel&#39; spreadsheets
+
+<ul>
+<li>Each column can have a different class, from above</li>
+</ul></li>
+<li>Matrix: two-dimensional data, composed of rows and columns. Unlike data frames, the entire matrix is composed of one R class, e.g. all numeric or all characters.</li>
+</ul></li>
 </ul>
-
-</article></slide><slide class=''><hgroup><h2>Head and Tail</h2></hgroup><article  id="head-and-tail-1">
-
-<pre class = 'prettyprint lang-r'>z = 1:100 # recall a sequence from 1 to 100
-head(z)</pre>
-
-<pre >## [1] 1 2 3 4 5 6</pre>
-
-<pre class = 'prettyprint lang-r'>tail(z)</pre>
-
-<pre >## [1]  95  96  97  98  99 100</pre>
-
-<pre class = 'prettyprint lang-r'>str(z)</pre>
-
-<pre >##  int [1:100] 1 2 3 4 5 6 7 8 9 10 ...</pre>
-
-<p>These functions show a brief snapshot of the data which is useful for exploratory data analysis.</p>
-
-</article></slide><slide class=''><hgroup><h2>Table</h2></hgroup><article  id="table" class="smaller">
-
-<p><code>table()</code> is the basic tabulation function, which is often more useful for <code>character</code> and <code>factor</code> vectors</p>
-
-<p>From the manual: &quot;table uses the cross-classifying factors to build a contingency table of the counts at each combination of factor level&quot;</p>
-
-<pre class = 'prettyprint lang-r'>x = c(&quot;boy&quot;, &quot;girl&quot;, &quot;girl&quot;, &quot;boy&quot;, &quot;girl&quot;)
-table(x)</pre>
-
-<pre >## x
-##  boy girl 
-##    2    3</pre>
-
-<pre class = 'prettyprint lang-r'>y = c(1, 2, 1, 2, 1)
-table(x,y)</pre>
-
-<pre >##       y
-## x      1 2
-##   boy  1 1
-##   girl 2 1</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Subsetting</h2></hgroup><article  id="data-subsetting">
-
-<p>Brackets are used to select/subset/extract data in R</p>
-
-<pre class = 'prettyprint lang-r'>x1 = 10:20
-x1</pre>
-
-<pre >##  [1] 10 11 12 13 14 15 16 17 18 19 20</pre>
-
-<pre class = 'prettyprint lang-r'>length(x1)</pre>
-
-<pre >## [1] 11</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Subsetting</h2></hgroup><article  id="data-subsetting-1">
-
-<pre class = 'prettyprint lang-r'>x1[1] # selecting first element</pre>
-
-<pre >## [1] 10</pre>
-
-<pre class = 'prettyprint lang-r'>x1[3:4] # selecting third and fourth elements</pre>
-
-<pre >## [1] 12 13</pre>
-
-<pre class = 'prettyprint lang-r'>x1[c(1, 5, 7)] # first, fifth, and seventh elements</pre>
-
-<pre >## [1] 10 14 16</pre>
-
-<h4><strong>This is probably the most powerful and useful function in R. If you master this, you can literally do anything with R. Everything in the &#39;data analysis pipeline&#39; revolves around subsetting (as you will soon see)</strong></h4>
 
 </article></slide><slide class=''><hgroup><h2>Matrices</h2></hgroup><article  id="matrices">
 
-<pre class = 'prettyprint lang-r'>n = 1:9 # sequence from first number to second number incrementing by 1
+<pre class = 'prettyprint lang-r'>n = 1:9 
 n</pre>
 
 <pre >## [1] 1 2 3 4 5 6 7 8 9</pre>
@@ -537,7 +502,7 @@ mat</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Selection</h2></hgroup><article  id="data-selection">
 
-<p>Matrices have two &quot;slots&quot; you can use to select data, which represent rows and columns, that are separated by a comma, so the syntax is <code>matrix[row,column]</code>.</p>
+<p>Matrices have two &quot;slots&quot; you can use to select data, which represent rows and columns, that are separated by a comma, so the syntax is <code>matrix[row,column]</code>. Note you cannot use <code>dplyr</code> functions on matrices.</p>
 
 <pre class = 'prettyprint lang-r'>mat[1, 1] # individual entry: row 1, column 1</pre>
 
@@ -565,101 +530,34 @@ mat</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Frames</h2></hgroup><article  id="data-frames">
 
-<p>The <code>data.frame</code> is the other two dimensional variable class.</p>
+<p>To review, the <code>data.frame</code> is the other two dimensional variable class.</p>
 
 <p>Again, data frames are like matrices, but each column is a vector that can have its own class. So some columns might be <code>character</code> and others might be <code>numeric</code>, while others maybe a <code>factor</code>.</p>
 
-<p>We can look at some of the example data frames that come with R.</p>
+</article></slide><slide class=''><hgroup><h2>Data Frames versus Matrices</h2></hgroup><article  id="data-frames-versus-matrices">
 
-</article></slide><slide class=''><hgroup><h2>Data Frames</h2></hgroup><article  id="data-frames-1" class="smaller">
+<p>You will likely use data.frame class for a lot of data cleaning and analysis. However, some operations that rely on matrix multiplication (like performing many linear regressions) are (much) faster with matrices. Also, as we will touch on later, some functions for iterating over data will return the matrix class, or will be placed in empty matrices that can then be converted to data.frames</p>
 
-<pre class = 'prettyprint lang-r'>data(iris) ## just use some data in R already
-names(iris) ## get the column names</pre>
+</article></slide><slide class=''><hgroup><h2>Data Frames versus Matrices</h2></hgroup><article  id="data-frames-versus-matrices-1">
 
-<pre >## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot; 
-## [5] &quot;Species&quot;</pre>
+<p>There is also additional summarization functions for matrices (and not data.frames) in the <code>matrixStats</code> package, like <code>rowMins()</code>, <code>colMaxs()</code>, etc.</p>
 
-<pre class = 'prettyprint lang-r'>str(iris) # easy snapshot of data, like `describe` in Stata</pre>
+<pre class = 'prettyprint lang-r'>library(matrixStats,quietly = TRUE)</pre>
 
-<pre >## &#39;data.frame&#39;:    150 obs. of  5 variables:
-##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
-##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
-##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
-##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
-##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</pre>
+<pre >## 
+## Attaching package: &#39;matrixStats&#39;
+## 
+## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     count</pre>
 
-<pre class = 'prettyprint lang-r'>head(iris, 3) # get top 3 rows</pre>
+<pre class = 'prettyprint lang-r'>avgs = select(circ, ends_with(&quot;Average&quot;))
+rowMins(as.matrix(avgs),na.rm=TRUE)[500:510]</pre>
 
-<pre >##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-## 1          5.1         3.5          1.4         0.2  setosa
-## 2          4.9         3.0          1.4         0.2  setosa
-## 3          4.7         3.2          1.3         0.2  setosa</pre>
+<pre >##  [1] 3538.5 3402.5 3862.5 3347.5 2837.5 2704.0 3138.5 3287.5 3275.0 3917.5
+## [11] 3046.0</pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Selection</h2></hgroup><article  id="data-selection-2">
-
-<p>Data frames have special ways to select data, specifically by a <code>$</code> and the column name.</p>
-
-<pre class = 'prettyprint lang-r'>head(iris$Petal.Length)</pre>
-
-<pre >## [1] 1.4 1.4 1.3 1.5 1.4 1.7</pre>
-
-<pre class = 'prettyprint lang-r'>class(iris$Petal.Width)</pre>
-
-<pre >## [1] &quot;numeric&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Selection</h2></hgroup><article  id="data-selection-3">
-
-<p>You can also subset data frames like matrices, using row and column indices, but using column names is generally safer and more reproducible.</p>
-
-<pre class = 'prettyprint lang-r'>head(iris[, 2])</pre>
-
-<pre >## [1] 3.5 3.0 3.2 3.1 3.6 3.9</pre>
-
-<p>You can also use the bracket notation, but specify the name(s) in quotes if you want more than 1 column. This allows you to subset rows and columns at the same time</p>
-
-<pre class = 'prettyprint lang-r'>iris[1:3, c(&quot;Sepal.Width&quot;, &quot;Species&quot;)]</pre>
-
-<pre >##   Sepal.Width Species
-## 1         3.5  setosa
-## 2         3.0  setosa
-## 3         3.2  setosa</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Frames</h2></hgroup><article  id="data-frames-2">
-
-<p>You can make your own data frames from &quot;scratch&quot; too, either from a matrix or using the <code>data.frame</code> function:</p>
-
-<pre class = 'prettyprint lang-r'>x = c(&quot;Andrew&quot;, &quot;Leonardo&quot;, &quot;Shaun&quot;)
-y = 1:3
-df = data.frame(name = x, id = y)
-df</pre>
-
-<pre >##       name id
-## 1   Andrew  1
-## 2 Leonardo  2
-## 3    Shaun  3</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Frames</h2></hgroup><article  id="data-frames-3" class="smaller">
-
-<p>You can add variables to a <code>data.frame</code> using <code>$</code> as well:</p>
-
-<pre class = 'prettyprint lang-r'>iris2 = iris # copy `iris` to a new df
-iris2$Index = 1:nrow(iris2)
-head(iris2)</pre>
-
-<pre >##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species Index
-## 1          5.1         3.5          1.4         0.2  setosa     1
-## 2          4.9         3.0          1.4         0.2  setosa     2
-## 3          4.7         3.2          1.3         0.2  setosa     3
-## 4          4.6         3.1          1.5         0.2  setosa     4
-## 5          5.0         3.6          1.4         0.2  setosa     5
-## 6          5.4         3.9          1.7         0.4  setosa     6</pre>
-
-<pre class = 'prettyprint lang-r'>names(iris2)</pre>
-
-<pre >## [1] &quot;Sepal.Length&quot; &quot;Sepal.Width&quot;  &quot;Petal.Length&quot; &quot;Petal.Width&quot; 
-## [5] &quot;Species&quot;      &quot;Index&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Classes: Extended</h2></hgroup><article  id="data-classes-extended">
+</article></slide><slide class=''><hgroup><h2>Data Classes</h2></hgroup><article  id="data-classes-2">
 
 <p>Extensions of &quot;normal&quot; data classes:</p>
 
@@ -670,7 +568,261 @@ head(iris2)</pre>
 <li>Arrays: any extension of matrices with more than 2 dimensions, e.g. 3x3x3 cube</li>
 <li>Lists: more flexible container for R objects.</li>
 </ul></li>
-</ul></article></slide>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Arrays</h2></hgroup><article  id="arrays">
+
+<p>These are just more flexible matrices - you should just be made aware of them as some functions return objects of this class, for example, cross tabulating over more than 2 variables and the <code>tapply</code> function.</p>
+
+</article></slide><slide class=''><hgroup><h2>Arrays</h2></hgroup><article  id="arrays-1">
+
+<p>Selecting from arrays is similar to matrices, just with additional commas for the additional slots.</p>
+
+<pre class = 'prettyprint lang-r'>ar = array(1:27, c(3,3,3))
+ar[,,1]</pre>
+
+<pre >##      [,1] [,2] [,3]
+## [1,]    1    4    7
+## [2,]    2    5    8
+## [3,]    3    6    9</pre>
+
+<pre class = 'prettyprint lang-r'>ar[,1,]</pre>
+
+<pre >##      [,1] [,2] [,3]
+## [1,]    1   10   19
+## [2,]    2   11   20
+## [3,]    3   12   21</pre>
+
+</article></slide><slide class=''><hgroup><h2>Lists</h2></hgroup><article  id="lists">
+
+<ul>
+<li>One other data type that is the most generic are <code>lists</code>.</li>
+<li>Can be created using list()</li>
+<li>Can hold vectors, strings, matrices, models, list of other list, lists upon lists!</li>
+<li>Can reference data using $ (if the elements are named), or using [], or [[]]</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist &lt;- list(letters=c(&quot;A&quot;, &quot;b&quot;, &quot;c&quot;), 
++         numbers=1:3, matrix(1:25, ncol=5))</pre>
+
+</article></slide><slide class=''><hgroup><h2>List Structure</h2></hgroup><article  id="list-structure">
+
+<pre class = 'prettyprint lang-r'>&gt; head(mylist)</pre>
+
+<pre >$letters
+[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;
+
+$numbers
+[1] 1 2 3
+
+[[3]]
+     [,1] [,2] [,3] [,4] [,5]
+[1,]    1    6   11   16   21
+[2,]    2    7   12   17   22
+[3,]    3    8   13   18   23
+[4,]    4    9   14   19   24
+[5,]    5   10   15   20   25</pre>
+
+</article></slide><slide class=''><hgroup><h2>List referencing</h2></hgroup><article  id="list-referencing">
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[1] # returns a list</pre>
+
+<pre >$letters
+[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[&quot;letters&quot;] # returns a list</pre>
+
+<pre >$letters
+[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>List referencing</h2></hgroup><article  id="list-referencing-1">
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[[1]] # returns the vector &#39;letters&#39;</pre>
+
+<pre >[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist$letters # returns vector</pre>
+
+<pre >[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[[&quot;letters&quot;]] # returns the vector &#39;letters&#39;</pre>
+
+<pre >[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>List referencing</h2></hgroup><article  id="list-referencing-2">
+
+<p>You can also select multiple lists with the single brackets.</p>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[1:2] # returns a list</pre>
+
+<pre >$letters
+[1] &quot;A&quot; &quot;b&quot; &quot;c&quot;
+
+$numbers
+[1] 1 2 3</pre>
+
+</article></slide><slide class=''><hgroup><h2>List referencing</h2></hgroup><article  id="list-referencing-3">
+
+<p>You can also select down several levels of a list at once</p>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist$letters[1]</pre>
+
+<pre >[1] &quot;A&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[[2]][1]</pre>
+
+<pre >[1] 1</pre>
+
+<pre class = 'prettyprint lang-r'>&gt; mylist[[3]][1:2,1:2]</pre>
+
+<pre >     [,1] [,2]
+[1,]    1    6
+[2,]    2    7</pre>
+
+</article></slide><slide class=''><hgroup><h2>Splitting Data Frames</h2></hgroup><article  id="splitting-data-frames">
+
+<p>The <code>split()</code> function is useful for splitting <code>data.frame</code>s</p>
+
+<p>&quot;<code>split</code> divides the data in the vector x into the groups defined by <code>f</code>. The replacement forms replace values corresponding to such a division. <code>unsplit</code> reverses the effect of split.&quot;</p>
+
+<pre class = 'prettyprint lang-r'>&gt; dayList = split(circ,circ$day)</pre>
+
+</article></slide><slide class=''><hgroup><h2>Splitting Data Frames</h2></hgroup><article  id="splitting-data-frames-1" class="smaller">
+
+<p>Here is a good chance to introduce <code>lapply</code>, which performs a function within each list element:</p>
+
+<pre class = 'prettyprint lang-r'>&gt; # head(dayList)
+&gt; lapply(dayList, head, n=2)</pre>
+
+<pre >$Friday
+      day       date orangeBoardings orangeAlightings orangeAverage
+5  Friday 01/15/2010            1645             1643        1644.0
+12 Friday 01/22/2010            1401             1388        1394.5
+   purpleBoardings purpleAlightings purpleAverage greenBoardings
+5               NA               NA            NA             NA
+12              NA               NA            NA             NA
+   greenAlightings greenAverage bannerBoardings bannerAlightings
+5               NA           NA              NA               NA
+12              NA           NA              NA               NA
+   bannerAverage  daily    newDate   newDate2
+5             NA 1644.0 2010-01-15 2010-01-15
+12            NA 1394.5 2010-01-22 2010-01-22
+
+$Monday
+     day       date orangeBoardings orangeAlightings orangeAverage
+1 Monday 01/11/2010             877             1027         952.0
+8 Monday 01/18/2010             999             1000         999.5
+  purpleBoardings purpleAlightings purpleAverage greenBoardings
+1              NA               NA            NA             NA
+8              NA               NA            NA             NA
+  greenAlightings greenAverage bannerBoardings bannerAlightings
+1              NA           NA              NA               NA
+8              NA           NA              NA               NA
+  bannerAverage daily    newDate   newDate2
+1            NA 952.0 2010-01-11 2010-01-11
+8            NA 999.5 2010-01-18 2010-01-18
+
+$Saturday
+        day       date orangeBoardings orangeAlightings orangeAverage
+6  Saturday 01/16/2010            1457             1524        1490.5
+13 Saturday 01/23/2010            1202             1210        1206.0
+   purpleBoardings purpleAlightings purpleAverage greenBoardings
+6               NA               NA            NA             NA
+13              NA               NA            NA             NA
+   greenAlightings greenAverage bannerBoardings bannerAlightings
+6               NA           NA              NA               NA
+13              NA           NA              NA               NA
+   bannerAverage  daily    newDate   newDate2
+6             NA 1490.5 2010-01-16 2010-01-16
+13            NA 1206.0 2010-01-23 2010-01-23
+
+$Sunday
+      day       date orangeBoardings orangeAlightings orangeAverage
+7  Sunday 01/17/2010             839              938         888.5
+14 Sunday 01/24/2010             715              711         713.0
+   purpleBoardings purpleAlightings purpleAverage greenBoardings
+7               NA               NA            NA             NA
+14              NA               NA            NA             NA
+   greenAlightings greenAverage bannerBoardings bannerAlightings
+7               NA           NA              NA               NA
+14              NA           NA              NA               NA
+   bannerAverage daily    newDate   newDate2
+7             NA 888.5 2010-01-17 2010-01-17
+14            NA 713.0 2010-01-24 2010-01-24
+
+$Thursday
+        day       date orangeBoardings orangeAlightings orangeAverage
+4  Thursday 01/14/2010            1194             1233        1213.5
+11 Thursday 01/21/2010            1303             1307        1305.0
+   purpleBoardings purpleAlightings purpleAverage greenBoardings
+4               NA               NA            NA             NA
+11              NA               NA            NA             NA
+   greenAlightings greenAverage bannerBoardings bannerAlightings
+4               NA           NA              NA               NA
+11              NA           NA              NA               NA
+   bannerAverage  daily    newDate   newDate2
+4             NA 1213.5 2010-01-14 2010-01-14
+11            NA 1305.0 2010-01-21 2010-01-21
+
+$Tuesday
+      day       date orangeBoardings orangeAlightings orangeAverage
+2 Tuesday 01/12/2010             777              815           796
+9 Tuesday 01/19/2010            1023             1047          1035
+  purpleBoardings purpleAlightings purpleAverage greenBoardings
+2              NA               NA            NA             NA
+9              NA               NA            NA             NA
+  greenAlightings greenAverage bannerBoardings bannerAlightings
+2              NA           NA              NA               NA
+9              NA           NA              NA               NA
+  bannerAverage daily    newDate   newDate2
+2            NA   796 2010-01-12 2010-01-12
+9            NA  1035 2010-01-19 2010-01-19
+
+$Wednesday
+         day       date orangeBoardings orangeAlightings orangeAverage
+3  Wednesday 01/13/2010            1203             1220        1211.5
+10 Wednesday 01/20/2010            1375             1416        1395.5
+   purpleBoardings purpleAlightings purpleAverage greenBoardings
+3               NA               NA            NA             NA
+10              NA               NA            NA             NA
+   greenAlightings greenAverage bannerBoardings bannerAlightings
+3               NA           NA              NA               NA
+10              NA           NA              NA               NA
+   bannerAverage  daily    newDate   newDate2
+3             NA 1211.5 2010-01-13 2010-01-13
+10            NA 1395.5 2010-01-20 2010-01-20</pre>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+
+<pre class = 'prettyprint lang-r'>&gt; # head(dayList)
+&gt; lapply(dayList, dim)</pre>
+
+<pre >$Friday
+[1] 164  17
+
+$Monday
+[1] 164  17
+
+$Saturday
+[1] 163  17
+
+$Sunday
+[1] 163  17
+
+$Thursday
+[1] 164  17
+
+$Tuesday
+[1] 164  17
+
+$Wednesday
+[1] 164  17</pre>
+
+</article></slide><slide class=''><hgroup><h2>General Class Information</h2></hgroup><article  id="general-class-information">
+
+<p>There are two useful functions associated with practically all R classes, which relate to logically checking the underlying class (<code>is.CLASS_()</code>) and coercing between classes (<code>as.CLASS_()</code>).</p>
+
+<p>We saw some examples of coercion in the past, like <code>as.numeric()</code> and <code>as.character()</code> regarding the <code>factor</code> class and also <code>as.Date()</code> for the <code>date</code> class.</p></article></slide>
 
 
   <slide class="backdrop"></slide>
