@@ -117,7 +117,9 @@
 
 <p>Again - <code>table</code>, <code>summarize</code>, <code>is.na</code>, <code>any</code>, <code>all</code> are useful.</p>
 
-</article></slide><slide class=''><hgroup><h2>Missing data</h2></hgroup><article  id="missing-data">
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Dealing with Missing Data</h2></hgroup><article  id="dealing-with-missing-data">
+
+</article></slide><slide class=''><hgroup><h2>Missing data types</h2></hgroup><article  id="missing-data-types">
 
 <p>One of the most important aspects of data cleaning is missing values.</p>
 
@@ -145,10 +147,10 @@
 
 <p>One important aspect (esp with subsetting) is that logical operations return <code>NA</code> for <code>NA</code> values. Think about it, the data could be <code>&gt; 2</code> or not we don&#39;t know, so <code>R</code> says there is no <code>TRUE</code> or <code>FALSE</code>, so that is missing:</p>
 
-<pre class = 'prettyprint lang-r'>x = c(0, 1, 2, 3, NA, 3, 3, 2,2, 3)
+<pre class = 'prettyprint lang-r'>x = c(0, NA, 2, 3, 4)
 x &gt; 2</pre>
 
-<pre >##  [1] FALSE FALSE FALSE  TRUE    NA  TRUE  TRUE FALSE FALSE  TRUE</pre>
+<pre >[1] FALSE    NA FALSE  TRUE  TRUE</pre>
 
 </article></slide><slide class=''><hgroup><h2>Missing Data with Logicals</h2></hgroup><article  id="missing-data-with-logicals-1">
 
@@ -156,27 +158,41 @@ x &gt; 2</pre>
 
 <pre class = 'prettyprint lang-r'>x != NA</pre>
 
-<pre >##  [1] NA NA NA NA NA NA NA NA NA NA</pre>
+<pre >[1] NA NA NA NA NA</pre>
 
 <pre class = 'prettyprint lang-r'>x &gt; 2 &amp; !is.na(x)</pre>
 
-<pre >##  [1] FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE</pre>
+<pre >[1] FALSE FALSE FALSE  TRUE  TRUE</pre>
 
 </article></slide><slide class=''><hgroup><h2>Missing Data with Logicals</h2></hgroup><article  id="missing-data-with-logicals-2">
 
 <p>What about seeing if a value is equal to multiple values? You can do <code>(x == 1 | x == 2) &amp; !is.na(x)</code>, but that is not efficient. Introduce the <code>%in%</code> operator:</p>
 
-<pre class = 'prettyprint lang-r'>(x == 1 | x == 2) # has NA</pre>
+<pre class = 'prettyprint lang-r'>(x == 0 | x == 2) # has NA</pre>
 
-<pre >##  [1] FALSE  TRUE  TRUE FALSE    NA FALSE FALSE  TRUE  TRUE FALSE</pre>
+<pre >[1]  TRUE    NA  TRUE FALSE FALSE</pre>
 
-<pre class = 'prettyprint lang-r'>(x == 1 | x == 2) &amp; !is.na(x) # No NA</pre>
+<pre class = 'prettyprint lang-r'>(x == 0 | x == 2) &amp; !is.na(x) # No NA</pre>
 
-<pre >##  [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE</pre>
+<pre >[1]  TRUE FALSE  TRUE FALSE FALSE</pre>
 
-<pre class = 'prettyprint lang-r'>x %in% c(1, 2) # NEVER has NA and returns logical</pre>
+<pre class = 'prettyprint lang-r'>x %in% c(0, 2) # NEVER has NA and returns logical</pre>
 
-<pre >##  [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE</pre>
+<pre >[1]  TRUE FALSE  TRUE FALSE FALSE</pre>
+
+</article></slide><slide class=''><hgroup><h2>Missing Data with Operations</h2></hgroup><article  id="missing-data-with-operations">
+
+<p>Similarly with logicals, operations/arithmetic with <code>NA</code> will result in <code>NA</code>s:</p>
+
+<pre class = 'prettyprint lang-r'>x + 2</pre>
+
+<pre >[1]  2 NA  4  5  6</pre>
+
+<pre class = 'prettyprint lang-r'>x * 2</pre>
+
+<pre >[1]  0 NA  4  6  8</pre>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Tables and Tabulations</h2></hgroup><article  id="tables-and-tabulations">
 
 </article></slide><slide class=''><hgroup><h2>Creating One-way Tables</h2></hgroup><article  id="creating-one-way-tables" class="smaller">
 
@@ -184,16 +200,15 @@ x &gt; 2</pre>
 
 <pre class = 'prettyprint lang-r'>table(x)</pre>
 
-<pre >## x
-## 0 1 2 3 
-## 1 1 3 4</pre>
+<pre >x
+0 2 3 4 
+1 1 1 1 </pre>
 
-<pre class = 'prettyprint lang-r'>table(x, 
-        useNA = &quot;ifany&quot;)</pre>
+<pre class = 'prettyprint lang-r'>table(x, useNA = &quot;ifany&quot;)</pre>
 
-<pre >## x
-##    0    1    2    3 &lt;NA&gt; 
-##    1    1    3    4    1</pre>
+<pre >x
+   0    2    3    4 &lt;NA&gt; 
+   1    1    1    1    1 </pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating One-way Tables</h2></hgroup><article  id="creating-one-way-tables-1" class="smaller">
 
@@ -202,11 +217,11 @@ x &gt; 2</pre>
 <pre class = 'prettyprint lang-r'>table(c(0, 1, 2, 3, 2, 3, 3, 2,2, 3), 
         useNA = &quot;always&quot;)</pre>
 
-<pre >## 
-##    0    1    2    3 &lt;NA&gt; 
-##    1    1    4    4    0</pre>
+<pre >
+   0    1    2    3 &lt;NA&gt; 
+   1    1    4    4    0 </pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-1" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Creating Two-way Tables</h2></hgroup><article  id="creating-two-way-tables" class="smaller">
 
 <p>A two-way table. If you pass in 2 vectors, <code>table</code> creates a 2-dimensional table.</p>
 
@@ -220,90 +235,89 @@ x &gt; 2</pre>
 
 <pre class = 'prettyprint lang-r'>margin.table(tab, 2)</pre>
 
-<pre >## 
-##    0    1    2    3    4 &lt;NA&gt; 
-##    1    1    2    4    2    0</pre>
+<pre >
+   0    1    2    3    4 &lt;NA&gt; 
+   1    1    2    4    2    0 </pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-2" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Proportion Tables</h2></hgroup><article  id="proportion-tables" class="smaller">
 
 <p><code>prop.table</code> finds the marginal proportions of the table. Think of it dividing the table by it&#39;s respective marginal totals. If <code>margin</code> not set, divides by overall total.</p>
 
 <pre class = 'prettyprint lang-r'>prop.table(tab)</pre>
 
-<pre >##       
-##          0   1   2   3   4 &lt;NA&gt;
-##   0    0.1 0.0 0.0 0.0 0.0  0.0
-##   1    0.0 0.1 0.0 0.0 0.0  0.0
-##   2    0.0 0.0 0.2 0.0 0.2  0.0
-##   3    0.0 0.0 0.0 0.4 0.0  0.0
-##   &lt;NA&gt; 0.0 0.0 0.0 0.0 0.0  0.0</pre>
+<pre >      
+         0   1   2   3   4 &lt;NA&gt;
+  0    0.1 0.0 0.0 0.0 0.0  0.0
+  1    0.0 0.1 0.0 0.0 0.0  0.0
+  2    0.0 0.0 0.2 0.0 0.2  0.0
+  3    0.0 0.0 0.0 0.4 0.0  0.0
+  &lt;NA&gt; 0.0 0.0 0.0 0.0 0.0  0.0</pre>
 
 <pre class = 'prettyprint lang-r'>prop.table(tab,1)</pre>
 
-<pre >##       
-##          0   1   2   3   4 &lt;NA&gt;
-##   0    1.0 0.0 0.0 0.0 0.0  0.0
-##   1    0.0 1.0 0.0 0.0 0.0  0.0
-##   2    0.0 0.0 0.5 0.0 0.5  0.0
-##   3    0.0 0.0 0.0 1.0 0.0  0.0
-##   &lt;NA&gt;</pre>
+<pre >      
+         0   1   2   3   4 &lt;NA&gt;
+  0    1.0 0.0 0.0 0.0 0.0  0.0
+  1    0.0 1.0 0.0 0.0 0.0  0.0
+  2    0.0 0.0 0.5 0.0 0.5  0.0
+  3    0.0 0.0 0.0 1.0 0.0  0.0
+  &lt;NA&gt;                         </pre>
 
 </article></slide><slide class=''><hgroup><h2>Download Salary FY2014 Data</h2></hgroup><article  id="download-salary-fy2014-data">
 
 <p>From <a href='https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7' title=''>https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7</a> <a href='http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv' title=''>http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv</a></p>
 
-<p>Read the CSV into R <code>Sal</code></p>
+<p>Read the CSV into R <code>Sal</code>:</p>
 
 <pre class = 'prettyprint lang-r'>Sal = read.csv(&quot;http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv&quot;,
                as.is = TRUE)</pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-3" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Checking for logical conditions</h2></hgroup><article  id="checking-for-logical-conditions" class="smaller">
 
 <ul>
 <li><code>any()</code> - checks if there are any <code>TRUE</code>s</li>
 <li><code>all()</code> - checks if ALL are true</li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>Sal[1:4,]</pre>
+<pre class = 'prettyprint lang-r'>head(Sal,2)</pre>
 
-<pre >##                 Name                      JobTitle AgencyID
-## 1    Aaron,Keontae E                AIDE BLUE CHIP   W02200
-## 2   Aaron,Patricia G Facilities/Office Services II   A03031
-## 3      Aaron,Petra L    ASSISTANT STATE&#39;S ATTORNEY   A29005
-## 4 Abaineh,Yohannes T                EPIDEMIOLOGIST   A65026
-##                     Agency   HireDate AnnualSalary  GrossPay
-## 1           Youth Summer   06/10/2013    $11310.00   $873.63
-## 2      OED-Employment Dev  10/24/1979    $53428.00 $52868.38
-## 3 States Attorneys Office  09/25/2006    $68300.00 $67439.19
-## 4  HLTH-Health Department  07/23/2009    $62000.00 $58654.74</pre>
+<pre >              Name                      JobTitle AgencyID
+1  Aaron,Keontae E                AIDE BLUE CHIP   W02200
+2 Aaron,Patricia G Facilities/Office Services II   A03031
+               Agency   HireDate AnnualSalary  GrossPay
+1      Youth Summer   06/10/2013    $11310.00   $873.63
+2 OED-Employment Dev  10/24/1979    $53428.00 $52868.38</pre>
 
 <pre class = 'prettyprint lang-r'>any(is.na(Sal$Name)) # are there any NAs?</pre>
 
-<pre >## [1] FALSE</pre>
+<pre >[1] FALSE</pre>
 
-</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning">
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Recoding Variables</h2></hgroup><article  id="recoding-variables">
+
+</article></slide><slide class=''><hgroup><h2>Example of Recoding: base R</h2></hgroup><article  id="example-of-recoding-base-r">
 
 <p>For example, let&#39;s say gender was coded as Male, M, m, Female, F, f. Using Excel to find all of these would be a matter of filtering and changing all by hand or using if statements.</p>
 
 <p>In R, you can simply do something like:</p>
 
-<pre >data$gender[data$gender %in% 
+<pre class = 'prettyprint lang-r'>data$gender[data$gender %in% 
     c(&quot;Male&quot;, &quot;M&quot;, &quot;m&quot;)] &lt;- &quot;Male&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning-1">
+</article></slide><slide class=''><hgroup><h2>Example of Recoding with <code>recode</code>: <code>car</code> package</h2></hgroup><article  id="example-of-recoding-with-recode-car-package">
 
 <p>You can also <code>recode</code> a vector:</p>
 
-<pre class = 'prettyprint lang-r'>library(car)
-x = rep(c(&quot;Male&quot;, &quot;M&quot;, &quot;m&quot;, &quot;f&quot;, &quot;Female&quot;, &quot;female&quot; ), each = 3)
+<pre class = 'prettyprint lang-r'>library(car, quietly = TRUE)
+x = rep(c(&quot;Male&quot;, &quot;M&quot;, &quot;m&quot;, &quot;f&quot;, &quot;Female&quot;, &quot;female&quot; ), 
+        each = 3)
 car::recode(x, &quot;c(&#39;m&#39;, &#39;M&#39;, &#39;male&#39;) = &#39;Male&#39;;
             c(&#39;f&#39;, &#39;F&#39;, &#39;female&#39;) = &#39;Female&#39;;&quot;)</pre>
 
-<pre >##  [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  
-##  [8] &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
-## [15] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;</pre>
+<pre > [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  
+ [8] &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
+[15] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning-2">
+</article></slide><slide class=''><hgroup><h2>Example of Recoding with <code>revalue</code>: <code>plyr</code></h2></hgroup><article  id="example-of-recoding-with-revalue-plyr">
 
 <p>You can also <code>revalue</code> a vector with the <code>revalue</code> command</p>
 
@@ -311,34 +325,200 @@ car::recode(x, &quot;c(&#39;m&#39;, &#39;M&#39;, &#39;male&#39;) = &#39;Male&#39
 plyr::revalue(x, c(&quot;M&quot; = &quot;Male&quot;, &quot;m&quot; = &quot;Male&quot;,
                    &quot;f&quot; = &quot;Female&quot;, &quot;female&quot; = &quot;Female&quot;))</pre>
 
-<pre >##  [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  
-##  [8] &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
-## [15] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;</pre>
+<pre > [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  
+ [8] &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
+[15] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning-3">
+</article></slide><slide class=''><hgroup><h2>Example of Cleaning: more complicated</h2></hgroup><article  id="example-of-cleaning-more-complicated">
 
 <p>Sometimes though, it&#39;s not so simple. That&#39;s where functions that find patterns come in very useful.</p>
 
 <pre class = 'prettyprint lang-r'>table(gender)</pre>
 
-<pre >## gender
-##      F FeMAle FEMALE     Fm      M     Ma   mAle   Male   MaLe   MALE 
-##     75     82     74     89     89     79     87     89     88     95 
-##    Man  Woman 
-##     73     80</pre>
+<pre >gender
+     F FeMAle FEMALE     Fm      M     Ma   mAle   Male   MaLe   MALE 
+    75     82     74     89     89     79     87     89     88     95 
+   Man  Woman 
+    73     80 </pre>
 
-</article></slide><slide class=''><hgroup><h2>Find/Replace and Regular Expressions</h2></hgroup><article  id="findreplace-and-regular-expressions">
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>String functions</h2></hgroup><article  id="string-functions">
+
+</article></slide><slide class=''><hgroup><h2>Pasting strings with <code>paste</code> and <code>paste0</code></h2></hgroup><article  id="pasting-strings-with-paste-and-paste0">
+
+<p>Paste can be very useful for joining vectors together:</p>
+
+<pre class = 'prettyprint lang-r'>paste(&quot;Visit&quot;, 1:5, sep = &quot;_&quot;)</pre>
+
+<pre >[1] &quot;Visit_1&quot; &quot;Visit_2&quot; &quot;Visit_3&quot; &quot;Visit_4&quot; &quot;Visit_5&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>paste(&quot;Visit&quot;, 1:5, sep = &quot;_&quot;, collapse = &quot; &quot;)</pre>
+
+<pre >[1] &quot;Visit_1 Visit_2 Visit_3 Visit_4 Visit_5&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>paste(&quot;To&quot;, &quot;is going be the &quot;, &quot;we go to the store!&quot;, sep = &quot;day &quot;)</pre>
+
+<pre >[1] &quot;Today is going be the day we go to the store!&quot;</pre>
+
+<pre class = 'prettyprint lang-r'># and paste0 can be even simpler see ?paste0 
+paste0(&quot;Visit&quot;,1:5)</pre>
+
+<pre >[1] &quot;Visit1&quot; &quot;Visit2&quot; &quot;Visit3&quot; &quot;Visit4&quot; &quot;Visit5&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Paste Depicting How Collapse Works</h2></hgroup><article  id="paste-depicting-how-collapse-works">
+
+<pre class = 'prettyprint lang-r'>paste(1:5)</pre>
+
+<pre >[1] &quot;1&quot; &quot;2&quot; &quot;3&quot; &quot;4&quot; &quot;5&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>paste(1:5, collapse = &quot; &quot;)</pre>
+
+<pre >[1] &quot;1 2 3 4 5&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Useful String Functions</h2></hgroup><article  id="useful-string-functions">
+
+<p>Useful String functions</p>
+
+<ul>
+<li><code>toupper()</code>, <code>tolower()</code> - uppercase or lowercase your data:</li>
+<li><code>str_trim()</code> (in the <code>stringr</code> package) or <code>trimws</code> in base
+
+<ul>
+<li>will trim whitespace</li>
+</ul></li>
+<li><code>nchar</code> - get the number of characters in a string</li>
+<li><code>paste()</code> - paste strings together with a space</li>
+<li><code>paste0</code> - paste strings together with no space as default</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>The <code>stringr</code> package</h2></hgroup><article  id="the-stringr-package">
+
+<p>Like <code>dplyr</code>, the <code>stringr</code> package:</p>
+
+<ul>
+<li>Makes some things more intuitive</li>
+<li>Is different than base R</li>
+<li>Is used on forums for answers</li>
+<li>Has a standard format for most functions
+
+<ul>
+<li>the first argument is a string like first argument is a <code>data.frame</code> in <code>dplyr</code></li>
+</ul></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Splitting/Find/Replace and Regular Expressions</h2></hgroup><article  id="splittingfindreplace-and-regular-expressions">
 
 <ul>
 <li>R can do much more than find exact matches for a whole string</li>
 <li>Like Perl and other languages, it can use regular expressions.</li>
-<li>What are regular expressions?</li>
+<li>What are regular expressions?
+
+<ul>
 <li>Ways to search for specific strings</li>
 <li>Can be very complicated or simple</li>
-<li>Highly Useful</li>
+<li>Highly Useful - think &quot;Find&quot; on steroids</li>
+</ul></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions</h2></hgroup><article  id="find-functions">
+</article></slide><slide class=''><hgroup><h2>A bit on Regular Expressions</h2></hgroup><article  id="a-bit-on-regular-expressions">
+
+<ul>
+<li><a href='http://www.regular-expressions.info/reference.html' title=''>http://www.regular-expressions.info/reference.html</a></li>
+<li>They can use to match a large number of strings in one statement</li>
+<li><code>.</code> matches any single character</li>
+<li><code>*</code> means repeat as many (even if 0) more times the last character</li>
+<li><code>?</code> makes the last thing optional</li>
+<li><code>^</code> matches start of vector <code>^a</code> - starts with &quot;a&quot;</li>
+<li><code>$</code> matches end of vector <code>b$</code> - ends with &quot;b&quot;</li>
+</ul>
+
+</article></slide><slide class='segue dark nobackground'><hgroup class = 'auto-fadein'><h2>Splitting Strings</h2></hgroup><article  id="splitting-strings">
+
+</article></slide><slide class=''><hgroup><h2>Substringing</h2></hgroup><article  id="substringing">
+
+<p>Very similar:</p>
+
+<p>Base R</p>
+
+<ul>
+<li><code>substr(x, start, stop)</code> - substrings from position start to position stop</li>
+<li><code>strsplit(x, split)</code> - splits strings up - returns list!</li>
+</ul>
+
+<p><code>stringr</code></p>
+
+<ul>
+<li><code>str_sub(x, start, end)</code> - substrings from position start to position end</li>
+<li><code>str_split(string, pattern)</code> - splits strings up - returns list!</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Splitting String: base R</h2></hgroup><article  id="splitting-string-base-r">
+
+<p>In base R, <code>strsplit</code> splits a vector on a string into a list</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;I really&quot;, &quot;like writing&quot;, &quot;R code programs&quot;)
+y &lt;- strsplit(x, split = &quot; &quot;) # returns a list
+y</pre>
+
+<pre >[[1]]
+[1] &quot;I&quot;      &quot;really&quot;
+
+[[2]]
+[1] &quot;like&quot;    &quot;writing&quot;
+
+[[3]]
+[1] &quot;R&quot;        &quot;code&quot;     &quot;programs&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Splitting String: <code>stringr</code></h2></hgroup><article  id="splitting-string-stringr">
+
+<p><code>stringr::str_split</code> do the same thing:</p>
+
+<pre class = 'prettyprint lang-r'>library(stringr)
+y2 &lt;- str_split(x, &quot; &quot;) # returns a list
+y2</pre>
+
+<pre >[[1]]
+[1] &quot;I&quot;      &quot;really&quot;
+
+[[2]]
+[1] &quot;like&quot;    &quot;writing&quot;
+
+[[3]]
+[1] &quot;R&quot;        &quot;code&quot;     &quot;programs&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Using a fixed expression</h2></hgroup><article  id="using-a-fixed-expression">
+
+<p>One example case is when you want to split on a period &quot;<code>.</code>&quot;. In regular expressions <code>.</code> means <strong>ANY</strong> character, so</p>
+
+<pre class = 'prettyprint lang-r'>str_split(&quot;I.like.strings&quot;, &quot;.&quot;)</pre>
+
+<pre >[[1]]
+ [1] &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>str_split(&quot;I.like.strings&quot;, fixed(&quot;.&quot;))</pre>
+
+<pre >[[1]]
+[1] &quot;I&quot;       &quot;like&quot;    &quot;strings&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Let&#39;s extract from <code>y</code></h2></hgroup><article  id="lets-extract-from-y">
+
+<pre class = 'prettyprint lang-r'>suppressPackageStartupMessages(library(dplyr)) # must be loaded AFTER plyr
+y[[2]]</pre>
+
+<pre >[1] &quot;like&quot;    &quot;writing&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>sapply(y, dplyr::first) # on the fly</pre>
+
+<pre >[1] &quot;I&quot;    &quot;like&quot; &quot;R&quot;   </pre>
+
+<pre class = 'prettyprint lang-r'>sapply(y, nth, 2) # on the fly</pre>
+
+<pre >[1] &quot;really&quot;  &quot;writing&quot; &quot;code&quot;   </pre>
+
+<pre class = 'prettyprint lang-r'>sapply(y, last) # on the fly</pre>
+
+<pre >[1] &quot;really&quot;   &quot;writing&quot;  &quot;programs&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: base R</h2></hgroup><article  id="find-functions-base-r">
 
 <p><code>grep</code>: <code>grep</code>, <code>grepl</code>, <code>regexpr</code> and <code>gregexpr</code> search for matches to argument pattern within each element of a character vector: they differ in the format of and amount of detail in the results.</p>
 
@@ -350,63 +530,156 @@ plyr::revalue(x, c(&quot;M&quot; = &quot;Male&quot;, &quot;m&quot; = &quot;Male&
 <li><p>If fixed=TRUE, it will do exact matching for the phrase anywhere in the vector (regular find)</p></li>
 </ul>
 
-</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions</h2></hgroup><article  id="find-functions-1">
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: <code>stringr</code></h2></hgroup><article  id="find-functions-stringr">
+
+<p><code>str_detect</code>, <code>str_subset</code>, <code>str_replace</code>, and <code>str_replace_all</code> search for matches to argument pattern within each element of a character vector: they differ in the format of and amount of detail in the results.</p>
+
+<ul>
+<li><code>str_detect</code> - returns <code>TRUE</code> if <code>pattern</code> is found</li>
+<li><code>str_subset</code> - returns only the strings which pattern were detected
+
+<ul>
+<li>convenient wrapper around <code>x[str_detect(x, pattern)]</code></li>
+</ul></li>
+<li><code>str_extract</code> - returns only strings which pattern were detected, but ONLY the pattern</li>
+<li><code>str_replace</code> - replaces <code>pattern</code> with <code>replacement</code> the first time</li>
+<li><code>str_replace_all</code> - replaces <code>pattern</code> with <code>replacement</code> as many times matched</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: stringr compared to base R</h2></hgroup><article  id="find-functions-stringr-compared-to-base-r">
+
+<p>Base R does not use these functions. Here is a &quot;translator&quot; of the <code>stringr</code> function to base R functions</p>
+
+<ul>
+<li><code>str_detect</code> - similar to <code>grepl</code> (return logical)</li>
+<li><code>grep(value = FALSE)</code> is similar to <code>which(str_detect())</code></li>
+<li><code>str_subset</code> - similar to <code>grep(value = TRUE)</code> - return value of matched</li>
+<li><code>str_replace</code> - similar to <code>sub</code> - replace one time</li>
+<li><code>str_replace_all</code> - similar to <code>gsub</code> - replace many times</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Let&#39;s look at modifier for <code>stringr</code></h2></hgroup><article  id="lets-look-at-modifier-for-stringr">
+
+<p><code>?modifiers</code></p>
+
+<ul>
+<li><code>fixed</code> - match everything exactly</li>
+<li><code>regexp</code> - default - uses <strong>reg</strong>ular <strong>exp</strong>ressions</li>
+<li><code>ignore_case</code> is an option to not have to use <code>tolower</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Important Comparisons</h2></hgroup><article  id="important-comparisons">
+
+<p>Base R:</p>
+
+<ul>
+<li>Argument order is <code>(pattern, x)</code></li>
+<li>Uses option <code>(fixed = TRUE)</code></li>
+</ul>
+
+<p><code>stringr</code></p>
+
+<ul>
+<li>Argument order is <code>(string, pattern)</code> aka <code>(x, pattern)</code></li>
+<li>Uses function <code>fixed(pattern)</code></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: Finding Indices</h2></hgroup><article  id="find-functions-finding-indices">
+
+<p>These are the indices where the pattern match occurs:</p>
 
 <pre class = 'prettyprint lang-r'>grep(&quot;Rawlings&quot;,Sal$Name)</pre>
 
-<pre >## [1] 13832 13833 13834 13835</pre>
+<pre >[1] 13832 13833 13834 13835</pre>
 
-<p>These are the indices/elements where the pattern match occurs</p>
+<pre class = 'prettyprint lang-r'>which(grepl(&quot;Rawlings&quot;, Sal$Name))</pre>
 
-<p><code>grep()</code> returns something similar to which() on a logical statement</p>
+<pre >[1] 13832 13833 13834 13835</pre>
 
-</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions</h2></hgroup><article  id="find-functions-2" class="smaller">
+<pre class = 'prettyprint lang-r'>which(str_detect(Sal$Name, &quot;Rawlings&quot;))</pre>
 
-<pre class = 'prettyprint lang-r'>grep(&quot;Rawlings&quot;,Sal$Name)</pre>
+<pre >[1] 13832 13833 13834 13835</pre>
 
-<pre >## [1] 13832 13833 13834 13835</pre>
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: Finding Logicals</h2></hgroup><article  id="find-functions-finding-logicals">
+
+<p>These are the indices where the pattern match occurs:</p>
+
+<pre class = 'prettyprint lang-r'>head(grepl(&quot;Rawlings&quot;,Sal$Name))</pre>
+
+<pre >[1] FALSE FALSE FALSE FALSE FALSE FALSE</pre>
+
+<pre class = 'prettyprint lang-r'>head(str_detect(Sal$Name, &quot;Rawlings&quot;))</pre>
+
+<pre >[1] FALSE FALSE FALSE FALSE FALSE FALSE</pre>
+
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: finding values, base R</h2></hgroup><article  id="find-functions-finding-values-base-r" class="smaller">
 
 <pre class = 'prettyprint lang-r'>grep(&quot;Rawlings&quot;,Sal$Name,value=TRUE)</pre>
 
-<pre >## [1] &quot;Rawlings,Kellye A&quot;          &quot;Rawlings,MarqWell D&quot;       
-## [3] &quot;Rawlings,Paula M&quot;           &quot;Rawlings-Blake,Stephanie C&quot;</pre>
+<pre >[1] &quot;Rawlings,Kellye A&quot;          &quot;Rawlings,MarqWell D&quot;       
+[3] &quot;Rawlings,Paula M&quot;           &quot;Rawlings-Blake,Stephanie C&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>Sal[grep(&quot;Rawlings&quot;,Sal$Name),]</pre>
 
-<pre >##                             Name             JobTitle AgencyID
-## 13832          Rawlings,Kellye A EMERGENCY DISPATCHER   A40302
-## 13833        Rawlings,MarqWell D       AIDE BLUE CHIP   W02384
-## 13834           Rawlings,Paula M       COMMUNITY AIDE   A04015
-## 13835 Rawlings-Blake,Stephanie C                MAYOR   A01001
-##                     Agency   HireDate AnnualSalary   GrossPay
-## 13832 M-R Info Technology  01/06/2003    $47980.00  $68426.73
-## 13833       Youth Summer   06/15/2012    $11310.00    $507.50
-## 13834      R&amp;P-Recreation  12/10/2007    $19802.00   $8195.79
-## 13835       Mayors Office  12/07/1995   $163365.00 $161219.24</pre>
+<pre >                            Name             JobTitle AgencyID
+13832          Rawlings,Kellye A EMERGENCY DISPATCHER   A40302
+13833        Rawlings,MarqWell D       AIDE BLUE CHIP   W02384
+13834           Rawlings,Paula M       COMMUNITY AIDE   A04015
+13835 Rawlings-Blake,Stephanie C                MAYOR   A01001
+                    Agency   HireDate AnnualSalary   GrossPay
+13832 M-R Info Technology  01/06/2003    $47980.00  $68426.73
+13833       Youth Summer   06/15/2012    $11310.00    $507.50
+13834      R&amp;P-Recreation  12/10/2007    $19802.00   $8195.79
+13835       Mayors Office  12/07/1995   $163365.00 $161219.24</pre>
 
-</article></slide><slide class=''><hgroup><h2><code>grep()</code> Options</h2></hgroup><article  id="grep-options">
+</article></slide><slide class=''><hgroup><h2>&#39;Find&#39; functions: finding values, <code>stringr</code> and <code class="smaller">dplyr</code></h2></hgroup><article  id="find-functions-finding-values-stringr-and-dplyr">
 
-<pre class = 'prettyprint lang-r'>head(grep(&quot;Tajhgh&quot;,Sal$Name, value=TRUE))</pre>
+<pre class = 'prettyprint lang-r'>str_subset(Sal$Name, &quot;Rawlings&quot;)</pre>
 
-<pre >## [1] &quot;Reynold,Tajhgh J&quot;</pre>
+<pre >[1] &quot;Rawlings,Kellye A&quot;          &quot;Rawlings,MarqWell D&quot;       
+[3] &quot;Rawlings,Paula M&quot;           &quot;Rawlings-Blake,Stephanie C&quot;</pre>
 
-<pre class = 'prettyprint lang-r'>grep(&quot;Jaffe&quot;,Sal$Name)</pre>
+<pre class = 'prettyprint lang-r'>Sal %&gt;% filter(str_detect(Name, &quot;Rawlings&quot;))</pre>
 
-<pre >## [1] 8603</pre>
+<pre >                        Name             JobTitle AgencyID
+1          Rawlings,Kellye A EMERGENCY DISPATCHER   A40302
+2        Rawlings,MarqWell D       AIDE BLUE CHIP   W02384
+3           Rawlings,Paula M       COMMUNITY AIDE   A04015
+4 Rawlings-Blake,Stephanie C                MAYOR   A01001
+                Agency   HireDate AnnualSalary   GrossPay
+1 M-R Info Technology  01/06/2003    $47980.00  $68426.73
+2       Youth Summer   06/15/2012    $11310.00    $507.50
+3      R&amp;P-Recreation  12/10/2007    $19802.00   $8195.79
+4       Mayors Office  12/07/1995   $163365.00 $161219.24</pre>
 
-<pre class = 'prettyprint lang-r'>length(grep(&quot;Jaffe&quot;,Sal$Name))</pre>
+</article></slide><slide class=''><hgroup><h2>Showing differnce in <code>str_extract</code></h2></hgroup><article  id="showing-differnce-in-str_extract">
 
-<pre >## [1] 1</pre>
+<p><code>str_extract</code> extracts just the matched string</p>
 
-</article></slide><slide class=''><hgroup><h2>A bit on Regular Expressions</h2></hgroup><article  id="a-bit-on-regular-expressions">
+<pre class = 'prettyprint lang-r'>ss = str_extract(Sal$Name, &quot;Rawling&quot;)
+head(ss)</pre>
 
-<ul>
-<li><a href='http://www.regular-expressions.info/reference.html' title=''>http://www.regular-expressions.info/reference.html</a></li>
-<li>They can use to match a large number of strings in one statement</li>
-<li><code>.</code> matches any single character</li>
-<li><code>*</code> means repeat as many (even if 0) more times the last character</li>
-<li><code>?</code> makes the last thing optional</li>
-</ul>
+<pre >[1] NA NA NA NA NA NA</pre>
+
+<pre class = 'prettyprint lang-r'>ss[ !is.na(ss)]</pre>
+
+<pre >[1] &quot;Rawling&quot; &quot;Rawling&quot; &quot;Rawling&quot; &quot;Rawling&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Showing differnce in <code>str_extract</code> and <code>str_extract_all</code></h2></hgroup><article  id="showing-differnce-in-str_extract-and-str_extract_all">
+
+<p><code>str_extract_all</code> extracts all the matched strings</p>
+
+<pre class = 'prettyprint lang-r'>head(str_extract(Sal$AgencyID, &quot;\\d&quot;))</pre>
+
+<pre >[1] &quot;0&quot; &quot;0&quot; &quot;2&quot; &quot;6&quot; &quot;9&quot; &quot;4&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>head(str_extract_all(Sal$AgencyID, &quot;\\d&quot;), 2)</pre>
+
+<pre >[[1]]
+[1] &quot;0&quot; &quot;2&quot; &quot;2&quot; &quot;0&quot; &quot;0&quot;
+
+[[2]]
+[1] &quot;0&quot; &quot;3&quot; &quot;0&quot; &quot;3&quot; &quot;1&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Using Regular Expressions</h2></hgroup><article  id="using-regular-expressions">
 
@@ -416,31 +689,39 @@ plyr::revalue(x, c(&quot;M&quot; = &quot;Male&quot;, &quot;m&quot; = &quot;Male&
 <ul>
 <li>Payne at the beginning,</li>
 <li>Leonard and then an S</li>
-<li>Spence then a capital C</li>
+<li>Spence then capital C</li>
 </ul></li>
 </ul>
 
-<pre class = 'prettyprint lang-r'>grep(&quot;Payne.*&quot;, x=Sal$Name, value=TRUE)</pre>
+<pre class = 'prettyprint lang-r'>head(grep(&quot;^Payne.*&quot;, x = Sal$Name, value = TRUE), 3)</pre>
 
-<pre >##  [1] &quot;Payne El,Jackie&quot;         &quot;Payne Johnson,Nickole A&quot;
-##  [3] &quot;Payne,Chanel&quot;            &quot;Payne,Connie T&quot;         
-##  [5] &quot;Payne,Denise I&quot;          &quot;Payne,Dominic R&quot;        
-##  [7] &quot;Payne,James R&quot;           &quot;Payne,Jasman T&quot;         
-##  [9] &quot;Payne,Joey D&quot;            &quot;Payne,Jordan A&quot;         
-## [11] &quot;Payne,Karen V&quot;           &quot;Payne,Karen V&quot;          
-## [13] &quot;Payne,Leonard S&quot;         &quot;Payne,Mary A&quot;           
-## [15] &quot;Payne,Micah W&quot;           &quot;Payne,Michael C&quot;        
-## [17] &quot;Payne,Michael N&quot;         &quot;Payne,Morag&quot;            
-## [19] &quot;Payne,Nora M&quot;            &quot;Payne,Shelley F&quot;</pre>
+<pre >[1] &quot;Payne El,Jackie&quot;         &quot;Payne Johnson,Nickole A&quot;
+[3] &quot;Payne,Chanel&quot;           </pre>
 
-<pre class = 'prettyprint lang-r'>grep(&quot;Leonard.?S&quot;, x=Sal$Name, value=TRUE)</pre>
+<pre class = 'prettyprint lang-r'>head(grep(&quot;Leonard.?S&quot;, x = Sal$Name, value = TRUE))</pre>
 
-<pre >## [1] &quot;Payne,Leonard S&quot;      &quot;Szumlanski,Leonard S&quot;</pre>
+<pre >[1] &quot;Payne,Leonard S&quot;      &quot;Szumlanski,Leonard S&quot;</pre>
 
-<pre class = 'prettyprint lang-r'>grep(&quot;Spence.*C.*&quot;, x=Sal$Name, value=TRUE)</pre>
+<pre class = 'prettyprint lang-r'>head(grep(&quot;Spence.*C.*&quot;, x = Sal$Name, value = TRUE))</pre>
 
-<pre >## [1] &quot;Greene,Spencer C&quot;    &quot;Spencer,Charles A&quot;   &quot;Spencer,Christian O&quot;
-## [4] &quot;Spencer,Clarence W&quot;  &quot;Spencer,Michael C&quot;</pre>
+<pre >[1] &quot;Greene,Spencer C&quot;    &quot;Spencer,Charles A&quot;   &quot;Spencer,Christian O&quot;
+[4] &quot;Spencer,Clarence W&quot;  &quot;Spencer,Michael C&quot;  </pre>
+
+</article></slide><slide class=''><hgroup><h2>Using Regular Expressions: <code>stringr</code></h2></hgroup><article  id="using-regular-expressions-stringr">
+
+<pre class = 'prettyprint lang-r'>head(str_subset( Sal$Name, &quot;^Payne.*&quot;), 3)</pre>
+
+<pre >[1] &quot;Payne El,Jackie&quot;         &quot;Payne Johnson,Nickole A&quot;
+[3] &quot;Payne,Chanel&quot;           </pre>
+
+<pre class = 'prettyprint lang-r'>head(str_subset( Sal$Name, &quot;Leonard.?S&quot;))</pre>
+
+<pre >[1] &quot;Payne,Leonard S&quot;      &quot;Szumlanski,Leonard S&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>head(str_subset( Sal$Name, &quot;Spence.*C.*&quot;))</pre>
+
+<pre >[1] &quot;Greene,Spencer C&quot;    &quot;Spencer,Charles A&quot;   &quot;Spencer,Christian O&quot;
+[4] &quot;Spencer,Clarence W&quot;  &quot;Spencer,Michael C&quot;  </pre>
 
 </article></slide><slide class=''><hgroup><h2>Replace</h2></hgroup><article  id="replace">
 
@@ -448,357 +729,68 @@ plyr::revalue(x, c(&quot;M&quot; = &quot;Male&quot;, &quot;m&quot; = &quot;Male&
 
 <pre class = 'prettyprint lang-r'>class(Sal$AnnualSalary)</pre>
 
-<pre >## [1] &quot;character&quot;</pre>
+<pre >[1] &quot;character&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>sort(c(&quot;1&quot;, &quot;2&quot;, &quot;10&quot;)) #  not sort correctly (order simply ranks the data)</pre>
 
-<pre >## [1] &quot;1&quot;  &quot;10&quot; &quot;2&quot;</pre>
+<pre >[1] &quot;1&quot;  &quot;10&quot; &quot;2&quot; </pre>
 
 <pre class = 'prettyprint lang-r'>order(c(&quot;1&quot;, &quot;2&quot;, &quot;10&quot;))</pre>
 
-<pre >## [1] 1 3 2</pre>
+<pre >[1] 1 3 2</pre>
 
 </article></slide><slide class=''><hgroup><h2>Replace</h2></hgroup><article  id="replace-1">
 
 <p>So we must change the annual pay into a numeric:</p>
 
+<pre class = 'prettyprint lang-r'>head(Sal$AnnualSalary, 4)</pre>
+
+<pre >[1] &quot;$11310.00&quot; &quot;$53428.00&quot; &quot;$68300.00&quot; &quot;$62000.00&quot;</pre>
+
 <pre class = 'prettyprint lang-r'>head(as.numeric(Sal$AnnualSalary), 4)</pre>
 
-<pre >## [1] NA NA NA NA</pre>
+<pre >Warning in head(as.numeric(Sal$AnnualSalary), 4): NAs introduced by
+coercion</pre>
 
-<p>R didn&#39;t like the $ so it thought turned them all to <code>NA</code>.</p>
+<pre >[1] NA NA NA NA</pre>
 
-<p><code>sub()</code> and <code>gsub()</code> can do the replacing part.</p>
+<p>R didn&#39;t like the <code>$</code> so it thought turned them all to <code>NA</code>.</p>
+
+<p><code>sub()</code> and <code>gsub()</code> can do the replacing part in base R.</p>
 
 </article></slide><slide class=''><hgroup><h2>Replacing and subbing</h2></hgroup><article  id="replacing-and-subbing" class="smaller">
 
-<p>Now we can replace the <code>$</code> with nothing (used fixed=TRUE because $ means something in regular expressions):</p>
+<p>Now we can replace the <code>$</code> with nothing (used <code>fixed=TRUE</code> because <code>$</code> means ending):</p>
 
-<pre class = 'prettyprint lang-r'>Sal$AnnualSalary &lt;- as.numeric(gsub(pattern=&quot;$&quot;, replacement=&quot;&quot;, 
+<pre class = 'prettyprint lang-r'>Sal$AnnualSalary &lt;- as.numeric(gsub(pattern = &quot;$&quot;, replacement=&quot;&quot;, 
                               Sal$AnnualSalary, fixed=TRUE))
-Sal &lt;- Sal[order(Sal$AnnualSalary,decreasing=TRUE), ] # use negative to sort descending
+Sal &lt;- Sal[order(Sal$AnnualSalary, decreasing=TRUE), ] 
 Sal[1:5, c(&quot;Name&quot;, &quot;AnnualSalary&quot;, &quot;JobTitle&quot;)]</pre>
 
-<pre >##                    Name AnnualSalary              JobTitle
-## 1222  Bernstein,Gregg L       238772      STATE&#39;S ATTORNEY
-## 3175   Charles,Ronnie E       200000   EXECUTIVE LEVEL III
-## 985     Batts,Anthony W       193800   EXECUTIVE LEVEL III
-## 1343      Black,Harry E       190000   EXECUTIVE LEVEL III
-## 16352     Swift,Michael       187200 CONTRACT SERV SPEC II</pre>
-
-</article></slide><slide class=''><hgroup><h2>Useful String Functions</h2></hgroup><article  id="useful-string-functions">
-
-<p>Useful String functions</p>
-
-<ul>
-<li><code>toupper()</code>, <code>tolower()</code> - uppercase or lowercase your data:</li>
-<li><code>str_trim()</code> (in the <code>stringr</code> package) - will trim whitespace</li>
-<li><code>nchar</code> - get the number of characters in a string</li>
-<li><code>substr(x, start, stop)</code> - substrings from position start to position stop</li>
-<li><code>strsplit(x, split)</code> - splits strings up - returns list!</li>
-<li><code>paste()</code> - paste strings together - look at <code>?paste</code></li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Paste</h2></hgroup><article  id="paste">
-
-<p>Paste can be very useful for joining vectors together:</p>
-
-<pre class = 'prettyprint lang-r'>paste(&quot;Visit&quot;, 1:5, sep=&quot;_&quot;)</pre>
-
-<pre >## [1] &quot;Visit_1&quot; &quot;Visit_2&quot; &quot;Visit_3&quot; &quot;Visit_4&quot; &quot;Visit_5&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>paste(&quot;Visit&quot;, 1:5, sep=&quot;_&quot;, collapse=&quot; &quot;)</pre>
-
-<pre >## [1] &quot;Visit_1 Visit_2 Visit_3 Visit_4 Visit_5&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>paste(&quot;To&quot;, &quot;is going be the &quot;, &quot;we go to the store!&quot;, sep=&quot;day &quot;)</pre>
-
-<pre >## [1] &quot;Today is going be the day we go to the store!&quot;</pre>
-
-<pre class = 'prettyprint lang-r'># and paste0 can be even simpler see ?paste0 
-paste0(&quot;Visit&quot;,1:5)</pre>
-
-<pre >## [1] &quot;Visit1&quot; &quot;Visit2&quot; &quot;Visit3&quot; &quot;Visit4&quot; &quot;Visit5&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>paste(1:5, letters[1:5], sep=&quot;_&quot;)</pre>
-
-<pre >## [1] &quot;1_a&quot; &quot;2_b&quot; &quot;3_c&quot; &quot;4_d&quot; &quot;5_e&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>paste(6:10, 11:15, 2000:2005, sep=&quot;/&quot;)</pre>
-
-<pre >## [1] &quot;6/11/2000&quot;  &quot;7/12/2001&quot;  &quot;8/13/2002&quot;  &quot;9/14/2003&quot;  &quot;10/15/2004&quot;
-## [6] &quot;6/11/2005&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>paste(paste(&quot;x&quot;,1:5,sep=&quot;&quot;),collapse=&quot;+&quot;)</pre>
-
-<pre >## [1] &quot;x1+x2+x3+x4+x5&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Strsplit</h2></hgroup><article  id="strsplit">
-
-<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;I really&quot;, &quot;like writing&quot;, &quot;R code&quot;)
-y &lt;- strsplit(x, split=&quot; &quot;)
-y[[2]]</pre>
-
-<pre >## [1] &quot;like&quot;    &quot;writing&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>sapply(y, &quot;[&quot;, 1) # on the fly</pre>
-
-<pre >## [1] &quot;I&quot;    &quot;like&quot; &quot;R&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>sapply(y, &quot;[&quot;, 2) # on the fly</pre>
-
-<pre >## [1] &quot;really&quot;  &quot;writing&quot; &quot;code&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Merging/Append</h2></hgroup><article  id="data-mergingappend">
-
-<ul>
-<li>Merging - joining data sets together - usually on key variables, usually &quot;id&quot;</li>
-<li><code>merge()</code> is the most common way to do this with data sets</li>
-<li><code>rbind</code>/<code>cbind</code> - row/column bind, respectively
-
-<ul>
-<li><code>rbind</code> is the equivalent of &quot;appending&quot; in Stata or &quot;setting&quot; in SAS</li>
-<li><code>cbind</code> allows you to add columns in addition to the previous ways</li>
-</ul></li>
-<li><code>reshape2</code> package also has a lot of information about different ways to reshape data (wide to long, etc) - but has a different (and sometimes more intuitive syntax)</li>
-<li><code>t()</code> is a function that will transpose the data</li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Merging</h2></hgroup><article  id="merging" class="smaller">
-
-<pre class = 'prettyprint lang-r'>base &lt;- data.frame(id=1:10, Age= seq(55,60, length=10))
-base[1:2,]</pre>
-
-<pre >##   id      Age
-## 1  1 55.00000
-## 2  2 55.55556</pre>
-
-<pre class = 'prettyprint lang-r'>visits &lt;- data.frame(id=rep(1:8, 3), visit= rep(1:3, 8),
-                    Outcome= seq(10,50, length=24))
-visits[1:2,]</pre>
-
-<pre >##   id visit  Outcome
-## 1  1     1 10.00000
-## 2  2     2 11.73913</pre>
-
-<pre class = 'prettyprint lang-r'>merged.data &lt;- merge(base, visits, by=&quot;id&quot;)
-merged.data[1:5,]</pre>
-
-<pre >##   id      Age visit  Outcome
-## 1  1 55.00000     1 10.00000
-## 2  1 55.00000     3 23.91304
-## 3  1 55.00000     2 37.82609
-## 4  2 55.55556     2 11.73913
-## 5  2 55.55556     1 25.65217</pre>
-
-<pre class = 'prettyprint lang-r'>dim(merged.data)</pre>
-
-<pre >## [1] 24  4</pre>
-
-<pre class = 'prettyprint lang-r'>all.data &lt;- merge(base, visits, by=&quot;id&quot;, all=TRUE)
-tail(all.data)</pre>
-
-<pre >##    id      Age visit  Outcome
-## 21  7 58.33333     2 48.26087
-## 22  8 58.88889     2 22.17391
-## 23  8 58.88889     1 36.08696
-## 24  8 58.88889     3 50.00000
-## 25  9 59.44444    NA       NA
-## 26 10 60.00000    NA       NA</pre>
-
-<pre class = 'prettyprint lang-r'>dim(all.data)</pre>
-
-<pre >## [1] 26  4</pre>
-
-</article></slide><slide class=''><hgroup><h2>Aside: Dates</h2></hgroup><article  id="aside-dates" class="smaller">
-
-<p>You can convert date-like strings in the <code>Date</code> class (<a href='http://www.statmethods.net/input/dates.html' title=''>http://www.statmethods.net/input/dates.html</a> for more info)</p>
-
-<pre class = 'prettyprint lang-r'>circ = read.csv(&quot;http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv&quot;,
-                as.is=TRUE)
-head(sort(circ$date))</pre>
-
-<pre >## [1] &quot;01/01/2011&quot; &quot;01/01/2012&quot; &quot;01/01/2013&quot; &quot;01/02/2011&quot; &quot;01/02/2012&quot;
-## [6] &quot;01/02/2013&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>circ$date &lt;- as.Date(circ$date, &quot;%m/%d/%Y&quot;) # creating a date for sorting
-head(circ$date)</pre>
-
-<pre >## [1] &quot;2010-01-11&quot; &quot;2010-01-12&quot; &quot;2010-01-13&quot; &quot;2010-01-14&quot; &quot;2010-01-15&quot;
-## [6] &quot;2010-01-16&quot;</pre>
-
-<pre class = 'prettyprint lang-r'>head(sort(circ$date))</pre>
-
-<pre >## [1] &quot;2010-01-11&quot; &quot;2010-01-12&quot; &quot;2010-01-13&quot; &quot;2010-01-14&quot; &quot;2010-01-15&quot;
-## [6] &quot;2010-01-16&quot;</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping</h2></hgroup><article  id="data-reshaping">
-
-<p>Disclaimer: the <code>reshape</code> command in R is not remarkably intuitive.</p>
-
-<ul>
-<li>Wide - multiple measurements are variables / columns so that the data gets wider with more measurements</li>
-<li>Long - multiple measurements are rows so data gets longer with more measurements</li>
-<li>One example would be many ids with multiple visits</li>
-</ul>
-
-</article></slide><slide class=''><hgroup><h2>Example of Long/Wide</h2></hgroup><article  id="example-of-longwide">
-
-<pre class = 'prettyprint lang-r'>head(wide)</pre>
-
-<pre >##   id visit1 visit2 visit3
-## 1  1   Good   Good    Bad</pre>
-
-<pre class = 'prettyprint lang-r'>head(long)</pre>
-
-<pre >##   id visit Outcome
-## 1  1     1    Good
-## 2  1     2    Good
-## 3  1     3     Bad</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping</h2></hgroup><article  id="data-reshaping-1">
-
-<ul>
-<li>Good resource: <a href='http://www.ats.ucla.edu/stat/r/faq/reshape.htm' title=''>http://www.ats.ucla.edu/stat/r/faq/reshape.htm</a></li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>head(Indometh) # this is long</pre>
-
-<pre >## Grouped Data: conc ~ time | Subject
-##   Subject time conc
-## 1       1 0.25 1.50
-## 2       1 0.50 0.94
-## 3       1 0.75 0.78
-## 4       1 1.00 0.48
-## 5       1 1.25 0.37
-## 6       1 2.00 0.19</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping</h2></hgroup><article  id="data-reshaping-2" class="smaller">
-
-<pre class = 'prettyprint lang-r'>wide &lt;- reshape(Indometh, v.names = &quot;conc&quot;, idvar = &quot;Subject&quot;,
-                timevar = &quot;time&quot;, direction = &quot;wide&quot;)
-head(wide)</pre>
-
-<pre >##    Subject conc.0.25 conc.0.5 conc.0.75 conc.1 conc.1.25 conc.2 conc.3
-## 1        1      1.50     0.94      0.78   0.48      0.37   0.19   0.12
-## 12       2      2.03     1.63      0.71   0.70      0.64   0.36   0.32
-## 23       3      2.72     1.49      1.16   0.80      0.80   0.39   0.22
-## 34       4      1.85     1.39      1.02   0.89      0.59   0.40   0.16
-## 45       5      2.05     1.04      0.81   0.39      0.30   0.23   0.13
-## 56       6      2.31     1.44      1.03   0.84      0.64   0.42   0.24
-##    conc.4 conc.5 conc.6 conc.8
-## 1    0.11   0.08   0.07   0.05
-## 12   0.20   0.25   0.12   0.08
-## 23   0.12   0.11   0.08   0.08
-## 34   0.11   0.10   0.07   0.07
-## 45   0.11   0.08   0.10   0.06
-## 56   0.17   0.13   0.10   0.09</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping</h2></hgroup><article  id="data-reshaping-3" class="smaller">
-
-<pre class = 'prettyprint lang-r'>dim(Indometh)</pre>
-
-<pre >## [1] 66  3</pre>
-
-<pre class = 'prettyprint lang-r'>wide</pre>
-
-<pre >##    Subject conc.0.25 conc.0.5 conc.0.75 conc.1 conc.1.25 conc.2 conc.3
-## 1        1      1.50     0.94      0.78   0.48      0.37   0.19   0.12
-## 12       2      2.03     1.63      0.71   0.70      0.64   0.36   0.32
-## 23       3      2.72     1.49      1.16   0.80      0.80   0.39   0.22
-## 34       4      1.85     1.39      1.02   0.89      0.59   0.40   0.16
-## 45       5      2.05     1.04      0.81   0.39      0.30   0.23   0.13
-## 56       6      2.31     1.44      1.03   0.84      0.64   0.42   0.24
-##    conc.4 conc.5 conc.6 conc.8
-## 1    0.11   0.08   0.07   0.05
-## 12   0.20   0.25   0.12   0.08
-## 23   0.12   0.11   0.08   0.08
-## 34   0.11   0.10   0.07   0.07
-## 45   0.11   0.08   0.10   0.06
-## 56   0.17   0.13   0.10   0.09</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping</h2></hgroup><article  id="data-reshaping-4">
-
-<ul>
-<li>If you&#39;ve reshaped a data set - to get it back, just reshape it again</li>
-</ul>
-
-<pre class = 'prettyprint lang-r'>reshape(wide, direction = &quot;long&quot;)[1:10,]</pre>
-
-<pre >##        Subject time conc
-## 1.0.25       1 0.25 1.50
-## 2.0.25       2 0.25 2.03
-## 3.0.25       3 0.25 2.72
-## 4.0.25       4 0.25 1.85
-## 5.0.25       5 0.25 2.05
-## 6.0.25       6 0.25 2.31
-## 1.0.5        1 0.50 0.94
-## 2.0.5        2 0.50 1.63
-## 3.0.5        3 0.50 1.49
-## 4.0.5        4 0.50 1.39</pre>
-
-<p>Note the row name change</p>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping - A Better Example</h2></hgroup><article  id="data-reshaping---a-better-example" class="smaller">
-
-<pre class = 'prettyprint lang-r'>destfile = tempfile(fileext = &quot;.xlsx&quot;)
-download.file(&quot;http://www.aejaffe.com/winterR_2016/data/indicator_estimatedincidencealltbper100000.xlsx&quot;, destfile = destfile)
-TB &lt;- read.xlsx(file = destfile,
-                sheetName = &quot;Data&quot;)
-head(TB, 1)</pre>
-
-<pre >##   TB.incidence..all.forms..per.100.000.population.per.year. X1990 X1991
-## 1                                               Afghanistan   168   168
-##   X1992 X1993 X1994 X1995 X1996 X1997 X1998 X1999 X2000 X2001 X2002 X2003
-## 1   168   168   168   168   168   168   168   168   168   168   168   168
-##   X2004 X2005 X2006 X2007 NA.
-## 1   168   168   168   168  NA</pre>
-
-<pre class = 'prettyprint lang-r'>TB$NA. &lt;- NULL
-head(TB, 1)</pre>
-
-<pre >##   TB.incidence..all.forms..per.100.000.population.per.year. X1990 X1991
-## 1                                               Afghanistan   168   168
-##   X1992 X1993 X1994 X1995 X1996 X1997 X1998 X1999 X2000 X2001 X2002 X2003
-## 1   168   168   168   168   168   168   168   168   168   168   168   168
-##   X2004 X2005 X2006 X2007
-## 1   168   168   168   168</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping - A Better Example</h2></hgroup><article  id="data-reshaping---a-better-example-1" class="smaller">
-
-<pre class = 'prettyprint lang-r'>colnames(TB) &lt;- c(&quot;Country&quot;, paste(&quot;Year&quot;, 
-                          1990:2007, sep=&quot;.&quot;))
-head(TB,1)</pre>
-
-<pre >##       Country Year.1990 Year.1991 Year.1992 Year.1993 Year.1994 Year.1995
-## 1 Afghanistan       168       168       168       168       168       168
-##   Year.1996 Year.1997 Year.1998 Year.1999 Year.2000 Year.2001 Year.2002
-## 1       168       168       168       168       168       168       168
-##   Year.2003 Year.2004 Year.2005 Year.2006 Year.2007
-## 1       168       168       168       168       168</pre>
-
-</article></slide><slide class=''><hgroup><h2>Data Reshaping - More is better!</h2></hgroup><article  id="data-reshaping---more-is-better" class="smaller">
-
-<pre class = 'prettyprint lang-r'>TB.long &lt;- reshape(TB, idvar=&quot;Country&quot;, 
-            v.names=&quot;Cases&quot;, times=1990:2007, 
-                   direction=&quot;long&quot;, timevar=&quot;Year&quot;, 
-                   varying = paste(&quot;Year&quot;, 1990:2007, sep=&quot;.&quot;))
-head(TB.long, 4)</pre>
-
-<pre >##                            Country Year Cases
-## Afghanistan.1990       Afghanistan 1990   168
-## Albania.1990               Albania 1990    25
-## Algeria.1990               Algeria 1990    38
-## American Samoa.1990 American Samoa 1990    21</pre>
-
-<pre class = 'prettyprint lang-r'>rownames(TB.long) &lt;- NULL
-head(TB.long, 4)</pre>
-
-<pre >##          Country Year Cases
-## 1    Afghanistan 1990   168
-## 2        Albania 1990    25
-## 3        Algeria 1990    38
-## 4 American Samoa 1990    21</pre></article></slide>
+<pre >                   Name AnnualSalary              JobTitle
+1222  Bernstein,Gregg L       238772      STATE&#39;S ATTORNEY
+3175   Charles,Ronnie E       200000   EXECUTIVE LEVEL III
+985     Batts,Anthony W       193800   EXECUTIVE LEVEL III
+1343      Black,Harry E       190000   EXECUTIVE LEVEL III
+16352     Swift,Michael       187200 CONTRACT SERV SPEC II</pre>
+
+</article></slide><slide class=''><hgroup><h2>Replacing and subbing: <code class="smaller">stringr</code></h2></hgroup><article  id="replacing-and-subbing-stringr">
+
+<p>We can do the same thing (with 2 piping operations!) in dplyr</p>
+
+<pre class = 'prettyprint lang-r'>dplyr_sal = Sal
+dplyr_sal = dplyr_sal %&gt;% mutate( 
+  AnnualSalary = AnnualSalary %&gt;%
+    str_replace(
+      fixed(&quot;$&quot;), 
+      &quot;&quot;) %&gt;%
+    as.numeric) %&gt;%
+  arrange(desc(AnnualSalary))
+check_Sal = Sal
+rownames(check_Sal) = NULL
+all.equal(check_Sal, dplyr_sal)</pre>
+
+<pre >[1] TRUE</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

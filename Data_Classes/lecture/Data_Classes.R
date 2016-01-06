@@ -1,7 +1,3 @@
-## ----assign_help---------------------------------------------------------
-## ?str
-## help("str")
-
 ## ----numChar-------------------------------------------------------------
 class(c("Andrew", "Jaffe"))
 class(c(1, 4, 7))
@@ -49,6 +45,13 @@ x = factor(c("case","case","case","control",
 as.character(x)
 as.numeric(x)
 
+## ----factorCheck---------------------------------------------------------
+xCopy = x
+levels(xCopy) = c("case", "control") # wrong way
+xCopy        
+as.character(xCopy) # labels switched
+as.numeric(xCopy)
+
 ## ----rep1----------------------------------------------------------------
 bg = rep(c("boy","girl"),each=50)
 head(bg)
@@ -61,8 +64,8 @@ circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_
             header=TRUE,as.is=TRUE)
 
 ## ----ifelse1-------------------------------------------------------------
-
-hi_rider = ifelse(circ$daily > 10000, 1, 0)
+hi_rider = ifelse(circ$daily > 10000, "high", "low")
+hi_rider = factor(hi_rider, levels = c("low","high"))
 head(hi_rider)
 table(hi_rider)
 
@@ -70,6 +73,8 @@ table(hi_rider)
 riderLevels = ifelse(circ$daily < 10000, "low", 
                   ifelse(circ$daily > 20000,
                   "high", "med"))
+riderLevels = factor(riderLevels, 
+              levels = c("low","med","high"))
 head(riderLevels)
 table(riderLevels)
 
@@ -90,30 +95,27 @@ head(cx)
 table(cx)
 table(cx,useNA="ifany")
 
-## ----head----------------------------------------------------------------
-z = 1:100 # recall a sequence from 1 to 100
-head(z)
-tail(z)
-str(z)
+## ----date----------------------------------------------------------------
+head(sort(circ$date))
+circ$newDate <- as.Date(circ$date, "%m/%d/%Y") # creating a date for sorting
+head(circ$newDate)
+range(circ$newDate)
 
-## ----tab-----------------------------------------------------------------
-x = c("boy", "girl", "girl", "boy", "girl")
-table(x)
-y = c(1, 2, 1, 2, 1)
-table(x,y)
+## ------------------------------------------------------------------------
+library(lubridate) # great for dates!
+suppressPackageStartupMessages(library(dplyr))
+circ = mutate(circ, newDate2 = mdy(date))
+head(circ$newDate2)
+range(circ$newDate2)
 
-## ----subset1-------------------------------------------------------------
-x1 = 10:20
-x1
-length(x1)
-
-## ----subset2-------------------------------------------------------------
-x1[1] # selecting first element
-x1[3:4] # selecting third and fourth elements
-x1[c(1, 5, 7)] # first, fifth, and seventh elements
+## ------------------------------------------------------------------------
+theTime = Sys.time()
+theTime
+class(theTime)
+theTime + 5000
 
 ## ----matrix--------------------------------------------------------------
-n = 1:9 # sequence from first number to second number incrementing by 1
+n = 1:9 
 n
 mat = matrix(n, nrow = 3)
 mat
@@ -127,31 +129,48 @@ mat[, 1] # first columns
 class(mat[1, ])
 class(mat[, 1])
 
-## ----df1-----------------------------------------------------------------
-data(iris) ## just use some data in R already
-names(iris) ## get the column names
-str(iris) # easy snapshot of data, like `describe` in Stata
-head(iris, 3) # get top 3 rows
+## ------------------------------------------------------------------------
+library(matrixStats,quietly = TRUE)
+avgs = select(circ, ends_with("Average"))
+rowMins(as.matrix(avgs),na.rm=TRUE)[500:510]
 
-## ----df2-----------------------------------------------------------------
-head(iris$Petal.Length)
-class(iris$Petal.Width)
+## ------------------------------------------------------------------------
+ar = array(1:27, c(3,3,3))
+ar[,,1]
+ar[,1,]
 
-## ----subset6-------------------------------------------------------------
-head(iris[, 2])
+## ----makeList, comment="", prompt=TRUE-----------------------------------
+mylist <- list(letters=c("A", "b", "c"), 
+        numbers=1:3, matrix(1:25, ncol=5))
 
-## ----subset7-------------------------------------------------------------
-iris[1:3, c("Sepal.Width", "Species")]
+## ----Lists, comment="", prompt=TRUE--------------------------------------
+head(mylist)
 
-## ----df3-----------------------------------------------------------------
-x = c("Andrew", "Leonardo", "Shaun")
-y = 1:3
-df = data.frame(name = x, id = y)
-df
+## ----Listsref1, comment="", prompt=TRUE----------------------------------
+mylist[1] # returns a list
+mylist["letters"] # returns a list
 
-## ----dfAdd---------------------------------------------------------------
-iris2 = iris # copy `iris` to a new df
-iris2$Index = 1:nrow(iris2)
-head(iris2)
-names(iris2)
+## ----Listsrefvec, comment="", prompt=TRUE--------------------------------
+mylist[[1]] # returns the vector 'letters'
+mylist$letters # returns vector
+mylist[["letters"]] # returns the vector 'letters'
+
+## ----Listsref2, comment="", prompt=TRUE----------------------------------
+mylist[1:2] # returns a list
+
+## ----Listsref3, comment="", prompt=TRUE----------------------------------
+mylist$letters[1]
+mylist[[2]][1]
+mylist[[3]][1:2,1:2]
+
+## ----split1, comment="", prompt=TRUE-------------------------------------
+dayList = split(circ,circ$day)
+
+## ----lapply1, comment="", prompt=TRUE------------------------------------
+# head(dayList)
+lapply(dayList, head, n=2)
+
+## ----lapply2, comment="", prompt=TRUE------------------------------------
+# head(dayList)
+lapply(dayList, dim)
 

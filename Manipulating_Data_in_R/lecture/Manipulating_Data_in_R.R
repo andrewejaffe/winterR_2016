@@ -60,6 +60,38 @@ head(wide, 3)
 wide = filter(wide, good) %>% select(-good)
 head(wide)
 
+## ----merging-------------------------------------------------------------
+base <- data.frame(id = 1:10, Age= seq(55,60, length=10))
+base[1:2,]
+visits <- data.frame(id = rep(1:8, 3), visit= rep(1:3, 8),
+                    Outcome = seq(10,50, length=24))
+visits[1:2,]
+
+## ----merging2------------------------------------------------------------
+merged.data <- merge(base, visits, by="id")
+merged.data[1:5,]
+dim(merged.data)
+
+## ----mergeall------------------------------------------------------------
+all.data <- merge(base, visits, by="id", all=TRUE)
+tail(all.data)
+dim(all.data)
+
+## ----left_join-----------------------------------------------------------
+lj = left_join(base, visits)
+dim(lj)
+tail(lj)
+
+## ----right_join----------------------------------------------------------
+rj = right_join(base, visits)
+dim(rj)
+tail(rj)
+
+## ----full_join-----------------------------------------------------------
+fj = full_join(base, visits)
+dim(fj)
+tail(fj)
+
 ## ------------------------------------------------------------------------
 args(tapply)
 

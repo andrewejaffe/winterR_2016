@@ -114,11 +114,11 @@
 
 <pre class = 'prettyprint lang-r'>class(c(&quot;Andrew&quot;, &quot;Jaffe&quot;))</pre>
 
-<pre >## [1] &quot;character&quot;</pre>
+<pre >[1] &quot;character&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>class(c(1, 4, 7))</pre>
 
-<pre >## [1] &quot;numeric&quot;</pre>
+<pre >[1] &quot;numeric&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Integer</h2></hgroup><article  id="integer">
 
@@ -129,11 +129,11 @@
 <pre class = 'prettyprint lang-r'>x = seq(from = 1, to = 5) # seq() is a function
 x</pre>
 
-<pre >## [1] 1 2 3 4 5</pre>
+<pre >[1] 1 2 3 4 5</pre>
 
 <pre class = 'prettyprint lang-r'>class(x)</pre>
 
-<pre >## [1] &quot;integer&quot;</pre>
+<pre >[1] &quot;integer&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Integer</h2></hgroup><article  id="integer-1">
 
@@ -143,7 +143,7 @@ x</pre>
 
 <pre class = 'prettyprint lang-r'>1:5</pre>
 
-<pre >## [1] 1 2 3 4 5</pre>
+<pre >[1] 1 2 3 4 5</pre>
 
 </article></slide><slide class=''><hgroup><h2>Logical</h2></hgroup><article  id="logical">
 
@@ -152,7 +152,7 @@ x</pre>
 <pre class = 'prettyprint lang-r'>x = c(TRUE, FALSE, TRUE, TRUE, FALSE)
 class(x)</pre>
 
-<pre >## [1] &quot;logical&quot;</pre>
+<pre >[1] &quot;logical&quot;</pre>
 
 <p><code>sum()</code> and <code>mean()</code> work on <code>logical</code> vectors - they return the total and proportion of <code>TRUE</code> elements, respectively.</p>
 
@@ -163,7 +163,7 @@ class(x)</pre>
 <pre class = 'prettyprint lang-r'>z = c(&quot;TRUE&quot;, &quot;FALSE&quot;, &quot;TRUE&quot;, &quot;FALSE&quot;)
 class(z)</pre>
 
-<pre >## [1] &quot;character&quot;</pre>
+<pre >[1] &quot;character&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Factor</h2></hgroup><article  id="factor">
 
@@ -172,12 +172,12 @@ class(z)</pre>
 <pre class = 'prettyprint lang-r'>x = factor(c(&quot;boy&quot;, &quot;girl&quot;, &quot;girl&quot;, &quot;boy&quot;, &quot;girl&quot;))
 x </pre>
 
-<pre >## [1] boy  girl girl boy  girl
-## Levels: boy girl</pre>
+<pre >[1] boy  girl girl boy  girl
+Levels: boy girl</pre>
 
 <pre class = 'prettyprint lang-r'>class(x)</pre>
 
-<pre >## [1] &quot;factor&quot;</pre>
+<pre >[1] &quot;factor&quot;</pre>
 
 <p>Note that levels are, by default, alphabetical or alphanumerical order.</p>
 
@@ -200,14 +200,14 @@ x </pre>
         &quot;control&quot;,&quot;control&quot;,&quot;control&quot;))
 cc</pre>
 
-<pre >## [1] case    case    case    control control control
-## Levels: case control</pre>
+<pre >[1] case    case    case    control control control
+Levels: case control</pre>
 
 <pre class = 'prettyprint lang-r'>levels(cc) = c(&quot;control&quot;,&quot;case&quot;)
 cc</pre>
 
-<pre >## [1] control control control case    case    case   
-## Levels: control case</pre>
+<pre >[1] control control control case    case    case   
+Levels: control case</pre>
 
 </article></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors-2">
 
@@ -217,15 +217,15 @@ cc</pre>
           &quot;control&quot;,&quot;control&quot;), 
         levels =c(&quot;control&quot;,&quot;case&quot;) )</pre>
 
-<pre >## [1] case    case    case    control control control
-## Levels: control case</pre>
+<pre >[1] case    case    case    control control control
+Levels: control case</pre>
 
 <pre class = 'prettyprint lang-r'>factor(c(&quot;case&quot;,&quot;case&quot;,&quot;case&quot;,&quot;control&quot;,
             &quot;control&quot;,&quot;control&quot;), 
         levels =c(&quot;control&quot;,&quot;case&quot;), ordered=TRUE)</pre>
 
-<pre >## [1] case    case    case    control control control
-## Levels: control &lt; case</pre>
+<pre >[1] case    case    case    control control control
+Levels: control &lt; case</pre>
 
 </article></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors-3">
 
@@ -236,11 +236,11 @@ cc</pre>
         levels =c(&quot;control&quot;,&quot;case&quot;) )
 as.character(x)</pre>
 
-<pre >## [1] &quot;case&quot;    &quot;case&quot;    &quot;case&quot;    &quot;control&quot; &quot;control&quot; &quot;control&quot;</pre>
+<pre >[1] &quot;case&quot;    &quot;case&quot;    &quot;case&quot;    &quot;control&quot; &quot;control&quot; &quot;control&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>as.numeric(x)</pre>
 
-<pre >## [1] 2 2 2 1 1 1</pre>
+<pre >[1] 2 2 2 1 1 1</pre>
 
 </article></slide><slide class=''><hgroup><h2>Factors</h2></hgroup><article  id="factors-4">
 
@@ -250,16 +250,16 @@ as.character(x)</pre>
 levels(xCopy) = c(&quot;case&quot;, &quot;control&quot;) # wrong way
 xCopy        </pre>
 
-<pre >## [1] control control control case    case    case   
-## Levels: case control</pre>
+<pre >[1] control control control case    case    case   
+Levels: case control</pre>
 
 <pre class = 'prettyprint lang-r'>as.character(xCopy) # labels switched</pre>
 
-<pre >## [1] &quot;control&quot; &quot;control&quot; &quot;control&quot; &quot;case&quot;    &quot;case&quot;    &quot;case&quot;</pre>
+<pre >[1] &quot;control&quot; &quot;control&quot; &quot;control&quot; &quot;case&quot;    &quot;case&quot;    &quot;case&quot;   </pre>
 
 <pre class = 'prettyprint lang-r'>as.numeric(xCopy)</pre>
 
-<pre >## [1] 2 2 2 1 1 1</pre>
+<pre >[1] 2 2 2 1 1 1</pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables">
 
@@ -268,16 +268,16 @@ xCopy        </pre>
 <pre class = 'prettyprint lang-r'>bg = rep(c(&quot;boy&quot;,&quot;girl&quot;),each=50)
 head(bg)</pre>
 
-<pre >## [1] &quot;boy&quot; &quot;boy&quot; &quot;boy&quot; &quot;boy&quot; &quot;boy&quot; &quot;boy&quot;</pre>
+<pre >[1] &quot;boy&quot; &quot;boy&quot; &quot;boy&quot; &quot;boy&quot; &quot;boy&quot; &quot;boy&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>bg2 = rep(c(&quot;boy&quot;,&quot;girl&quot;),times=50)
 head(bg2)</pre>
 
-<pre >## [1] &quot;boy&quot;  &quot;girl&quot; &quot;boy&quot;  &quot;girl&quot; &quot;boy&quot;  &quot;girl&quot;</pre>
+<pre >[1] &quot;boy&quot;  &quot;girl&quot; &quot;boy&quot;  &quot;girl&quot; &quot;boy&quot;  &quot;girl&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>length(bg)==length(bg2)</pre>
 
-<pre >## [1] TRUE</pre>
+<pre >[1] TRUE</pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables-1">
 
@@ -309,14 +309,14 @@ head(bg2)</pre>
 hi_rider = factor(hi_rider, levels = c(&quot;low&quot;,&quot;high&quot;))
 head(hi_rider)</pre>
 
-<pre >## [1] low low low low low low
-## Levels: low high</pre>
+<pre >[1] low low low low low low
+Levels: low high</pre>
 
 <pre class = 'prettyprint lang-r'>table(hi_rider)</pre>
 
-<pre >## hi_rider
-##  low high 
-##  740  282</pre>
+<pre >hi_rider
+ low high 
+ 740  282 </pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables-3">
 
@@ -329,14 +329,14 @@ riderLevels = factor(riderLevels,
               levels = c(&quot;low&quot;,&quot;med&quot;,&quot;high&quot;))
 head(riderLevels)</pre>
 
-<pre >## [1] low low low low low low
-## Levels: low med high</pre>
+<pre >[1] low low low low low low
+Levels: low med high</pre>
 
 <pre class = 'prettyprint lang-r'>table(riderLevels)</pre>
 
-<pre >## riderLevels
-##  low  med high 
-##  740  280    2</pre>
+<pre >riderLevels
+ low  med high 
+ 740  280    2 </pre>
 
 </article></slide><slide class=''><hgroup><h2>Creating categorical variables</h2></hgroup><article  id="creating-categorical-variables-4">
 
@@ -364,46 +364,46 @@ head(riderLevels)</pre>
 cx = cut(x, breaks=c(0,10,25,50,100))
 head(cx)  </pre>
 
-<pre >## [1] (0,10] (0,10] (0,10] (0,10] (0,10] (0,10]
-## Levels: (0,10] (10,25] (25,50] (50,100]</pre>
+<pre >[1] (0,10] (0,10] (0,10] (0,10] (0,10] (0,10]
+Levels: (0,10] (10,25] (25,50] (50,100]</pre>
 
 <pre class = 'prettyprint lang-r'>table(cx)</pre>
 
-<pre >## cx
-##   (0,10]  (10,25]  (25,50] (50,100] 
-##       10       15       25       50</pre>
+<pre >cx
+  (0,10]  (10,25]  (25,50] (50,100] 
+      10       15       25       50 </pre>
 
 <p>We can also leave off the labels</p>
 
 <pre class = 'prettyprint lang-r'>cx = cut(x, breaks=c(0,10,25,50,100), labels=FALSE)
 head(cx)  </pre>
 
-<pre >## [1] 1 1 1 1 1 1</pre>
+<pre >[1] 1 1 1 1 1 1</pre>
 
 <pre class = 'prettyprint lang-r'>table(cx)</pre>
 
-<pre >## cx
-##  1  2  3  4 
-## 10 15 25 50</pre>
+<pre >cx
+ 1  2  3  4 
+10 15 25 50 </pre>
 
 <p>Note that you have to specify the endpoints of the data, otherwise some of the categories will not be created</p>
 
 <pre class = 'prettyprint lang-r'>cx = cut(x, breaks=c(10,25,50), labels=FALSE)
 head(cx)  </pre>
 
-<pre >## [1] NA NA NA NA NA NA</pre>
+<pre >[1] NA NA NA NA NA NA</pre>
 
 <pre class = 'prettyprint lang-r'>table(cx)</pre>
 
-<pre >## cx
-##  1  2 
-## 15 25</pre>
+<pre >cx
+ 1  2 
+15 25 </pre>
 
 <pre class = 'prettyprint lang-r'>table(cx,useNA=&quot;ifany&quot;)</pre>
 
-<pre >## cx
-##    1    2 &lt;NA&gt; 
-##   15   25   60</pre>
+<pre >cx
+   1    2 &lt;NA&gt; 
+  15   25   60 </pre>
 
 </article></slide><slide class=''><hgroup><h2>Date</h2></hgroup><article  id="date">
 
@@ -411,18 +411,18 @@ head(cx)  </pre>
 
 <pre class = 'prettyprint lang-r'>head(sort(circ$date))</pre>
 
-<pre >## [1] &quot;01/01/2011&quot; &quot;01/01/2012&quot; &quot;01/01/2013&quot; &quot;01/02/2011&quot; &quot;01/02/2012&quot;
-## [6] &quot;01/02/2013&quot;</pre>
+<pre >[1] &quot;01/01/2011&quot; &quot;01/01/2012&quot; &quot;01/01/2013&quot; &quot;01/02/2011&quot; &quot;01/02/2012&quot;
+[6] &quot;01/02/2013&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>circ$newDate &lt;- as.Date(circ$date, &quot;%m/%d/%Y&quot;) # creating a date for sorting
 head(circ$newDate)</pre>
 
-<pre >## [1] &quot;2010-01-11&quot; &quot;2010-01-12&quot; &quot;2010-01-13&quot; &quot;2010-01-14&quot; &quot;2010-01-15&quot;
-## [6] &quot;2010-01-16&quot;</pre>
+<pre >[1] &quot;2010-01-11&quot; &quot;2010-01-12&quot; &quot;2010-01-13&quot; &quot;2010-01-14&quot; &quot;2010-01-15&quot;
+[6] &quot;2010-01-16&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>range(circ$newDate)</pre>
 
-<pre >## [1] &quot;2010-01-11&quot; &quot;2013-03-01&quot;</pre>
+<pre >[1] &quot;2010-01-11&quot; &quot;2013-03-01&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Date</h2></hgroup><article  id="date-1">
 
@@ -433,12 +433,12 @@ suppressPackageStartupMessages(library(dplyr))
 circ = mutate(circ, newDate2 = mdy(date))
 head(circ$newDate2)</pre>
 
-<pre >## [1] &quot;2010-01-11 UTC&quot; &quot;2010-01-12 UTC&quot; &quot;2010-01-13 UTC&quot; &quot;2010-01-14 UTC&quot;
-## [5] &quot;2010-01-15 UTC&quot; &quot;2010-01-16 UTC&quot;</pre>
+<pre >[1] &quot;2010-01-11 UTC&quot; &quot;2010-01-12 UTC&quot; &quot;2010-01-13 UTC&quot; &quot;2010-01-14 UTC&quot;
+[5] &quot;2010-01-15 UTC&quot; &quot;2010-01-16 UTC&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>range(circ$newDate2)</pre>
 
-<pre >## [1] &quot;2010-01-11 UTC&quot; &quot;2013-03-01 UTC&quot;</pre>
+<pre >[1] &quot;2010-01-11 UTC&quot; &quot;2013-03-01 UTC&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>POSIXct</h2></hgroup><article  id="posixct">
 
@@ -447,15 +447,15 @@ head(circ$newDate2)</pre>
 <pre class = 'prettyprint lang-r'>theTime = Sys.time()
 theTime</pre>
 
-<pre >## [1] &quot;2016-01-05 22:09:48 EST&quot;</pre>
+<pre >[1] &quot;2016-01-05 22:48:55 EST&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>class(theTime)</pre>
 
-<pre >## [1] &quot;POSIXct&quot; &quot;POSIXt&quot;</pre>
+<pre >[1] &quot;POSIXct&quot; &quot;POSIXt&quot; </pre>
 
 <pre class = 'prettyprint lang-r'>theTime + 5000</pre>
 
-<pre >## [1] &quot;2016-01-05 23:33:08 EST&quot;</pre>
+<pre >[1] &quot;2016-01-06 00:12:15 EST&quot;</pre>
 
 <p>Note it&#39;s like a more general date format.</p>
 
@@ -479,15 +479,15 @@ theTime</pre>
 <pre class = 'prettyprint lang-r'>n = 1:9 
 n</pre>
 
-<pre >## [1] 1 2 3 4 5 6 7 8 9</pre>
+<pre >[1] 1 2 3 4 5 6 7 8 9</pre>
 
 <pre class = 'prettyprint lang-r'>mat = matrix(n, nrow = 3)
 mat</pre>
 
-<pre >##      [,1] [,2] [,3]
-## [1,]    1    4    7
-## [2,]    2    5    8
-## [3,]    3    6    9</pre>
+<pre >     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9</pre>
 
 </article></slide><slide class=''><hgroup><h2>Matrix (and Data frame) Functions</h2></hgroup><article  id="matrix-and-data-frame-functions">
 
@@ -506,15 +506,15 @@ mat</pre>
 
 <pre class = 'prettyprint lang-r'>mat[1, 1] # individual entry: row 1, column 1</pre>
 
-<pre >## [1] 1</pre>
+<pre >[1] 1</pre>
 
 <pre class = 'prettyprint lang-r'>mat[1, ] # first row</pre>
 
-<pre >## [1] 1 4 7</pre>
+<pre >[1] 1 4 7</pre>
 
 <pre class = 'prettyprint lang-r'>mat[, 1] # first columns</pre>
 
-<pre >## [1] 1 2 3</pre>
+<pre >[1] 1 2 3</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Selection</h2></hgroup><article  id="data-selection-1">
 
@@ -522,11 +522,11 @@ mat</pre>
 
 <pre class = 'prettyprint lang-r'>class(mat[1, ])</pre>
 
-<pre >## [1] &quot;integer&quot;</pre>
+<pre >[1] &quot;integer&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>class(mat[, 1])</pre>
 
-<pre >## [1] &quot;integer&quot;</pre>
+<pre >[1] &quot;integer&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Frames</h2></hgroup><article  id="data-frames">
 
@@ -544,18 +544,20 @@ mat</pre>
 
 <pre class = 'prettyprint lang-r'>library(matrixStats,quietly = TRUE)</pre>
 
-<pre >## 
-## Attaching package: &#39;matrixStats&#39;
-## 
-## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     count</pre>
+<pre >Warning: package &#39;matrixStats&#39; was built under R version 3.2.3</pre>
+
+<pre >
+Attaching package: &#39;matrixStats&#39;
+
+The following object is masked from &#39;package:dplyr&#39;:
+
+    count</pre>
 
 <pre class = 'prettyprint lang-r'>avgs = select(circ, ends_with(&quot;Average&quot;))
 rowMins(as.matrix(avgs),na.rm=TRUE)[500:510]</pre>
 
-<pre >##  [1] 3538.5 3402.5 3862.5 3347.5 2837.5 2704.0 3138.5 3287.5 3275.0 3917.5
-## [11] 3046.0</pre>
+<pre > [1] 3538.5 3402.5 3862.5 3347.5 2837.5 2704.0 3138.5 3287.5 3275.0 3917.5
+[11] 3046.0</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Classes</h2></hgroup><article  id="data-classes-2">
 
@@ -581,17 +583,17 @@ rowMins(as.matrix(avgs),na.rm=TRUE)[500:510]</pre>
 <pre class = 'prettyprint lang-r'>ar = array(1:27, c(3,3,3))
 ar[,,1]</pre>
 
-<pre >##      [,1] [,2] [,3]
-## [1,]    1    4    7
-## [2,]    2    5    8
-## [3,]    3    6    9</pre>
+<pre >     [,1] [,2] [,3]
+[1,]    1    4    7
+[2,]    2    5    8
+[3,]    3    6    9</pre>
 
 <pre class = 'prettyprint lang-r'>ar[,1,]</pre>
 
-<pre >##      [,1] [,2] [,3]
-## [1,]    1   10   19
-## [2,]    2   11   20
-## [3,]    3   12   21</pre>
+<pre >     [,1] [,2] [,3]
+[1,]    1   10   19
+[2,]    2   11   20
+[3,]    3   12   21</pre>
 
 </article></slide><slide class=''><hgroup><h2>Lists</h2></hgroup><article  id="lists">
 
