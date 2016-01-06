@@ -343,8 +343,14 @@ NULL</pre>
 <pre class = 'prettyprint lang-r'>gb = group_by(wide, line)
 summarize(gb, mean_avg = mean(Average))</pre>
 
-<pre >  mean_avg
-1 2984.526</pre>
+<pre >Source: local data frame [4 x 2]
+
+    line  mean_avg
+   (chr)     (dbl)
+1 banner  827.2685
+2  green 1957.7814
+3 orange 3033.1611
+4 purple 4016.9345</pre>
 
 </article></slide><slide class=''><hgroup><h2>Perform Operations By Groups: dplyr with piping</h2></hgroup><article  id="perform-operations-by-groups-dplyr-with-piping">
 
@@ -354,8 +360,14 @@ summarize(gb, mean_avg = mean(Average))</pre>
   group_by(line) %&gt;%
   summarise(mean_avg = mean(Average))</pre>
 
-<pre >  mean_avg
-1 2984.526</pre>
+<pre >Source: local data frame [4 x 2]
+
+    line  mean_avg
+   (chr)     (dbl)
+1 banner  827.2685
+2  green 1957.7814
+3 orange 3033.1611
+4 purple 4016.9345</pre>
 
 </article></slide><slide class=''><hgroup><h2>Perform Operations By Multiple Groups: dplyr</h2></hgroup><article  id="perform-operations-by-multiple-groups-dplyr">
 
@@ -367,8 +379,24 @@ wide %&gt;%
   group_by(line, year) %&gt;%
   summarise(mean_avg = mean(Average))</pre>
 
-<pre >  mean_avg
-1 2984.526</pre>
+<pre >Source: local data frame [13 x 3]
+Groups: line [?]
+
+     line  year  mean_avg
+    (chr) (dbl)     (dbl)
+1  banner  2012  882.0929
+2  banner  2013  635.3833
+3   green  2011 1455.1667
+4   green  2012 2028.7740
+5   green  2013 2028.5250
+6  orange  2010 1890.7859
+7  orange  2011 3061.6556
+8  orange  2012 4046.4082
+9  orange  2013 3322.6250
+10 purple  2010 2577.1000
+11 purple  2011 4026.9146
+12 purple  2012 4811.0068
+13 purple  2013 4045.3833</pre>
 
 </article></slide><slide class=''><hgroup><h2>Perform Operations By Multiple Groups: dplyr</h2></hgroup><article  id="perform-operations-by-multiple-groups-dplyr-1" class="smaller">
 

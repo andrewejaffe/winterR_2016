@@ -117,32 +117,116 @@
 
 <p>Again - <code>table</code>, <code>summarize</code>, <code>is.na</code>, <code>any</code>, <code>all</code> are useful.</p>
 
-</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-1" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Missing data</h2></hgroup><article  id="missing-data">
 
-<pre class = 'prettyprint lang-r'>table(c(0, 1, 2, 3, NA, 3, 3, 2,2, 3), 
-        useNA=&quot;ifany&quot;)</pre>
+<p>One of the most important aspects of data cleaning is missing values.</p>
 
-<pre >## 
+<p>Types of &quot;missing&quot; data:</p>
+
+<ul>
+<li><code>NA</code> - general missing data</li>
+<li><code>NaN</code> - stands for &quot;<strong>N</strong>ot <strong>a</strong> <strong>N</strong>umber&quot;, happens when you do 0/0.</li>
+<li><code>Inf</code> and <code>-Inf</code> - Infinity, happens when you take a positive number (or negative number) by 0.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Finding Missing data</h2></hgroup><article  id="finding-missing-data">
+
+<p>Each missing data type has a function that returns <code>TRUE</code> if the data is missing:</p>
+
+<ul>
+<li><code>NA</code> - <code>is.na</code></li>
+<li><code>NaN</code> - <code>is.nan</code></li>
+<li><code>Inf</code> and <code>-Inf</code> - <code>is.infinite</code></li>
+<li><code>is.finite</code> returns <code>FALSE</code> for all missing data and <code>TRUE</code> for non-missing</li>
+<li><code>complete.cases</code> on a <code>data.frame</code>/<code>matrix</code> returns <code>TRUE</code> if all values in that row of the object are not missing.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>Missing Data with Logicals</h2></hgroup><article  id="missing-data-with-logicals">
+
+<p>One important aspect (esp with subsetting) is that logical operations return <code>NA</code> for <code>NA</code> values. Think about it, the data could be <code>&gt; 2</code> or not we don&#39;t know, so <code>R</code> says there is no <code>TRUE</code> or <code>FALSE</code>, so that is missing:</p>
+
+<pre class = 'prettyprint lang-r'>x = c(0, 1, 2, 3, NA, 3, 3, 2,2, 3)
+x &gt; 2</pre>
+
+<pre >##  [1] FALSE FALSE FALSE  TRUE    NA  TRUE  TRUE FALSE FALSE  TRUE</pre>
+
+</article></slide><slide class=''><hgroup><h2>Missing Data with Logicals</h2></hgroup><article  id="missing-data-with-logicals-1">
+
+<p>What to do? What if we want if <code>x &gt; 2</code> and <code>x</code> isn&#39;t <code>NA</code>?<br/>Don&#39;t do <code>x != NA</code>, do <code>x &gt; 2</code> and <code>x</code> is NOT <code>NA</code>:</p>
+
+<pre class = 'prettyprint lang-r'>x != NA</pre>
+
+<pre >##  [1] NA NA NA NA NA NA NA NA NA NA</pre>
+
+<pre class = 'prettyprint lang-r'>x &gt; 2 &amp; !is.na(x)</pre>
+
+<pre >##  [1] FALSE FALSE FALSE  TRUE FALSE  TRUE  TRUE FALSE FALSE  TRUE</pre>
+
+</article></slide><slide class=''><hgroup><h2>Missing Data with Logicals</h2></hgroup><article  id="missing-data-with-logicals-2">
+
+<p>What about seeing if a value is equal to multiple values? You can do <code>(x == 1 | x == 2) &amp; !is.na(x)</code>, but that is not efficient. Introduce the <code>%in%</code> operator:</p>
+
+<pre class = 'prettyprint lang-r'>(x == 1 | x == 2) # has NA</pre>
+
+<pre >##  [1] FALSE  TRUE  TRUE FALSE    NA FALSE FALSE  TRUE  TRUE FALSE</pre>
+
+<pre class = 'prettyprint lang-r'>(x == 1 | x == 2) &amp; !is.na(x) # No NA</pre>
+
+<pre >##  [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE</pre>
+
+<pre class = 'prettyprint lang-r'>x %in% c(1, 2) # NEVER has NA and returns logical</pre>
+
+<pre >##  [1] FALSE  TRUE  TRUE FALSE FALSE FALSE FALSE  TRUE  TRUE FALSE</pre>
+
+</article></slide><slide class=''><hgroup><h2>Creating One-way Tables</h2></hgroup><article  id="creating-one-way-tables" class="smaller">
+
+<p>Here we will use <code>table</code> to make tabulations of the data. Look at <code>?table</code> to see options for missing data.</p>
+
+<pre class = 'prettyprint lang-r'>table(x)</pre>
+
+<pre >## x
+## 0 1 2 3 
+## 1 1 3 4</pre>
+
+<pre class = 'prettyprint lang-r'>table(x, 
+        useNA = &quot;ifany&quot;)</pre>
+
+<pre >## x
 ##    0    1    2    3 &lt;NA&gt; 
 ##    1    1    3    4    1</pre>
 
+</article></slide><slide class=''><hgroup><h2>Creating One-way Tables</h2></hgroup><article  id="creating-one-way-tables-1" class="smaller">
+
+<p>You can set <code>useNA = &quot;always&quot;</code> to have it always have a column for <code>NA</code></p>
+
 <pre class = 'prettyprint lang-r'>table(c(0, 1, 2, 3, 2, 3, 3, 2,2, 3), 
-        useNA=&quot;always&quot;)</pre>
+        useNA = &quot;always&quot;)</pre>
 
 <pre >## 
 ##    0    1    2    3 &lt;NA&gt; 
 ##    1    1    4    4    0</pre>
 
+</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-1" class="smaller">
+
+<p>A two-way table. If you pass in 2 vectors, <code>table</code> creates a 2-dimensional table.</p>
+
 <pre class = 'prettyprint lang-r'>tab &lt;- table(c(0, 1, 2, 3, 2, 3, 3, 2,2, 3), 
              c(0, 1, 2, 3, 2, 3, 3, 4, 4, 3), 
-              useNA=&quot;always&quot;)
-margin.table(tab, 2)</pre>
+              useNA = &quot;always&quot;)</pre>
+
+</article></slide><slide class=''><hgroup><h2>Finding Row or Column Totals</h2></hgroup><article  id="finding-row-or-column-totals">
+
+<p><code>margin.table</code> finds the marginal sums of the table. <code>margin</code> is 1 for rows, 2 for columns in general in <code>R</code>. Here is the column sums of the table:</p>
+
+<pre class = 'prettyprint lang-r'>margin.table(tab, 2)</pre>
 
 <pre >## 
 ##    0    1    2    3    4 &lt;NA&gt; 
 ##    1    1    2    4    2    0</pre>
 
-</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-2" class="smaller">
+
+<p><code>prop.table</code> finds the marginal proportions of the table. Think of it dividing the table by it&#39;s respective marginal totals. If <code>margin</code> not set, divides by overall total.</p>
 
 <pre class = 'prettyprint lang-r'>prop.table(tab)</pre>
 
@@ -166,17 +250,17 @@ margin.table(tab, 2)</pre>
 
 </article></slide><slide class=''><hgroup><h2>Download Salary FY2014 Data</h2></hgroup><article  id="download-salary-fy2014-data">
 
-<p><a href='https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7' title=''>https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7</a></p>
+<p>From <a href='https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7' title=''>https://data.baltimorecity.gov/City-Government/Baltimore-City-Employee-Salaries-FY2014/2j28-xzd7</a> <a href='http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv' title=''>http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv</a></p>
 
-<p>Download as a CSV and then read it into R as the variable <code>Sal</code></p>
+<p>Read the CSV into R <code>Sal</code></p>
 
 <pre class = 'prettyprint lang-r'>Sal = read.csv(&quot;http://www.aejaffe.com/winterR_2016/data/Baltimore_City_Employee_Salaries_FY2014.csv&quot;,
                as.is = TRUE)</pre>
 
-</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-2" class="smaller">
+</article></slide><slide class=''><hgroup><h2>Data Cleaning</h2></hgroup><article  id="data-cleaning-3" class="smaller">
 
 <ul>
-<li><code>any()</code> - checks if there are any TRUES</li>
+<li><code>any()</code> - checks if there are any <code>TRUE</code>s</li>
 <li><code>all()</code> - checks if ALL are true</li>
 </ul>
 
@@ -193,7 +277,7 @@ margin.table(tab, 2)</pre>
 ## 3 States Attorneys Office  09/25/2006    $68300.00 $67439.19
 ## 4  HLTH-Health Department  07/23/2009    $62000.00 $58654.74</pre>
 
-<pre class = 'prettyprint lang-r'>any(is.na(Sal$Name))</pre>
+<pre class = 'prettyprint lang-r'>any(is.na(Sal$Name)) # are there any NAs?</pre>
 
 <pre >## [1] FALSE</pre>
 
@@ -206,7 +290,32 @@ margin.table(tab, 2)</pre>
 <pre >data$gender[data$gender %in% 
     c(&quot;Male&quot;, &quot;M&quot;, &quot;m&quot;)] &lt;- &quot;Male&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
+</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning-1">
+
+<p>You can also <code>recode</code> a vector:</p>
+
+<pre class = 'prettyprint lang-r'>library(car)
+x = rep(c(&quot;Male&quot;, &quot;M&quot;, &quot;m&quot;, &quot;f&quot;, &quot;Female&quot;, &quot;female&quot; ), each = 3)
+car::recode(x, &quot;c(&#39;m&#39;, &#39;M&#39;, &#39;male&#39;) = &#39;Male&#39;;
+            c(&#39;f&#39;, &#39;F&#39;, &#39;female&#39;) = &#39;Female&#39;;&quot;)</pre>
+
+<pre >##  [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  
+##  [8] &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
+## [15] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning-2">
+
+<p>You can also <code>revalue</code> a vector with the <code>revalue</code> command</p>
+
+<pre class = 'prettyprint lang-r'>library(plyr)
+plyr::revalue(x, c(&quot;M&quot; = &quot;Male&quot;, &quot;m&quot; = &quot;Male&quot;,
+                   &quot;f&quot; = &quot;Female&quot;, &quot;female&quot; = &quot;Female&quot;))</pre>
+
+<pre >##  [1] &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;   &quot;Male&quot;  
+##  [8] &quot;Male&quot;   &quot;Male&quot;   &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;
+## [15] &quot;Female&quot; &quot;Female&quot; &quot;Female&quot; &quot;Female&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>Example of Cleaning:</h2></hgroup><article  id="example-of-cleaning-3">
 
 <p>Sometimes though, it&#39;s not so simple. That&#39;s where functions that find patterns come in very useful.</p>
 
@@ -324,8 +433,6 @@ margin.table(tab, 2)</pre>
 ## [17] &quot;Payne,Michael N&quot;         &quot;Payne,Morag&quot;            
 ## [19] &quot;Payne,Nora M&quot;            &quot;Payne,Shelley F&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
-
 <pre class = 'prettyprint lang-r'>grep(&quot;Leonard.?S&quot;, x=Sal$Name, value=TRUE)</pre>
 
 <pre >## [1] &quot;Payne,Leonard S&quot;      &quot;Szumlanski,Leonard S&quot;</pre>
@@ -413,8 +520,6 @@ paste0(&quot;Visit&quot;,1:5)</pre>
 
 <pre >## [1] &quot;Visit1&quot; &quot;Visit2&quot; &quot;Visit3&quot; &quot;Visit4&quot; &quot;Visit5&quot;</pre>
 
-</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
-
 <pre class = 'prettyprint lang-r'>paste(1:5, letters[1:5], sep=&quot;_&quot;)</pre>
 
 <pre >## [1] &quot;1_a&quot; &quot;2_b&quot; &quot;3_c&quot; &quot;4_d&quot; &quot;5_e&quot;</pre>
@@ -476,8 +581,6 @@ visits[1:2,]</pre>
 ## 1  1     1 10.00000
 ## 2  2     2 11.73913</pre>
 
-</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
-
 <pre class = 'prettyprint lang-r'>merged.data &lt;- merge(base, visits, by=&quot;id&quot;)
 merged.data[1:5,]</pre>
 
@@ -491,8 +594,6 @@ merged.data[1:5,]</pre>
 <pre class = 'prettyprint lang-r'>dim(merged.data)</pre>
 
 <pre >## [1] 24  4</pre>
-
-</article></slide><slide class=''><hgroup><h2></h2></hgroup><article >
 
 <pre class = 'prettyprint lang-r'>all.data &lt;- merge(base, visits, by=&quot;id&quot;, all=TRUE)
 tail(all.data)</pre>
@@ -563,7 +664,8 @@ head(circ$date)</pre>
 
 <pre class = 'prettyprint lang-r'>head(Indometh) # this is long</pre>
 
-<pre >##   Subject time conc
+<pre >## Grouped Data: conc ~ time | Subject
+##   Subject time conc
 ## 1       1 0.25 1.50
 ## 2       1 0.50 0.94
 ## 3       1 0.75 0.78

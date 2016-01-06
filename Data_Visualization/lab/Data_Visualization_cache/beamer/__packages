@@ -8,3 +8,5 @@ dplyr
 ggplot2
 RColorBrewer
 lattice
+car
+plyr
