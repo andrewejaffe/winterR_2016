@@ -3,9 +3,9 @@ title: "Manipulating Data in R"
 author: "John Muschelli"
 date: "January 7, 2016"
 output:
+  beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
-  beamer_presentation: default
 ---
 
 ```{r, echo = FALSE}
@@ -81,9 +81,7 @@ We want to look at each ridership, and will removet the `daily` column:
 ex_data$daily = NULL
 ```
 
-# Reshaping data from wide (fat) to long (tall)
-
-# Resources
+## Reshaping data from wide (fat) to long (tall)
 
 See http://www.cookbook-r.com/Manipulating_data/Converting_data_between_wide_and_long_format/
 
@@ -116,8 +114,6 @@ head(long)
 table(long$line)
 table(long$type)
 ```
-
-# Reshaping data from long (tall) to wide (fat)
 
 ## Reshaping data from long (tall) to wide (fat): tidyr
 
@@ -154,7 +150,6 @@ head(wide)
 ```
 
 
-# Merging Data
 ## Data Merging/Append in Base R
 
 * Merging - joining data sets together - usually on key variables, usually "id"
@@ -165,6 +160,7 @@ head(wide)
 * `t()` is a function that will transpose the data
 
 ## Merging {.smaller}
+
 ```{r merging}
 base <- data.frame(id = 1:10, Age= seq(55,60, length=10))
 base[1:2,]
@@ -173,7 +169,7 @@ visits <- data.frame(id = rep(1:8, 3), visit= rep(1:3, 8),
 visits[1:2,]
 ```
 
-
+## Merging {.smaller}
 
 ```{r merging2}
 merged.data <- merge(base, visits, by="id")
@@ -182,6 +178,7 @@ dim(merged.data)
 ```
 
 
+## Merging {.smaller}
 
 ```{r mergeall}
 all.data <- merge(base, visits, by="id", all=TRUE)
@@ -190,7 +187,6 @@ dim(all.data)
 ```
 
 ## Joining in `dplyr`
-
 
 * `?join` - see different types of joining for `dplyr`
 * Let's look at https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
@@ -218,10 +214,6 @@ fj = full_join(base, visits)
 dim(fj)
 tail(fj)
 ```
-
-
-
-# Perform Operations By Groups of Variables
 
 ## Perform Operations By Groups: base R
 
