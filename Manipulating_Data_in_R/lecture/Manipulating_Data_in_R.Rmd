@@ -27,6 +27,7 @@ In this module, we will show you how to:
 We will show you how to do each operation in base R then show you how to use the `dplyr` or `tidyr` package to do the same operation (if applicable).  
 
 See the "Data Wrangling Cheat Sheet using `dplyr` and `tidyr`":
+
 * https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf
 
 ## Load the packages/libraries

@@ -113,35 +113,35 @@
 
 <pre class = 'prettyprint lang-r'>head(mtcars)</pre>
 
-<pre >                   mpg cyl disp  hp drat    wt  qsec vs am gear carb
-Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</pre>
+<pre >##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</pre>
 
 </article></slide><slide class=''><hgroup><h2>Statistical summarization</h2></hgroup><article  id="statistical-summarization">
 
 <pre class = 'prettyprint lang-r'>mean(mtcars$hp)</pre>
 
-<pre >[1] 146.6875</pre>
+<pre >## [1] 146.6875</pre>
 
 <pre class = 'prettyprint lang-r'>quantile(mtcars$hp)</pre>
 
-<pre >   0%   25%   50%   75%  100% 
- 52.0  96.5 123.0 180.0 335.0 </pre>
+<pre >##    0%   25%   50%   75%  100% 
+##  52.0  96.5 123.0 180.0 335.0</pre>
 
 </article></slide><slide class=''><hgroup><h2>Statistical summarization</h2></hgroup><article  id="statistical-summarization-1">
 
 <pre class = 'prettyprint lang-r'>median(mtcars$wt)</pre>
 
-<pre >[1] 3.325</pre>
+<pre >## [1] 3.325</pre>
 
 <pre class = 'prettyprint lang-r'>quantile(mtcars$wt, probs = 0.6)</pre>
 
-<pre > 60% 
-3.44 </pre>
+<pre >##  60% 
+## 3.44</pre>
 
 </article></slide><slide class=''><hgroup><h2>Statistical summarization</h2></hgroup><article  id="statistical-summarization-2">
 
@@ -150,16 +150,16 @@ Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1</pre>
 <pre class = 'prettyprint lang-r'>x = c(1,5,7,NA,4,2, 8,10,45,42)
 mean(x)</pre>
 
-<pre >[1] NA</pre>
+<pre >## [1] NA</pre>
 
 <pre class = 'prettyprint lang-r'>mean(x,na.rm=TRUE)</pre>
 
-<pre >[1] 13.77778</pre>
+<pre >## [1] 13.77778</pre>
 
 <pre class = 'prettyprint lang-r'>quantile(x,na.rm=TRUE)</pre>
 
-<pre >  0%  25%  50%  75% 100% 
-   1    4    7   10   45 </pre>
+<pre >##   0%  25%  50%  75% 100% 
+##    1    4    7   10   45</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Summarization on matrices/data frames</h2></hgroup><article  id="data-summarization-on-matricesdata-frames">
 
@@ -196,34 +196,34 @@ circ2 = select(circ, date, day, ends_with(&quot;Average&quot;))</pre>
 <pre class = 'prettyprint lang-r'>avgs = select(circ2, ends_with(&quot;Average&quot;))
 colMeans(avgs,na.rm=TRUE)</pre>
 
-<pre >orangeAverage purpleAverage  greenAverage bannerAverage 
-    3033.1611     4016.9345     1957.7814      827.2685 </pre>
+<pre >## orangeAverage purpleAverage  greenAverage bannerAverage 
+##     3033.1611     4016.9345     1957.7814      827.2685</pre>
 
 <pre class = 'prettyprint lang-r'>circ2$daily = rowMeans(avgs,na.rm=TRUE)
 head(circ2$daily)</pre>
 
-<pre >[1]  952.0  796.0 1211.5 1213.5 1644.0 1490.5</pre>
+<pre >## [1]  952.0  796.0 1211.5 1213.5 1644.0 1490.5</pre>
 
 </article></slide><slide class=''><hgroup><h2>Summary</h2></hgroup><article  id="summary">
 
 <pre class = 'prettyprint lang-r'>summary(circ2)</pre>
 
-<pre >     date               day            orangeAverage  purpleAverage 
- Length:1146        Length:1146        Min.   :   0   Min.   :   0  
- Class :character   Class :character   1st Qu.:2001   1st Qu.:2795  
- Mode  :character   Mode  :character   Median :2968   Median :4222  
-                                       Mean   :3033   Mean   :4017  
-                                       3rd Qu.:4020   3rd Qu.:5147  
-                                       Max.   :6926   Max.   :8090  
-                                       NA&#39;s   :10     NA&#39;s   :153   
-  greenAverage  bannerAverage        daily     
- Min.   :   0   Min.   :   0.0   Min.   :   0  
- 1st Qu.:1491   1st Qu.: 632.5   1st Qu.:2097  
- Median :2079   Median : 763.0   Median :2846  
- Mean   :1958   Mean   : 827.3   Mean   :2878  
- 3rd Qu.:2340   3rd Qu.: 945.9   3rd Qu.:3646  
- Max.   :5094   Max.   :4617.0   Max.   :6123  
- NA&#39;s   :661    NA&#39;s   :876      NA&#39;s   :10    </pre>
+<pre >##      date               day            orangeAverage  purpleAverage 
+##  Length:1146        Length:1146        Min.   :   0   Min.   :   0  
+##  Class :character   Class :character   1st Qu.:2001   1st Qu.:2795  
+##  Mode  :character   Mode  :character   Median :2968   Median :4222  
+##                                        Mean   :3033   Mean   :4017  
+##                                        3rd Qu.:4020   3rd Qu.:5147  
+##                                        Max.   :6926   Max.   :8090  
+##                                        NA&#39;s   :10     NA&#39;s   :153   
+##   greenAverage  bannerAverage        daily     
+##  Min.   :   0   Min.   :   0.0   Min.   :   0  
+##  1st Qu.:1491   1st Qu.: 632.5   1st Qu.:2097  
+##  Median :2079   Median : 763.0   Median :2846  
+##  Mean   :1958   Mean   : 827.3   Mean   :2878  
+##  3rd Qu.:2340   3rd Qu.: 945.9   3rd Qu.:3646  
+##  Max.   :5094   Max.   :4617.0   Max.   :6123  
+##  NA&#39;s   :661    NA&#39;s   :876      NA&#39;s   :10</pre>
 
 </article></slide><slide class=''><hgroup><h2>Apply statements</h2></hgroup><article  id="apply-statements">
 
@@ -245,18 +245,18 @@ head(circ2$daily)</pre>
 
 <pre class = 'prettyprint lang-r'>apply(avgs,2,mean,na.rm=TRUE) # column means</pre>
 
-<pre >orangeAverage purpleAverage  greenAverage bannerAverage 
-    3033.1611     4016.9345     1957.7814      827.2685 </pre>
+<pre >## orangeAverage purpleAverage  greenAverage bannerAverage 
+##     3033.1611     4016.9345     1957.7814      827.2685</pre>
 
 <pre class = 'prettyprint lang-r'>apply(avgs,2,sd,na.rm=TRUE) # columns sds</pre>
 
-<pre >orangeAverage purpleAverage  greenAverage bannerAverage 
-    1227.5779     1406.6544      592.8969      436.0487 </pre>
+<pre >## orangeAverage purpleAverage  greenAverage bannerAverage 
+##     1227.5779     1406.6544      592.8969      436.0487</pre>
 
 <pre class = 'prettyprint lang-r'>apply(avgs,2,max,na.rm=TRUE) # column maxs</pre>
 
-<pre >orangeAverage purpleAverage  greenAverage bannerAverage 
-       6926.5        8089.5        5094.0        4617.0 </pre>
+<pre >## orangeAverage purpleAverage  greenAverage bannerAverage 
+##        6926.5        8089.5        5094.0        4617.0</pre>
 
 </article></slide><slide class=''><hgroup><h2>Other Apply Statements</h2></hgroup><article  id="other-apply-statements">
 
@@ -283,8 +283,8 @@ head(circ2$daily)</pre>
 
 <pre class = 'prettyprint lang-r'>tapply(circ2$daily, circ2$day, max, na.rm=TRUE)</pre>
 
-<pre >   Friday    Monday  Saturday    Sunday  Thursday   Tuesday Wednesday 
-  5600.75   5002.25   6123.00   3980.25   4820.50   4855.25   4985.00 </pre>
+<pre >##    Friday    Monday  Saturday    Sunday  Thursday   Tuesday Wednesday 
+##   5600.75   5002.25   6123.00   3980.25   4820.50   4855.25   4985.00</pre>
 
 </article></slide><slide class=''><hgroup><h2>Data Summarization</h2></hgroup><article  id="data-summarization-1">
 
