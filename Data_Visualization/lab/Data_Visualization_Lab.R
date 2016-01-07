@@ -1,24 +1,27 @@
-### Module 9 - lab
-# 6/17/2015
-## you will need data from:
-##     https://data.baltimorecity.gov/browse?limitTo=datasets
-## A. Baltimore_City_Employee_Salaries_FY2014
-## B. Monuments
+### Data Visualization Lab
+# 1/7/2016
 
+## you will need the charm city circulator dataset:
+# circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+#            header=TRUE,as.is=TRUE)
 
-# Salaries data:
+# Using ggplot2:
 
-# 1. Make an object called health.sal using the salaries data set, 
-#		with only agencies of those with "fire" (or any forms), if any, in the name
+# 1. plot average ridership  by date.
+# 	a. Color the points by route (orange, purple, green, banner)
+#	b. Color the points by day of the week
 
-# 2. Make a data set called trans which contains only agencies that contain "TRANS".
+# 2. Replot 1a where the colors of the points are the
+#	name of the route (with banner --> blue)
 
-# 3. What is/are the profession(s) of people who have "abra" in their name for Baltimore's Salaries?
+# 3. plot average ridership  by date with one panel per route
 
-# 4. What is the distribution of annual salaries look like? What is the IQR?
+# 4. plot average ridership by date with separate panels
+#		by day of the week, colored by route
 
-# 5. Convert HireDate to the `Date` class - plot Annual Salary vs Hire Date
+# Using base R graphics:
 
-# Monuments data:
-
-# 6. How many monuments contain the phrase "Monument" in them?
+# 5. plot average ridership on the orange route versus date
+#		as a solid line, and add dashed "error" lines based 
+#		on the boardings and alightings. 
+#	the line colors should be orange.

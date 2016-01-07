@@ -428,11 +428,8 @@ head(circ$newDate)</pre>
 
 <p>However, the <code>lubridate</code> package is much easier for generating explicit dates:</p>
 
-<pre class = 'prettyprint lang-r'>library(lubridate) # great for dates!</pre>
-
-<pre >## Warning: package &#39;lubridate&#39; was built under R version 3.2.3</pre>
-
-<pre class = 'prettyprint lang-r'>suppressPackageStartupMessages(library(dplyr))
+<pre class = 'prettyprint lang-r'>library(lubridate) # great for dates!
+suppressPackageStartupMessages(library(dplyr))
 circ = mutate(circ, newDate2 = mdy(date))
 head(circ$newDate2)</pre>
 
@@ -450,7 +447,7 @@ head(circ$newDate2)</pre>
 <pre class = 'prettyprint lang-r'>theTime = Sys.time()
 theTime</pre>
 
-<pre >## [1] &quot;2016-01-06 19:54:27 EST&quot;</pre>
+<pre >## [1] &quot;2016-01-06 22:45:38 EST&quot;</pre>
 
 <pre class = 'prettyprint lang-r'>class(theTime)</pre>
 
@@ -458,7 +455,7 @@ theTime</pre>
 
 <pre class = 'prettyprint lang-r'>theTime + 5000</pre>
 
-<pre >## [1] &quot;2016-01-06 21:17:47 EST&quot;</pre>
+<pre >## [1] &quot;2016-01-07 00:08:58 EST&quot;</pre>
 
 <p>Note it&#39;s like a more general date format.</p>
 
@@ -545,18 +542,8 @@ mat</pre>
 
 <p>There is also additional summarization functions for matrices (and not data.frames) in the <code>matrixStats</code> package, like <code>rowMins()</code>, <code>colMaxs()</code>, etc.</p>
 
-<pre class = 'prettyprint lang-r'>library(matrixStats,quietly = TRUE)</pre>
-
-<pre >## Warning: package &#39;matrixStats&#39; was built under R version 3.2.3</pre>
-
-<pre >## 
-## Attaching package: &#39;matrixStats&#39;
-## 
-## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     count</pre>
-
-<pre class = 'prettyprint lang-r'>avgs = select(circ, ends_with(&quot;Average&quot;))
+<pre class = 'prettyprint lang-r'>library(matrixStats,quietly = TRUE)
+avgs = select(circ, ends_with(&quot;Average&quot;))
 rowMins(as.matrix(avgs),na.rm=TRUE)[500:510]</pre>
 
 <pre >##  [1] 3538.5 3402.5 3862.5 3347.5 2837.5 2704.0 3138.5 3287.5 3275.0 3917.5

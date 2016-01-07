@@ -1,11 +1,10 @@
-## ----knit-setup, echo=FALSE, results='hide'------------------------------
+## ----knit-setup, echo=FALSE----------------------------------------------
 library(knitr)
-library(dplyr)
 opts_chunk$set(echo = TRUE, 
                message = FALSE, 
                warning = FALSE,
-               fig.height = 4,
-               fig.width = 4, 
+               fig.height = 3.5,
+               fig.width = 3.5, 
                comment = "")
 
 ## ----seed, comment="",echo=FALSE,prompt=TRUE-----------------------------
@@ -137,29 +136,8 @@ plot(orangeAverage ~ greenAverage, data=circ,
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 
-## ------------------------------------------------------------------------
-library(tidyr)
-long = death
-long$state = rownames(long)
-long = long %>% gather(year, deaths, -state)
-head(long, 2)
-
-## ------------------------------------------------------------------------
-library(stringr)
-library(dplyr)
-long$year = long$year %>% str_replace("^X", "") %>% as.numeric
-long = long %>% filter(!is.na(deaths))
-
-## ----geom_line, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-library(ggplot2)
-qplot(x = year, y = deaths, colour = state, 
-    data = long, geom = "line") + guides(colour = FALSE)
-
-## ----geom_tile-----------------------------------------------------------
-qplot(x = year, y = state, colour = deaths, 
-    data = long, geom = "tile") + guides(colour = FALSE)
-
 ## ----geoboxplot, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+library(ggplot2)
 qplot(factor(Diet), y = weight, 
       data = ChickWeight, geom = "boxplot")
 
@@ -223,4 +201,25 @@ qplot(x=Time, y=weight, colour = Chick,
 ggplot(aes(x = Time, y = weight, colour = Chick), 
     data = ChickWeight) + geom_line() + 
     facet_wrap(facets = ~Diet) + guides(colour = FALSE)
+
+## ------------------------------------------------------------------------
+library(tidyr)
+long = death
+long$state = rownames(long)
+long = long %>% gather(year, deaths, -state)
+head(long, 2)
+
+## ------------------------------------------------------------------------
+library(stringr)
+library(dplyr)
+long$year = long$year %>% str_replace("^X", "") %>% as.numeric
+long = long %>% filter(!is.na(deaths))
+
+## ----geom_line, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+qplot(x = year, y = deaths, colour = state, 
+    data = long, geom = "line") + guides(colour = FALSE)
+
+## ----geom_tile-----------------------------------------------------------
+qplot(x = year, y = state, colour = deaths, 
+    data = long, geom = "tile") + guides(colour = FALSE)
 

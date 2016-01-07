@@ -48,8 +48,8 @@ head(Sal,2)
 any(is.na(Sal$Name)) # are there any NAs?
 
 ## ---- eval = FALSE-------------------------------------------------------
-data$gender[data$gender %in% 
-    c("Male", "M", "m")] <- "Male"
+## data$gender[data$gender %in%
+##     c("Male", "M", "m")] <- "Male"
 
 ## ------------------------------------------------------------------------
 library(car, quietly = TRUE)

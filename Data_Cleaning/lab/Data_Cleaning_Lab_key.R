@@ -1,231 +1,169 @@
 #################
 # Data Cleaning and Plotting
 ##############
+# 1/6/2016
 
-## Download the "Real Property Taxes" Data from OpenBaltimore:
-## https://data.baltimorecity.gov/Property/Real-Property-Taxes/27w9-urtv
-## as a .csv file
+## Download the "Real Property Taxes" Data from my website (via OpenBaltimore):
+# www.aejaffe.com/winterR_2016/data/real_property_tax.csv.gz
+## note you don't need to unzip it to read it into R
+rm( list = ls() ) # clear the workspace
+library(stringr)
+library(dplyr)
 
 # 1. Read the Property Tax data into R and call it the variable `tax`
-tax = read.csv("../data/Real_Property_Taxes.csv", 
-               as.is=TRUE)
-
-table(tax$resCode)
-library(stringr)
-tax$resCode = str_trim(tax$resCode)
-tax$cityTax = str_trim(tax$cityTax)
-tax$stateTax = str_trim(tax$stateTax)
-tax$amountDue = str_trim(tax$amountDue)
-
-table(tax$resCode)
+tax = read.csv(
+  "~/Downloads/real_property_tax.csv.gz", 
+               stringsAsFactors = FALSE)
+tax_fac = read.csv(
+  "~/Downloads/real_property_tax.csv.gz", 
+  stringsAsFactors = TRUE)
 
 # 2. How many addresses pay property taxes? 
-dim(tax) # ? all homes in dataset
-length(unique(tax$propertyAddress)) # those with unique address
-length(unique(tax$propertyAddress[
-  tax$cityTax != "$0.00"]))
-# and those that have non-zero city
-length(unique(tax$propertyAddress[tax$cityTax != "$0.00" &
-		tax$stateTax != "$0.00"]))
+nrow(tax)
+dim(tax)
 
-# 3. What is the total city and state tax charged?
-tax$cityTax = as.numeric(gsub("$","",
-              tax$cityTax,fixed=TRUE))
-tax$stateTax = as.numeric(gsub("$","",
-              tax$stateTax,fixed=TRUE))
-tax$amountDue = as.numeric(gsub("$","",
-              tax$amountDue,fixed=TRUE))
+# 3. What is the total city and state tax paid?
+head(tax$cityTax)
+head(tax_fac$cityTax)
+cityTax = tax$cityTax %>% 
+  str_replace(fixed("$"), "") %>%
+  as.numeric
+stateTax = tax$stateTax %>% 
+  str_replace(fixed("$"), "") %>%
+  as.numeric
+head(cityTax)
 
-colSums(tax[,c("cityTax","stateTax")],
-          na.rm=TRUE)
-colSums(tax[,c("cityTax","stateTax")],
-        na.rm=TRUE)/1e6
-sum(tax$cityTax,na.rm=TRUE)
-sum(tax$stateTax,na.rm=TRUE)
-sum(colSums(tax[,c("cityTax","stateTax")],na.rm=TRUE))
-sum(tax$cityTax,na.rm=TRUE) + sum(tax$stateTax,na.rm=TRUE)
-sum(tax$cityTax, tax$stateTax,na.rm=TRUE) / 1e6
+head(tax$cityTax[ is.na(cityTax) ])
+table(tax$cityTax[ is.na(cityTax) ])
+
+head(tax$stateTax[ is.na(stateTax) ])
+table(tax$stateTax[ is.na(stateTax) ])
+
+tax$cityTax = cityTax
+tax$stateTax = stateTax
+
+sum(tax$cityTax, na.rm = TRUE)
+sum(tax$stateTax, na.rm = TRUE)
+
 
 # 4. What is the 75th percentile of city and state tax paid by ward?
-tapply(tax$cityTax, tax$ward, 
-       quantile, prob=0.75, na.rm=TRUE)
-tapply(tax$stateTax, tax$ward, 
-       quantile, prob=0.75, na.rm=TRUE)
+head(tax$propertyAddress)
+tax$propertyAddress = str_trim(tax$propertyAddress)
+head(tax$propertyAddress)
 
+tax$street = str_detect(
+  tax$propertyAddress,
+                        "ST$")
+tax$street = str_detect(
+  tax$propertyAddress,
+  "STREET$") | tax$street
 
-# tapply(tax$cityTax, tax$ward, function(x) {
-#   x = log(x + 500)
-#   quantile(x, prob=0.75, na.rm=TRUE)
-# })
+ss = str_split(tax$propertyAddress," ")
+tab = table(sapply(ss, last))
 
-# 5. Using `tapply()` and `table()`
+# 5. Split the data by ward into a list: 
+tax_list = split(tax, tax$street)
+
+# Using `tapply()` and `table()`
 #	a. how many observations are in each ward?
-
-table(tax$ward)
-wardList = split(tax, tax$ward)
-sapply(wardList,nrow)
+sapply(tax_list, nrow)
+sum(tax$street)
+table(tax$street)
+tapply(tax$propertyAddress, tax$street, length)
 
 #	b. what is the mean state tax per ward
-tapply(tax$stateTax, tax$ward, mean,na.rm=TRUE)
-sapply(wardList, function(x) mean(x$stateTax, na.rm=TRUE))
+tax %>% 
+  group_by(street) %>% 
+  summarize(mean_state = mean(stateTax, na.rm = TRUE))
+tapply(tax$stateTax, tax$street, mean, na.rm=TRUE)
 
 #	c. what is the maximum amount still due?
-tapply(tax$amountDue, tax$ward, max, na.rm=TRUE)
-sapply(wardList, function(x) max(x$stateTax, na.rm=TRUE))
 
-# 6. Make boxplots using a) default and b) ggplot2 graphics showing cityTax 
+
+# 6. Make boxplots using base graphics showing cityTax 
 #	 	by whether the property	is a principal residence or not.
-
-boxplot(cityTax ~ resCode, 
-      data=tax,ylab="city tax")
-ct10 = log10(tax$cityTax+1) # try log10
-boxplot(ct10 ~ tax$resCode,ylab="log10(city tax+1)")
-boxplot(ct10 ~ tax$resCode,ylab="log10(city tax+1)",
-        yaxt="n")
-axis(2, at = 0:6, labels = paste0("$",10^(0:6)))
-
-## ggplot2
-library(ggplot2)
-qplot(factor(resCode), cityTax, 
-      data = tax, geom = "boxplot")
-qplot(factor(resCode), log10(cityTax+1),
-      data = tax, geom = "boxplot")
-
-
+tax$resCode = str_trim(tax$resCode)
+boxplot(log(cityTax) ~ resCode, data = tax)
 # 7. Subset the data to only retain those houses that are principal residences. 
+pres = tax %>% filter( resCode %in% "PRINCIPAL RESIDENCE")
 #	a) How many such houses are there?
-tax2 = tax[tax$resCode=="PRINCIPAL RESIDENCE",]
-nrow(tax2)
-
+dim(pres)
 #	b) Describe the distribution of property taxes on these residences.
-hist(log10(tax2$cityTax+1))
-quantile(tax2$cityTax,na.rm=TRUE)
-hist(log10(tax2$stateTax+1))
-quantile(tax2$stateTax,na.rm=TRUE)
 
 # 8. Convert the 'lotSize' variable to a numeric square feet variable. 
 #	Tips: - Assume hyphens represent decimal places within measurements. 
 #		  - 1 acre = 43560 square feet
+#		  - The hyphens represent inches (not decimals)
 # 		  - Don't spend more than 5-10 minutes on this; stop and move on
-tax$lotSize = str_trim(tax$lotSize) # trim white space
-lot = tax$lotSize # i want to check later
+
+tax$lotSize = str_trim(tax$lotSize) # trim to be safe
+lot = tax$lotSize # for checking later
 
 # first lets take care of acres
 aIndex= c(grep("ACRE.*", tax$lotSize),
             grep(" %", tax$lotSize, fixed=TRUE))
-acre = tax$lotSize[aIndex]
+head(aIndex)
+head(lot[aIndex])
 
+acre = tax$lotSize[aIndex] # temporary variable
+## find and replace character strings
 acre = gsub(" ACRE.*","",acre)
 acre = gsub(" %","",acre)
-acre[is.na(as.numeric(acre))]
+head(acre[is.na(as.numeric(acre))])
 
-acre = gsub("-",".",acre,fixed=TRUE)
-acre[is.na(as.numeric(acre))]
-
+acre = gsub("-",".",acre,fixed=TRUE) # hyphen instead of decimal
+head(acre[is.na(as.numeric(acre))])
 acre = gsub("ACRES","", acre, fixed=TRUE)
+head(acre[is.na(as.numeric(acre))])
+
+acre = gsub("O","0", acre, fixed=TRUE) # 0 vs O
+acre = gsub("Q","", acre, fixed=TRUE) # Q, oops
 acre[is.na(as.numeric(acre))]
 
-acre = gsub("O","0", acre, fixed=TRUE)
-acre = gsub("Q","", acre, fixed=TRUE)
-acre2 = as.numeric(acre)*43560 # all but 4
-sum(is.na(acre2))
+acre2 = as.numeric(acre)*43560 
+sum(is.na(acre2)) # all but 4
 
-### now feet
+## now square feet:
 fIndex = grep("X", tax$lotSize)
 ft = tax$lotSize[fIndex]
-ft = gsub("-",".",ft,fixed=TRUE)
+
+ft = gsub("&", "-", ft, fixed=TRUE)
+ft = gsub("IMP ONLY ", "", ft, fixed=TRUE)
 ft = gsub("`","1",ft,fixed=TRUE)
-ft = gsub("&",".",ft,fixed=TRUE)
-width = as.numeric(sapply(strsplit(ft,"X"),"[", 1))
-width = as.numeric(sapply(strsplit(ft,"X"),function(x) x[1]))
 
-length = as.numeric(sapply(strsplit(ft,"X"),"[", 2))
-sqft = width*length
+# wrapper for string split and sapply
+ss = function(x, pattern, slot=1,...) sapply(strsplit(x,pattern,...), "[", slot)
 
-# now add column
+width = ss(ft,"X", 1)
+length = ss(ft,"X", 2)
+
+## width
+widthFeet = as.numeric(ss(width, "-"))
+widthInch = as.numeric(ss(width, "-",2))/12
+widthInch[is.na(widthInch)] = 0 # when no inches present
+totalWidth = widthFeet + widthInch # add together
+
+# length
+lengthFeet = as.numeric(ss(length, "-"))
+lengthInch = as.numeric(ss(length, "-",2))/12
+lengthInch[is.na(lengthInch)] = 0 # when no inches present
+totalLength = lengthFeet + lengthInch
+
+# combine together for square feet
+sqrtFt = totalWidth*totalLength
+
 tax$sqft = rep(NA)
 tax$sqft[aIndex] = acre2
-tax$sqft[fIndex] = sqft
+tax$sqft[fIndex] = sqrtFt
 mean(!is.na(tax$sqft))
 
-# some are already sq ft
 sIndex=c(grep("FT", tax$lotSize), 
          grep("S.*F.", tax$lotSize))
-sf = tax$lotSize[sIndex]
-sqft2 = as.numeric(sapply(strsplit(sf,"|SQ"),function(x) x[1]))
+sf = tax$lotSize[sIndex] # subset temporary variable
+sqft2 = as.numeric(ss(sf,"|SQ",1))
 tax$sqft[sIndex] = sqft2
-table(is.na(tax$sqft)) # 441
-
+table(is.na(tax$sqft)) 
 ## progress!
+
+#what remains?
 lot[is.na(tax$sqft)]
-tax$sqft[grep("-", tax$lotSize)] = tax$sqft[grep("-", tax$lotSize)]*((12/10)^2)
-
-# 9.a) Plot your numeric lotSize versus cityTax on principal residences. 
-#	b) How many values of lot size were missing?
-
-plot(log10(tax$cityTax+1), log10(tax$sqft))
-
-#  b) How many values of lot size were missing?
-sum(is.na(tax$sqft)) # 441
-
-
-################################
-## Read in the Salary FY2014 dataset
-
-# 10. Make an object called health.sal using the salaries data set, 
-#		with only agencies of those with "fire" (or any forms), if any, in the name
-
-Sal = read.csv("../data/Baltimore_City_Employee_Salaries_FY2014.csv",
-               as.is=TRUE)
-Sal$AnnualSalary = as.numeric(gsub("$","",Sal$AnnualSalary,fixed=TRUE))
-Sal$GrossPay = as.numeric(gsub("$","",Sal$GrossPay, fixed=TRUE))
-
-fire.sal = Sal[grep("fire", Sal$Agency, ignore.case=TRUE),]
-
-# 11. Make a data set called trans which contains only agencies that contain "TRANS".
-trans = Sal[grep("trans", Sal$Agency,ignore.case=TRUE),]
-
-# 12. What is/are the profession(s) of people who have "abra" in their name for Baltimore's Salaries?
-table(Sal$JobTitle[grep("abra", Sal$Name)])
-
-# 13. What is the distribution of annual salaries look like? What is the IQR?
-hist(Sal$AnnualSalary)
-quantile(Sal$AnnualSalary)
-
-# 14. Convert HireDate to the `Date` class - plot Annual Salary vs Hire Date
-Sal$HireDate = as.Date(Sal$HireDate, "%m/%d/%Y")
-
-# 15. Plot annual salary versus hire date. 
-#		Hint: first convert to numeric and date respectively
-plot(AnnualSalary ~ HireDate, data=Sal)
-plot(Sal$HireDate, Sal$AnnualSalary)
-
-# 16. Create a smaller dataset that only includes the
-# 	Police Department,  Fire Department and Sheriff's Office.
-Sal$Agency = str_trim(Sal$Agency)
-
-Sal2 = Sal[Sal$Agency %in% c("Police Department",
-                            "Fire Department", 
-                             "Sheriff's Office"),]
-
-#  a. How many employees are in this new dataset?
-dim(Sal2)
-nrow(Sal2)
-
-# 17. Replot annual salary versus hire date, color by Agency using
-#	i) regular plotting and ii) ggplot2
-plot(AnnualSalary ~ HireDate, data=Sal2, 
-      col = as.numeric(factor(Agency)))
-legend("topleft", levels(factor(Sal2$Agency)),
-       col = 1:3, pch = 15)
-
-yl = quantile(Sal2$AnnualSalary, c(0,0.995))
-
-qplot(x=HireDate, y=AnnualSalary, data=Sal2, geom=c("point", "smooth"), 
-        color=Agency, ylim = yl)
-
-ggplot(Sal2, aes(x=HireDate, y=AnnualSalary, color=Agency)) +
-  geom_point(shape=19) +  ylim(yl) +
-  geom_smooth(method=loess, se=TRUE, fullrange=TRUE,size=3,n=150)
-
-
