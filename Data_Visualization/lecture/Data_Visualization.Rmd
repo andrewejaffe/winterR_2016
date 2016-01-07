@@ -1,16 +1,16 @@
 ---
 title: "Data Visualization"
 author: "Andrew Jaffe"
-date: "January 5, 2016"
+date: "January 7, 2016"
 output:
   ioslides_presentation:
     css: ../../styles.css
-  beamer_presentation: default
 ---
 
 
-```{r knit-setup, echo=FALSE, results='hide'}
+```{r knit-setup, echo=FALSE}
 library(knitr)
+library(dplyr,quietly = TRUE)
 opts_chunk$set(echo = TRUE, 
                message = FALSE, 
                warning = FALSE,
@@ -31,16 +31,17 @@ set.seed(3)
 ## Read in Data
 
 ```{r plotEx,  fig.align='center',cache=FALSE}
-death = read.csv("http://biostat.jhsph.edu/~ajaffe/files/indicatordeadkids35.csv",
+death = read.csv("http://www.aejaffe.com/winterR_2016/data/indicatordeadkids35.csv",
                  as.is=TRUE,header=TRUE, row.names=1)
-print(death[1:2, 1:5])
+death[1:2, 1:5]
 ```
 
 We see that the column names were years, and R doesn't necessarily like to read in a column name that starts with a number and puts an X there.  
 We'll just take off that X and get the years.  
 
 ```{r}
-year = as.integer(gsub("X","",names(death)))
+library(stringr)
+year = names(death) %>% str_replace("X","") %>% as.integer
 head(year)
 ```
 
@@ -72,61 +73,27 @@ plot(as.numeric(death["Sweden",])~year,
 
 
 ## Basic Plots
+You can also use the `subset` argument in the `plot()` function, only when using formula notation:
+
+```{r plotEx_sub, fig.align='center', cache=TRUE}
+plot(as.numeric(death["Sweden",])~year,
+      ylab = "# of deaths per family", main = "Sweden",
+     subset = year < 2015, pch = 19, cex=1.2,col="blue")
+```
+
+
+## Basic Plots
 Using `scatter.smooth` plots the points and runs a loess smoother through the data. 
 ```{r plotEx4, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
 scatter.smooth(as.numeric(death["Sweden",])~year,span=0.2,
       ylab="# of deaths per family", main = "Sweden",lwd=3,
-     xlim = c(1760,2012), pch = 19, cex=0.9,col="grey")
+     subset = year < 2015, pch = 19, cex=0.9,col="grey")
 ```
-
-
-## Make Data Long
-
-Here we can `gather` the dataset:
-
-```{r}
-library(tidyr)
-long = death
-long$state = rownames(long)
-long = long %>% gather(year, deaths, -state)
-head(long, 2)
-```
-
-## Make Year Numeric
-
-Here we 
-
-* Take out any row where the death reate is missing.
-* Make year numeric
-
-```{r}
-library(stringr)
-library(dplyr)
-long$year = long$year %>% str_replace("^X", "") %>% as.numeric
-long = long %>% filter(!is.na(deaths))
-```
-
-## ggplot2
-
-`ggplot2` is a package of plotting that is very popular and powerful. `qplot` is a short hand for "quick plot".  
-
-```{r geom_line, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-library(ggplot2)
-qplot(x = year, y = deaths, colour = state, data = long, geom = "line") + guides(colour = FALSE)
-```
-
-## ggplot2
-
-Let's try to make it different like base R, a bit.  We use `tile` for the geometric unit:
-
-```{r geom_tile}
-qplot(x = year, y = state, colour = deaths, data = long, geom = "tile") + guides(colour = FALSE)
-```
-
 
 
 ## Basic Plots
 `par(mfrow=c(1,2))` tells R that we want to set a parameter (`par` function) named `mfrow` (number of plots - 1 row, 2 columns) so we can have 2 plots side by side (Sweden and the UK)
+
 ```{r plotEx5, comment="",prompt=TRUE, fig.width=8,fig.height=4,fig.align='center', cache=TRUE}
 par(mfrow=c(1,2))
 scatter.smooth(as.numeric(death["Sweden",])~year,span=0.2,
@@ -136,9 +103,6 @@ scatter.smooth(as.numeric(death["United Kingdom",])~year,span=0.2,
       ylab="# of deaths per family", main = "United Kingdom",lwd=3,
      xlim = c(1760,2012), pch = 19, cex=0.9,col="grey")
 ```
-
-
-
 
 ## Basic Plots
 We can set the y-axis to be the same.  
@@ -152,7 +116,6 @@ scatter.smooth(as.numeric(death["United Kingdom",])~year,span=0.2,
       ylab="", main = "United Kingdom",lwd=3,ylim=yl,
      xlim = c(1760,2012), pch = 19, cex=0.9,col="grey")
 ```
-
 
 
 ## Bar Plots
@@ -252,161 +215,6 @@ boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
 ```
 
 
-
-## ggplot2 boxplot {.smaller}
-
-We can simply do a boxplot:
-
-```{r geoboxplot, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-qplot(factor(Diet), y = weight, 
-      data = ChickWeight, geom = "boxplot")
-```
-
-
-## ggplot2
-
-The generic plotting function is `ggplot`:
-
-```{r geoboxplot_g, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-g = ggplot(aes(x = Diet, y = weight), data = ChickWeight)
-g + geom_boxplot()
-```
-
-
-
-## Boxplots revisited again
-
-We can do the same plot, by just saying we want a boxplot and points (and jitter the points)
-
-```{r geoboxpoint, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-qplot( factor(Diet), y = weight, data = ChickWeight, geom = c("boxplot", "jitter"))
-```
-
-
-## ggplot2: Adding 2 geoms together
-
-To have multiple geometrics, just "add" them
-
-```{r geoboxplot_add, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-g + geom_boxplot() + geom_point(position = "jitter")
-```
-
-
-## ggplot2: Adding 2 geoms together
-
-To have multiple geometrics, just "add" them
-
-```{r geoboxplot_addjitter, fig.align='center', cache=FALSE}
-g + geom_boxplot() + geom_jitter()
-```
-
-
-
-## Histograms again
- 
-We can do histograms again using `hist`.  Let's do histograms of weight at all time points for the chick's weights.  We reiterate how useful these are to show your data.
-
-```{r hist, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-hist(ChickWeight$weight, breaks = 20)
-```
-
-
-
-## Multiple Histograms
-
-```{r ghist, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-qplot(x = weight, 
-      fill = factor(Diet),
-      data = ChickWeight, 
-      geom = c("histogram"))
-```
-
-
-
-
-## Multiple Histograms
-
-Alpha refers tot he opacity of the color, less is 
-```{r ghist_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-qplot(x = weight, fill = Diet, data = ChickWeight, geom = c("histogram"), alpha=I(.7))
-```
-
-
-
-
-## Multiple Densities
-
-We cold also do densities
-```{r gdens, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-qplot(x= weight, fill = Diet, data = ChickWeight, geom = c("density"), alpha=I(.7))
-```
-
-
-
-## Multiple Densities
-
-```{r gdens_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-qplot(x= weight, colour = Diet, data = ChickWeight, geom = c("density"), alpha=I(.7))
-```
-
-
-## Multiple Densities
-
-```{r gdens_alpha_gg, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-ggplot(aes(x= weight, colour = Diet), data = ChickWeight) + geom_density(alpha=I(.7))
-```
-
-
-
-
-## Multiple Densities
-
-You can take off the lines of the bottom like this
-```{r gdens_line_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
-ggplot(aes(x = weight, colour = Diet), data = ChickWeight) + geom_line(stat = "density")
-```
-
-
-
-
-
-## Spaghetti plot
- 
-We can make a spaghetti plot by telling ggplot we want a "line", and each line is colored by Chick.
-
-```{r spaghetti, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-qplot(x=Time, y=weight, colour = Chick, 
-      data = ChickWeight, geom = "line")
-```
-
-
-
-## Spaghetti plot: Facets
-
-In ggplot2, if you want separate plots for something, these are referred to as facets.
-
-```{r fac_spag, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-qplot(x = Time, y = weight, colour = Chick, facets = ~Diet, 
-      data = ChickWeight, geom = "line")
-```
-
-
-## Spaghetti plot: Facets
-
-We can turn off the legend (referred to a "guide" in ggplot2). (Note - there is different syntax with the `+`)
-```{r fac_spag_noleg, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-qplot(x=Time, y=weight, colour = Chick, facets = ~ Diet, 
-      data = ChickWeight, geom = "line") + guides(colour=FALSE)
-```
-
-## Spaghetti plot: Facets
-
-```{r fac_spag2, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-ggplot(aes(x = Time, y = weight, colour = Chick), data = ChickWeight) + 
-  geom_line() + facet_wrap(facets = ~Diet) + guides(colour = FALSE)
-```
-
-
 ## Colors
 
 R relies on color 'palettes'.
@@ -483,7 +291,7 @@ pch, lwd: if you want points in the legend, give a pch value. if you want lines,
 col: give the color for each legend level
 
 
-
+## Adding legends
 
 
 ```{r leg1, fig.align='center', cache=FALSE}
@@ -501,92 +309,229 @@ legend("topleft", paste("Diet",levels(ChickWeight$Diet)),
 ## Coloring by variable
 
 ```{r circ, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-destfile = tempfile(fileext = ".rda")
-download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
-load(destfile)
-dat = circ
-dat2 = circ2
+circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+            header=TRUE,as.is=TRUE)
 palette(brewer.pal(7,"Dark2"))
-dd = factor(dat$day)
-plot(orangeAverage ~ greenAverage, data=dat, 
+dd = factor(circ$day)
+plot(orangeAverage ~ greenAverage, data=circ, 
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 ```
-
-
 
 ## Coloring by variable
 
 ```{r circ2, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-dd = factor(dat$day, levels=c("Monday","Tuesday","Wednesday","Thursday",
-                              "Friday","Saturday","Sunday"))
-plot(orangeAverage ~ greenAverage, data=dat,
+dd = factor(circ$day, levels=c("Monday","Tuesday","Wednesday",
+            "Thursday","Friday","Saturday","Sunday"))
+plot(orangeAverage ~ greenAverage, data=circ,
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 ```
 
+## ggplot2
+
+`ggplot2` is a package of plotting that is very popular and powerful. `qplot` is a short hand for "quick plot".  Let's try this out on the childhood mortality data used above. However, let's do some manipulation first, by using `gather` on the data to convert to long. 
+
+```{r}
+library(tidyr)
+long = death
+long$state = rownames(long)
+long = long %>% gather(year, deaths, -state)
+head(long, 2)
+```
+
+## ggplot2
+
+Let's also make the year numeric, as we did above in the stand-alone `year` variable. 
 
 
+```{r}
+library(stringr)
+library(dplyr)
+long$year = long$year %>% str_replace("^X", "") %>% as.numeric
+long = long %>% filter(!is.na(deaths))
+```
 
-## More powerful graphics
+## ggplot2
 
-There are two very common packages for making very nice looking graphics. 
+`ggplot2` is a package of plotting that is very popular and powerful. `qplot` is a short hand for "quick plot".  
 
-lattice: http://lmdvr.r-forge.r-project.org/figures/figures.html
+```{r geom_line, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+library(ggplot2)
+qplot(x = year, y = deaths, colour = state, 
+    data = long, geom = "line") + guides(colour = FALSE)
+```
 
-ggplot2: http://docs.ggplot2.org/current/index.html
+## ggplot2
+
+Let's try to make it different like base R, a bit.  We use `tile` for the geometric unit:
+
+```{r geom_tile}
+qplot(x = year, y = state, colour = deaths, 
+    data = long, geom = "tile") + guides(colour = FALSE)
+```
 
 
+## ggplot2 boxplot 
 
-## Lattice
+We can simply do a boxplot:
 
-```{r lattice1, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-library(lattice)
-xyplot(weight ~ Time | Diet, data = ChickWeight)
+```{r geoboxplot, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+qplot(factor(Diet), y = weight, 
+      data = ChickWeight, geom = "boxplot")
+```
+
+
+## ggplot2
+
+The generic plotting function is `ggplot`:
+
+```{r geoboxplot_g, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+g = ggplot(aes(x = Diet, y = weight), data = ChickWeight)
+g + geom_boxplot()
 ```
 
 
 
-## Lattice
+## Boxplots revisited again
 
-```{r lattice2, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-densityplot(~weight | Diet, data = ChickWeight)
+We can do the same plot, by just saying we want a boxplot and points (and jitter the points)
+
+```{r geoboxpoint, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+qplot( factor(Diet), y = weight, data = ChickWeight, 
+       geom = c("boxplot", "jitter"))
+```
+
+
+## ggplot2: Adding 2 geoms together
+
+To have multiple geometrics, just "add" them
+
+```{r geoboxplot_add, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+g + geom_boxplot() + geom_point(position = "jitter")
+```
+
+
+## ggplot2: Adding 2 geoms together
+
+To have multiple geometrics, just "add" them
+
+```{r geoboxplot_addjitter, fig.align='center', cache=FALSE}
+g + geom_boxplot() + geom_jitter()
 ```
 
 
 
-## Lattice
+## Histograms again
+ 
+We can do histograms again using `hist`.  Let's do histograms of weight at all time points for the chick's weights.  We reiterate how useful these are to show your data.
 
-```{r levelplot1, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-rownames(dat2) = dat2$date
-mat = as.matrix(dat2[975:nrow(dat2),3:6])
-levelplot(t(mat), aspect = "fill")
+```{r hist, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+hist(ChickWeight$weight, breaks = 20)
 ```
 
 
 
-## Lattice
+## Multiple Histograms
 
-```{r levelplot2, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
-theSeq = seq(0,max(mat, na.rm = TRUE), by=50)
-my.col <- colorRampPalette(brewer.pal(5,"Greens"))(length(theSeq))
-levelplot(t(mat), aspect = "fill",at = theSeq,col.regions = my.col,xlab="Route",ylab="Date")
+```{r ghist, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+qplot(x = weight, 
+      fill = factor(Diet),
+      data = ChickWeight, 
+      geom = c("histogram"))
 ```
 
 
 
-## Lattice
 
-```{r levelplot3, comment="",prompt=TRUE, fig.width=8,fig.height=4,fig.align='center', cache=TRUE}
-library(RColorBrewer)
-tmp=death[grep("s$", rownames(death)), 200:251]
-yr = gsub("X","",names(tmp))
-theSeq = seq(0,max(tmp,na.rm=TRUE), by=0.05)
-my.col <- colorRampPalette(brewer.pal(5,"Reds"))(length(theSeq))
-levelplot(t(tmp), aspect = "fill",at = theSeq,col.regions = my.col,
-           scales=list(x=list(label=yr, rot=90, cex=0.7)))
+## Multiple Histograms
+
+Alpha refers tot he opacity of the color, less is 
+```{r ghist_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+qplot(x = weight, fill = Diet, data = ChickWeight, 
+      geom = c("histogram"), alpha=I(.7))
 ```
 
+
+
+
+## Multiple Densities
+
+We cold also do densities
+```{r gdens, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+qplot(x= weight, fill = Diet, data = ChickWeight, 
+      geom = c("density"), alpha=I(.7))
+```
+
+
+
+## Multiple Densities
+
+```{r gdens_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+qplot(x= weight, colour = Diet, data = ChickWeight, 
+      geom = c("density"), alpha=I(.7))
+```
+
+
+## Multiple Densities
+
+```{r gdens_alpha_gg, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+ggplot(aes(x= weight, colour = Diet), 
+  data = ChickWeight) + geom_density(alpha=I(.7))
+```
+
+
+
+
+## Multiple Densities
+
+You can take off the lines of the bottom like this
+```{r gdens_line_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE}
+ggplot(aes(x = weight, colour = Diet), data = ChickWeight) + 
+  geom_line(stat = "density")
+```
+
+
+
+
+
+## Spaghetti plot
+ 
+We can make a spaghetti plot by telling ggplot we want a "line", and each line is colored by Chick.
+
+```{r spaghetti, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+qplot(x=Time, y=weight, colour = Chick, 
+      data = ChickWeight, geom = "line")
+```
+
+
+
+## Spaghetti plot: Facets
+
+In ggplot2, if you want separate plots for something, these are referred to as facets.
+
+```{r fac_spag, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+qplot(x = Time, y = weight, colour = Chick, 
+      facets = ~Diet, data = ChickWeight, geom = "line")
+```
+
+
+## Spaghetti plot: Facets
+
+We can turn off the legend (referred to a "guide" in ggplot2). (Note - there is different syntax with the `+`)
+```{r fac_spag_noleg, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+qplot(x=Time, y=weight, colour = Chick, 
+      facets = ~ Diet,  data = ChickWeight, 
+        geom = "line") + guides(colour=FALSE)
+```
+
+## Spaghetti plot: Facets
+
+```{r fac_spag2, comment="",prompt=TRUE, fig.align='center', cache=FALSE}
+ggplot(aes(x = Time, y = weight, colour = Chick), 
+    data = ChickWeight) + geom_line() + 
+    facet_wrap(facets = ~Diet) + guides(colour = FALSE)
+```
 
 
 ## ggplot2 

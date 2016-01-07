@@ -1,5 +1,6 @@
 ## ----knit-setup, echo=FALSE, results='hide'------------------------------
 library(knitr)
+library(dplyr)
 opts_chunk$set(echo = TRUE, 
                message = FALSE, 
                warning = FALSE,
@@ -11,12 +12,13 @@ opts_chunk$set(echo = TRUE,
 set.seed(3) 
 
 ## ----plotEx,  fig.align='center',cache=FALSE-----------------------------
-death = read.csv("http://biostat.jhsph.edu/~ajaffe/files/indicatordeadkids35.csv",
+death = read.csv("http://www.aejaffe.com/winterR_2016/data/indicatordeadkids35.csv",
                  as.is=TRUE,header=TRUE, row.names=1)
-print(death[1:2, 1:5])
+death[1:2, 1:5]
 
 ## ------------------------------------------------------------------------
-year = as.integer(gsub("X","",names(death)))
+library(stringr)
+year = names(death) %>% str_replace("X","") %>% as.integer
 head(year)
 
 ## ----plot1, comment="",prompt=TRUE,  fig.align='center',cache=TRUE-------
@@ -31,30 +33,15 @@ plot(as.numeric(death["Sweden",])~year,
       ylab = "# of deaths per family", main = "Sweden",
      xlim = c(1760,2012), pch = 19, cex=1.2,col="blue")
 
+## ----plotEx_sub, fig.align='center', cache=TRUE--------------------------
+plot(as.numeric(death["Sweden",])~year,
+      ylab = "# of deaths per family", main = "Sweden",
+     subset = year < 2015, pch = 19, cex=1.2,col="blue")
+
 ## ----plotEx4, comment="",prompt=TRUE, fig.align='center', cache=TRUE-----
 scatter.smooth(as.numeric(death["Sweden",])~year,span=0.2,
       ylab="# of deaths per family", main = "Sweden",lwd=3,
-     xlim = c(1760,2012), pch = 19, cex=0.9,col="grey")
-
-## ------------------------------------------------------------------------
-library(tidyr)
-long = death
-long$state = rownames(long)
-long = long %>% gather(year, deaths, -state)
-head(long, 2)
-
-## ------------------------------------------------------------------------
-library(stringr)
-library(dplyr)
-long$year = long$year %>% str_replace("^X", "") %>% as.numeric
-long = long %>% filter(!is.na(deaths))
-
-## ----geom_line, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-library(ggplot2)
-qplot(x = year, y = deaths, colour = state, data = long, geom = "line") + guides(colour = FALSE)
-
-## ----geom_tile-----------------------------------------------------------
-qplot(x = year, y = state, colour = deaths, data = long, geom = "tile") + guides(colour = FALSE)
+     subset = year < 2015, pch = 19, cex=0.9,col="grey")
 
 ## ----plotEx5, comment="",prompt=TRUE, fig.width=8,fig.height=4,fig.align='center', cache=TRUE----
 par(mfrow=c(1,2))
@@ -100,64 +87,7 @@ boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
 points(ChickWeight$weight ~ jitter(as.numeric(ChickWeight$Diet),0.5))
 
 ## ----box_ex, eval=FALSE--------------------------------------------------
-boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
-
-## ----geoboxplot, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-qplot(factor(Diet), y = weight, 
-      data = ChickWeight, geom = "boxplot")
-
-## ----geoboxplot_g, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-g = ggplot(aes(x = Diet, y = weight), data = ChickWeight)
-g + geom_boxplot()
-
-## ----geoboxpoint, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
-qplot( factor(Diet), y = weight, data = ChickWeight, geom = c("boxplot", "jitter"))
-
-## ----geoboxplot_add, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-g + geom_boxplot() + geom_point(position = "jitter")
-
-## ----geoboxplot_addjitter, fig.align='center', cache=FALSE---------------
-g + geom_boxplot() + geom_jitter()
-
-## ----hist, comment="",prompt=TRUE, fig.align='center', cache=FALSE-------
-hist(ChickWeight$weight, breaks = 20)
-
-## ----ghist, comment="",prompt=TRUE, fig.align='center', cache=TRUE-------
-qplot(x = weight, 
-      fill = factor(Diet),
-      data = ChickWeight, 
-      geom = c("histogram"))
-
-## ----ghist_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
-qplot(x = weight, fill = Diet, data = ChickWeight, geom = c("histogram"), alpha=I(.7))
-
-## ----gdens, comment="",prompt=TRUE, fig.align='center', cache=TRUE-------
-qplot(x= weight, fill = Diet, data = ChickWeight, geom = c("density"), alpha=I(.7))
-
-## ----gdens_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
-qplot(x= weight, colour = Diet, data = ChickWeight, geom = c("density"), alpha=I(.7))
-
-## ----gdens_alpha_gg, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
-ggplot(aes(x= weight, colour = Diet), data = ChickWeight) + geom_density(alpha=I(.7))
-
-## ----gdens_line_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
-ggplot(aes(x = weight, colour = Diet), data = ChickWeight) + geom_line(stat = "density")
-
-## ----spaghetti, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-qplot(x=Time, y=weight, colour = Chick, 
-      data = ChickWeight, geom = "line")
-
-## ----fac_spag, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-qplot(x = Time, y = weight, colour = Chick, facets = ~Diet, 
-      data = ChickWeight, geom = "line")
-
-## ----fac_spag_noleg, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-qplot(x=Time, y=weight, colour = Chick, facets = ~ Diet, 
-      data = ChickWeight, geom = "line") + guides(colour=FALSE)
-
-## ----fac_spag2, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-ggplot(aes(x = Time, y = weight, colour = Chick), data = ChickWeight) + 
-  geom_line() + facet_wrap(facets = ~Diet) + guides(colour = FALSE)
+## boxplot(weight ~ Diet, data=ChickWeight, outline=FALSE)
 
 ## ----pal, fig.align='center', cache=TRUE---------------------------------
 palette("default")
@@ -192,47 +122,105 @@ legend("topleft", paste("Diet",levels(ChickWeight$Diet)),
        lwd = 3, ncol = 2)
 
 ## ----circ, comment="",prompt=TRUE, fig.align='center', cache=FALSE-------
-destfile = tempfile(fileext = ".rda")
-download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
-load(destfile)
-dat = circ
-dat2 = circ2
+circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+            header=TRUE,as.is=TRUE)
 palette(brewer.pal(7,"Dark2"))
-dd = factor(dat$day)
-plot(orangeAverage ~ greenAverage, data=dat, 
+dd = factor(circ$day)
+plot(orangeAverage ~ greenAverage, data=circ, 
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 
 ## ----circ2, comment="",prompt=TRUE, fig.align='center', cache=FALSE------
-dd = factor(dat$day, levels=c("Monday","Tuesday","Wednesday","Thursday",
-                              "Friday","Saturday","Sunday"))
-plot(orangeAverage ~ greenAverage, data=dat,
+dd = factor(circ$day, levels=c("Monday","Tuesday","Wednesday",
+            "Thursday","Friday","Saturday","Sunday"))
+plot(orangeAverage ~ greenAverage, data=circ,
      pch=19, col = as.numeric(dd))
 legend("bottomright", levels(dd), col=1:length(dd), pch = 19)
 
-## ----lattice1, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-library(lattice)
-xyplot(weight ~ Time | Diet, data = ChickWeight)
+## ------------------------------------------------------------------------
+library(tidyr)
+long = death
+long$state = rownames(long)
+long = long %>% gather(year, deaths, -state)
+head(long, 2)
 
-## ----lattice2, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-densityplot(~weight | Diet, data = ChickWeight)
+## ------------------------------------------------------------------------
+library(stringr)
+library(dplyr)
+long$year = long$year %>% str_replace("^X", "") %>% as.numeric
+long = long %>% filter(!is.na(deaths))
 
-## ----levelplot1, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-rownames(dat2) = dat2$date
-mat = as.matrix(dat2[975:nrow(dat2),3:6])
-levelplot(t(mat), aspect = "fill")
+## ----geom_line, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+library(ggplot2)
+qplot(x = year, y = deaths, colour = state, 
+    data = long, geom = "line") + guides(colour = FALSE)
 
-## ----levelplot2, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
-theSeq = seq(0,max(mat, na.rm = TRUE), by=50)
-my.col <- colorRampPalette(brewer.pal(5,"Greens"))(length(theSeq))
-levelplot(t(mat), aspect = "fill",at = theSeq,col.regions = my.col,xlab="Route",ylab="Date")
+## ----geom_tile-----------------------------------------------------------
+qplot(x = year, y = state, colour = deaths, 
+    data = long, geom = "tile") + guides(colour = FALSE)
 
-## ----levelplot3, comment="",prompt=TRUE, fig.width=8,fig.height=4,fig.align='center', cache=TRUE----
-library(RColorBrewer)
-tmp=death[grep("s$", rownames(death)), 200:251]
-yr = gsub("X","",names(tmp))
-theSeq = seq(0,max(tmp,na.rm=TRUE), by=0.05)
-my.col <- colorRampPalette(brewer.pal(5,"Reds"))(length(theSeq))
-levelplot(t(tmp), aspect = "fill",at = theSeq,col.regions = my.col,
-           scales=list(x=list(label=yr, rot=90, cex=0.7)))
+## ----geoboxplot, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+qplot(factor(Diet), y = weight, 
+      data = ChickWeight, geom = "boxplot")
+
+## ----geoboxplot_g, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+g = ggplot(aes(x = Diet, y = weight), data = ChickWeight)
+g + geom_boxplot()
+
+## ----geoboxpoint, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
+qplot( factor(Diet), y = weight, data = ChickWeight, 
+       geom = c("boxplot", "jitter"))
+
+## ----geoboxplot_add, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+g + geom_boxplot() + geom_point(position = "jitter")
+
+## ----geoboxplot_addjitter, fig.align='center', cache=FALSE---------------
+g + geom_boxplot() + geom_jitter()
+
+## ----hist, comment="",prompt=TRUE, fig.align='center', cache=FALSE-------
+hist(ChickWeight$weight, breaks = 20)
+
+## ----ghist, comment="",prompt=TRUE, fig.align='center', cache=TRUE-------
+qplot(x = weight, 
+      fill = factor(Diet),
+      data = ChickWeight, 
+      geom = c("histogram"))
+
+## ----ghist_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
+qplot(x = weight, fill = Diet, data = ChickWeight, 
+      geom = c("histogram"), alpha=I(.7))
+
+## ----gdens, comment="",prompt=TRUE, fig.align='center', cache=TRUE-------
+qplot(x= weight, fill = Diet, data = ChickWeight, 
+      geom = c("density"), alpha=I(.7))
+
+## ----gdens_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
+qplot(x= weight, colour = Diet, data = ChickWeight, 
+      geom = c("density"), alpha=I(.7))
+
+## ----gdens_alpha_gg, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
+ggplot(aes(x= weight, colour = Diet), 
+  data = ChickWeight) + geom_density(alpha=I(.7))
+
+## ----gdens_line_alpha, comment="",prompt=TRUE, fig.align='center', cache=TRUE----
+ggplot(aes(x = weight, colour = Diet), data = ChickWeight) + 
+  geom_line(stat = "density")
+
+## ----spaghetti, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+qplot(x=Time, y=weight, colour = Chick, 
+      data = ChickWeight, geom = "line")
+
+## ----fac_spag, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+qplot(x = Time, y = weight, colour = Chick, 
+      facets = ~Diet, data = ChickWeight, geom = "line")
+
+## ----fac_spag_noleg, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+qplot(x=Time, y=weight, colour = Chick, 
+      facets = ~ Diet,  data = ChickWeight, 
+        geom = "line") + guides(colour=FALSE)
+
+## ----fac_spag2, comment="",prompt=TRUE, fig.align='center', cache=FALSE----
+ggplot(aes(x = Time, y = weight, colour = Chick), 
+    data = ChickWeight) + geom_line() + 
+    facet_wrap(facets = ~Diet) + guides(colour = FALSE)
 
