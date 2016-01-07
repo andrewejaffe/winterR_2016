@@ -119,13 +119,6 @@
 <pre class = 'prettyprint lang-r'>library(dplyr)
 library(tidyr)</pre>
 
-<pre >
-Attaching package: &#39;tidyr&#39;
-
-The following object is masked from &#39;package:reshape&#39;:
-
-    expand</pre>
-
 </article></slide><slide class=''><hgroup><h2>Data used: Charm City Circulator</h2></hgroup><article  id="data-used-charm-city-circulator">
 
 <p><a href='http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv' title=''>http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv</a></p>
@@ -158,6 +151,15 @@ nrow(ex_data[ is.na(ex_data$date), ])</pre>
 
 <pre >[1] 0</pre>
 
+<pre class = 'prettyprint lang-r'>head(ex_data$date)</pre>
+
+<pre >[1] &quot;2010-01-11 UTC&quot; &quot;2010-01-12 UTC&quot; &quot;2010-01-13 UTC&quot; &quot;2010-01-14 UTC&quot;
+[5] &quot;2010-01-15 UTC&quot; &quot;2010-01-16 UTC&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>class(ex_data$date)</pre>
+
+<pre >[1] &quot;POSIXct&quot; &quot;POSIXt&quot; </pre>
+
 </article></slide><slide class=''><hgroup><h2>Making column names a little more separated</h2></hgroup><article  id="making-column-names-a-little-more-separated">
 
 <p>We will use <code>str_replace</code> from <code>stringr</code> to put periods in the column names.</p>
@@ -186,11 +188,11 @@ colnames(ex_data) = cn</pre>
 
 <p>The <code>reshape</code> command exists. It is a <strong>confusing</strong> function. Don&#39;t use it.</p>
 
-</article></slide><slide class=''><hgroup><h2>Reshaping data from wide (fat) to long (tall): tidyr</h2></hgroup><article  id="reshaping-data-from-wide-fat-to-long-tall-tidyr">
+</article></slide><slide class=''><hgroup><h2>Reshaping data from wide (fat) to long (tall): tidyr</h2></hgroup><article  id="reshaping-data-from-wide-fat-to-long-tall-tidyr" class="smaller">
 
 <p>In <code>tidyr</code>, the <code>gather</code> function gathers columns into rows.</p>
 
-<p>We want the column names into &quot;<code>type</code>&quot; variable in the output dataset and the value in &quot;<code>number</code>&quot; variable</p>
+<p>We want the column names into &quot;<code>var</code>&quot; variable in the output dataset and the value in &quot;<code>number</code>&quot; variable. We then describe which columns we want to &quot;gather:&quot;</p>
 
 <pre class = 'prettyprint lang-r'>long = gather(ex_data, &quot;var&quot;, &quot;number&quot;, 
               starts_with(&quot;orange&quot;),

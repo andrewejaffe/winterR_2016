@@ -14,6 +14,8 @@ head(ex_data, 2)
 library(lubridate) # great for dates!
 ex_data = mutate(ex_data, date = mdy(date))
 nrow(ex_data[ is.na(ex_data$date), ])
+head(ex_data$date)
+class(ex_data$date)
 
 ## ------------------------------------------------------------------------
 library(stringr)

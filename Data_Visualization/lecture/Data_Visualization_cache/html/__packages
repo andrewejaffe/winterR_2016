@@ -1,0 +1,12 @@
+base
+rmarkdown
+knitr
+rJava
+xlsxjars
+xlsx
+dplyr
+ggplot2
+RColorBrewer
+lattice
+tidyr
+stringr

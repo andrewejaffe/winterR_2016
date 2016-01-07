@@ -56,6 +56,8 @@ The `lubridate` package is great for dates:
 library(lubridate) # great for dates!
 ex_data = mutate(ex_data, date = mdy(date))
 nrow(ex_data[ is.na(ex_data$date), ])
+head(ex_data$date)
+class(ex_data$date)
 ```
 
 ## Making column names a little more separated
@@ -90,11 +92,11 @@ See http://www.cookbook-r.com/Manipulating_data/Converting_data_between_wide_and
 
 The `reshape` command exists.  It is a **confusing** function.  Don't use it.
 
-## Reshaping data from wide (fat) to long (tall): tidyr
+## Reshaping data from wide (fat) to long (tall): tidyr {.smaller}
 
 In `tidyr`, the `gather` function gathers columns into rows.
 
-We want the column names into "`type`" variable in the output dataset and the value in "`number`" variable
+We want the column names into "`var`" variable in the output dataset and the value in "`number`" variable. We then describe which columns we want to "gather:" 
 ```{r}
 long = gather(ex_data, "var", "number", 
               starts_with("orange"),
