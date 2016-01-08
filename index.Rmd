@@ -38,7 +38,7 @@ Winter R 2016
 | 3  | 2016-01-06 | Module 8  | [HTML](Data_Cleaning/lecture/Data_Cleaning.html), [PDF](Data_Cleaning/lecture/Data_Cleaning.pdf), [Code](Data_Cleaning/lecture/Data_Cleaning.R), [Lab](Data_Cleaning/lab/Data_Cleaning_Lab.R), [Key](Data_Cleaning/lab/Data_Cleaning_Lab_Key.R) | Data Cleaning |
 | 3  | 2016-01-06  | Homework 3  | [HW ](HW/homework3.R)  |   |
 | 4  | 2016-01-06 | Module 9  | [HTML](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.html), [PDF](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.pdf), [Code](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.R) | Data Manipulation |
-| 4  | 2016-01-06 | Module 10  | [HTML](Data_Visualization/lecture/Data_Visualization.html), [PDF](Data_Visualization/lecture/Data_Visualization.pdf), [Code](Data_Visualization/lecture/Data_Visualization.R),  [Lab](Data_Visualization/lab/Data_Visualization_Lab.R), [Key](Data_Visualization/lab/Data_Visualization_Lab_Key.R)| Data Visualization |
+| 4  | 2016-01-06 | Module 10  | [HTML](Data_Visualization/lecture/Data_Visualization.html), [PDF](Data_Visualization/lecture/Data_Visualization.pdf), [Code](Data_Visualization/lecture/Data_Visualization.R),  [Lab](Data_Visualization/lab/Data_Visualization_Lab.R), [Key](Data_Visualization/lab/Data_Visualization_Lab_key.R)| Data Visualization |
 | 4  | 2016-01-06 | Module 11  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Code](Knitr/lecture/Knitr.Rmd), [Lab](Knitr/lab/illusion.Rmd) | Reproducible Research |
 |---|---|---|---|---|
 
