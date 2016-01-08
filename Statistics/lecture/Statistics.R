@@ -1,27 +1,28 @@
 ## ----cor1, comment="",prompt=TRUE----------------------------------------
-destfile = tempfile(fileext = ".rda")
-download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
-load(destfile)
-cor(circ2$orangeAverage, circ2$purpleAverage)
-cor(circ2$orangeAverage, circ2$purpleAverage, use="complete.obs")
+circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+           header=TRUE,as.is=TRUE)
+cor(circ$orangeAverage, circ$purpleAverage)
+cor(circ$orangeAverage, circ$purpleAverage, use="complete.obs")
 
 ## ----cor2, comment="",prompt=TRUE----------------------------------------
-signif(cor(circ2[,grep("Average",names(circ2))], use="complete.obs"),3)
+signif(cor(circ[,grep("Average",names(circ))], 
+            use="complete.obs"),3)
 
 ## ----cor3, comment="",prompt=TRUE----------------------------------------
-signif(cor(circ2[,3:4],circ2[,5:6], use="complete.obs"),3)
+signif(cor(circ[,3:4],circ[,5:6], use="complete.obs"),3)
 
 ## ----cor4, comment="",prompt=TRUE----------------------------------------
-ct= cor.test(circ2$orangeAverage,
-    circ2$purpleAverage, use="complete.obs")
+ct= cor.test(circ$orangeAverage,
+    circ$purpleAverage, use="complete.obs")
 ct
 
 ## ----cor4a, comment="",prompt=TRUE, fig.height=4,fig.width=4-------------
-plot(circ2$orangeAverage, circ2$purpleAverage,
+plot(circ$orangeAverage, circ$purpleAverage,
      xlab="Orange Line", ylab="Purple Line",
      main="Average Ridership",cex.axis=1.5,
      cex.lab=1.5,cex.main=2)
-legend("topleft", paste("r =", signif(ct$estimate,3)), bty="n",cex=1.5)
+legend("topleft", paste0("r=", signif(ct$estimate,3)), 
+       bty="n",cex=1.5)
 
 ## ----cor5, comment="",prompt=TRUE----------------------------------------
 # str(ct)
@@ -30,21 +31,20 @@ ct$statistic
 ct$p.value
 
 ## ----tt1, comment="",prompt=TRUE-----------------------------------------
-tt = t.test(circ2$orangeAverage, circ2$purpleAverage)
+tt = t.test(circ$orangeAverage, circ$purpleAverage)
 tt
 
 ## ----tt1_1, comment="", prompt=TRUE--------------------------------------
 names(tt)
 
-## ----tt2, comment="",prompt=TRUE-----------------------------------------
+## ----tt2, comment="",prompt=TRUE,cache=TRUE------------------------------
 http_data_dir = "http://www.aejaffe.com/winterR_2016/data/"
-
 cars = read.csv(paste0(http_data_dir, "kaggleCarAuction.csv"),
                 as.is=TRUE)
 tt2 = t.test(VehBCost~IsBadBuy, data=cars)
 tt2$estimate
 
-## ----tt3, comment="",prompt=TRUE, fig.height=4,fig.width=4---------------
+## ----tt3, comment="",prompt=TRUE, fig.height=4,fig.width=4,cache=TRUE----
 boxplot(VehBCost~IsBadBuy, data=cars, 
         xlab="Bad Buy",ylab="Value")
 leg = paste("t=", signif(tt$statistic,3), 
@@ -67,7 +67,7 @@ sfit$coef
 fit = lm(VehOdo~VehicleAge, data=cars)
 print(fit)
 
-## ----regress4, comment="",prompt=TRUE, fig.height=4,fig.width=8----------
+## ----regress4, comment="",prompt=TRUE, fig.height=4,fig.width=8,cache=TRUE----
 library(scales) # we need this for the alpha command - make points transparent
 par(mfrow=c(1,2))
 plot(VehOdo ~ jitter(VehicleAge,amount=0.2), data=cars, pch = 19,
@@ -129,4 +129,52 @@ sample(1:10, 5, replace=FALSE)
 ## ----samp_plot, comment="",prompt=TRUE, fig.height=4,fig.width=4---------
 samp.cars <- cars[ sample(nrow(cars), 10000), ]
 plot(VehOdo ~ jitter(VehBCost,amount=0.3), data= samp.cars)  
+
+## ------------------------------------------------------------------------
+data(iris)
+head(iris, 3)
+
+## ------------------------------------------------------------------------
+# log transform 
+log.ir <- log(iris[, 1:4])
+ir.species <- iris[, 5]
+ir.pca <- prcomp(log.ir, center = TRUE, scale = TRUE) 
+
+## ------------------------------------------------------------------------
+print(ir.pca)
+summary(ir.pca)
+
+## ------------------------------------------------------------------------
+plot(ir.pca$x, col = as.numeric(ir.species),pch=19)
+legend("topleft", levels(ir.species), col=1:3, pch=15, nc=3)
+
+## ------------------------------------------------------------------------
+# devtools::install_github("ggbiplot", "vqv")
+ggbiplot::ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, 
+    groups = ir.species, ellipse = TRUE, 
+    circle = TRUE) + scale_color_discrete(name = '') +
+    theme(legend.direction = 'horizontal', 
+               legend.position = 'top')
+
+## ------------------------------------------------------------------------
+set.seed(210)
+x = c(sample(1:20, 16, TRUE), rep(NA, 4))
+x
+mean(x, na.rm = TRUE)
+sd(x, na.rm = TRUE)/sqrt(sum(!is.na(x)))
+
+## ------------------------------------------------------------------------
+imp <- replicate(5, c(x[!is.na(x)], 
+    sample(x[!is.na(x)], 4, TRUE)))
+tail(imp)
+colMeans(imp)
+
+## ------------------------------------------------------------------------
+overallMean = mean(colMeans(imp))
+withinVar = mean(apply(imp,2,sd)/sqrt(length(x)))
+betweenVar = sum((colMeans(imp) - overallMean)^2)/(5-1)
+overallSE = sqrt(withinVar + ((1 + (1/5)) * betweenVar))
+
+c(mean(1:20), overallMean, mean(x, na.rm = TRUE))
+c(overallSE, sd(x, na.rm = TRUE)/sqrt(sum(!is.na(x))))
 
