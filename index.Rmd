@@ -31,37 +31,23 @@ Winter R 2016
 | 1  | 2016-01-04  | Module 2  | [HTML](RStudio/lecture/RStudio.html), [PDF](RStudio/lecture/RStudio.pdf) | R Studio  |
 | 1  | 2016-01-04  | Module 3  | [HTML](Basic_R/lecture/Basic_R.html), [PDF](Basic_R/lecture/Basic_R.pdf), [Code](Basic_R/lecture/Basic_R.R), [Lab](Basic_R/lab/Basic_R_Lab.R), [Key](Basic_R/lab/Basic_R_Lab_Key.R) | Basic R  |
 | 1  | 2016-01-04  | Module 4  | [HTML](Data_IO/lecture/Data_IO.html), [PDF](Data_IO/lecture/Data_IO.pdf), [Code](Data_IO/lecture/Data_IO.R), [Lab](Data_IO/lab/Data_IO_Lab.R), [Key](Data_IO/lab/Data_IO_Lab_Key.R) | Data Import/Output  |
+|---|---|---|---|---|
 | 2  | 2016-01-05  | Homework 2  | [HW ](HW/homework2.R)  |   |
 | 2  | 2016-01-05  | Module 5  | [HTML](Subsetting_Data_in_R/lecture/Subsetting_Data_in_R.html), [PDF](Subsetting_Data_in_R/lecture/Subsetting_Data_in_R.pdf), [Code](Subsetting_Data_in_R/lecture/Subsetting_Data_in_R.R),  [Lab](Subsetting_Data_in_R/lab/Subsetting_Data_in_R_Lab.R), [Key](Subsetting_Data_in_R/lab/Subsetting_Data_in_R_Lab_Key.R)  | Subsetting Data |
 | 2  | 2016-01-05 | Module 6  | [HTML](Data_Summarization/lecture/Data_Summarization.html), [PDF](Data_Summarization/lecture/Data_Summarization.pdf), [Code](Data_Summarization/lecture/Data_Summarization.R), [Lab](Data_Summarization/lab/Data_Summarization_Lab.R), [Key](Data_Summarization/lab/Data_Summarization_Lab_Key.R)  | Data Summarization |
+|---|---|---|---|---|
 | 3  | 2016-01-06 | Module 7  | [HTML](Data_Classes/lecture/Data_Classes.html), [PDF](Data_Classes/lecture/Data_Classes.pdf), [Code](Data_Classes/lecture/Data_Classes.R) | Data Classes
 | 3  | 2016-01-06 | Module 8  | [HTML](Data_Cleaning/lecture/Data_Cleaning.html), [PDF](Data_Cleaning/lecture/Data_Cleaning.pdf), [Code](Data_Cleaning/lecture/Data_Cleaning.R), [Lab](Data_Cleaning/lab/Data_Cleaning_Lab.R), [Key](Data_Cleaning/lab/Data_Cleaning_Lab_Key.R) | Data Cleaning |
 | 3  | 2016-01-06  | Homework 3  | [HW ](HW/homework3.R)  |   |
-| 4  | 2016-01-06 | Module 9  | [HTML](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.html), [PDF](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.pdf), [Code](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.R) | Data Manipulation |
-| 4  | 2016-01-06 | Module 10  | [HTML](Data_Visualization/lecture/Data_Visualization.html), [PDF](Data_Visualization/lecture/Data_Visualization.pdf), [Code](Data_Visualization/lecture/Data_Visualization.R), [Lab](Data_Visualization/lab/Data_Visualization_Lab.R) | Data Visualization |
-| 4  | 2016-01-06 | Module 11  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Code](Knitr/lecture/Knitr.Rmd), [Lab](Knitr/lab/illusion.Rmd) | Reproducible Research |
 |---|---|---|---|---|
-
-<!-- 
+| 4  | 2016-01-07 | Module 9  | [HTML](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.html), [PDF](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.pdf), [Code](Manipulating_Data_in_R/lecture/Manipulating_Data_in_R.R) | Data Manipulation |
+| 4  | 2016-01-07 | Module 10  | [HTML](Data_Visualization/lecture/Data_Visualization.html), [PDF](Data_Visualization/lecture/Data_Visualization.pdf), [Code](Data_Visualization/lecture/Data_Visualization.R),  [Lab](Data_Visualization/lab/Data_Visualization_Lab.R), [Key](Data_Visualization/lab/Data_Visualization_Lab_key.R)| Data Visualization |
 |---|---|---|---|---|
-| 3  | 2016-06-17  | Homework 3  | [HW](hw/homework3.R) | Homework |
-| 3  | 2016-06-17  | Module 7  | [lecSlides](modules/module7.html), [lecNotes](modules/module7.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module7.R), [lab](labs/module7_lab.R), [key](labs/module7_lab_key.R)  | Summarization |
-| 3  | 2016-06-17  | Module 8  | [lecSlides](modules/module8.html), [lecNotes](modules/module8.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module8.R), [lab](labs/module8_lab.R), [key](labs/module8_lab_key.R)  | Visualization |
+| 5  | 2016-01-08 | Module 11  | [HTML](Statistics/lecture/Statistics.html), [PDF](Statistics/lecture/Statistics.pdf), [Code](Statistics/lecture/Statistics.R) | Statistics |
+| 5  | 2016-01-08 | Module 12  | [HTML](Functions/lecture/Functions.html), [PDF](Functions/lecture/Functions.pdf), [Code](Functions/lecture/Functions.R) | Functions |
+| 5  | 2016-01-08 | Module 13  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Code](Knitr/lecture/Knitr.Rmd), [Lab](Knitr/lab/illusion.Rmd) | Reproducible Research |
+| 5  | 2016-01-08 | HW Review  |  |  |
 |---|---|---|---|---|
-| 4  | 2016-06-18  | Module 9  | [lecSlides](modules/module9.html), [lecNotes](modules/module9.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module9.R), [lab](labs/module9_lab.R), [key](labs/module9_lab_key.R)  | Data cleaning |
-| 4  | 2016-06-18  | Module 10  | [lecSlides](modules/module10.html), [lecNotes](modules/module10.pdf),  [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module10.R) | Lists and functions |
-| 4  | 2016-06-18  | Module 11  | [lecSlides](modules/module11.html), [lecNotes](modules/module11.pdf),  [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module11.R) | Statistics |
-|---|---|---|---|---|
-| 5  | 2016-06-19  | Module 12 lecture | [lecSlides](modules/module12.html), [lecNotes](modules/module12.pdf), [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/module12.R)  | Reproducible research  |
-| 5  | 2016-06-19  | Module 12 lab | [lab](labs/module12_lab.R), [illusion R Markdown](labs/illusion.Rmd), [illusion Word](labs/illusion.docx), [part 2 Rmd](labs/module12_lab_part2.Rmd), [part 2 html](labs/module12_lab_part2.html)  | Reproducible research (practical) |
-| 5  | 2016-06-19  | Module 13  | [lecSlides](modules/mapping_module.html),  [code](https://github.com/andrewejaffe/summerR_2016/blob/gh-pages/modules/mapping_module.R), [lab](labs/mapping_module_lab.R) | Mapping Tools  |
-
-<!-- Add links to the rest of the material as we go
-
-| 5  | 2016-06-19  | Module X  | [lecSlides](modules/moduleX.html), [code](), [lab](), [key]()  |   |
-
-| 5  | 2016-06-19  | Module 12 lab | [lab](labs/module12_lab.R), [illusion R Markdown](labs/illusion.Rmd), [illusion Word](labs/illusion.docx), [part 2 Rmd](labs/module12_lab_part2.Rmd), [part 2 html](labs/module12_lab_part2.html), [key](labs/module12_lab_key.R) | Reproducible research (practical) |
--->
 
 Feel free to submit typos/errors/etc via the github repository associated with the class: 
 https://github.com/andrewejaffe/winterR_2016

@@ -1,11 +1,12 @@
 ---
 title: "Statistics"
-author: "Andrew Jaffe"
+author: "Andrew Jaffe, John Muschelli"
 date: "January 8, 2015"
 output:
   beamer_presentation: default
   ioslides_presentation:
     css: ../../styles.css
+  slidy_presentation: default
 ---
 
 ## Statistics
@@ -33,11 +34,10 @@ cor(x, y = NULL, use = "everything",
 
 Like other functions, if there are NAs, you get NA as the result.  But if you specify use only the complete observations, then it will give you correlation on the non-missing data. 
 ```{r cor1, comment="",prompt=TRUE}
-destfile = tempfile(fileext = ".rda")
-download.file("http://www.aejaffe.com/winterR_2016/data/charmcirc.rda", destfile = destfile)
-load(destfile)
-cor(circ2$orangeAverage, circ2$purpleAverage)
-cor(circ2$orangeAverage, circ2$purpleAverage, use="complete.obs")
+circ = read.csv("http://www.aejaffe.com/winterR_2016/data/Charm_City_Circulator_Ridership.csv", 
+           header=TRUE,as.is=TRUE)
+cor(circ$orangeAverage, circ$purpleAverage)
+cor(circ$orangeAverage, circ$purpleAverage, use="complete.obs")
 ```
 
 ## Correlation  {.smaller}
@@ -45,13 +45,18 @@ cor(circ2$orangeAverage, circ2$purpleAverage, use="complete.obs")
 You can also get the correlation between matrix columns
 
 ```{r cor2, comment="",prompt=TRUE}
-signif(cor(circ2[,grep("Average",names(circ2))], use="complete.obs"),3)
+signif(cor(circ[,grep("Average",names(circ))], 
+            use="complete.obs"),3)
 ```
+
+## Correlation  {.smaller}
+
+You can also get the correlation between matrix columns
 
 Or between columns of two matrices, column by column.
 
 ```{r cor3, comment="",prompt=TRUE}
-signif(cor(circ2[,3:4],circ2[,5:6], use="complete.obs"),3)
+signif(cor(circ[,3:4],circ[,5:6], use="complete.obs"),3)
 ```
 
 ## Correlation  {.smaller}
@@ -59,8 +64,8 @@ signif(cor(circ2[,3:4],circ2[,5:6], use="complete.obs"),3)
 You can also use cor.test() to test for whether correlation is significant (ie non-zero). Note that linear regression may be better, especially if you want to regress out other confounders.  
 
 ```{r cor4, comment="",prompt=TRUE}
-ct= cor.test(circ2$orangeAverage,
-    circ2$purpleAverage, use="complete.obs")
+ct= cor.test(circ$orangeAverage,
+    circ$purpleAverage, use="complete.obs")
 ct
 ```
 
@@ -69,11 +74,12 @@ ct
 Note that you can add the correlation to a plot, via the legend() function. 
 
 ```{r cor4a, comment="",prompt=TRUE, fig.height=4,fig.width=4}
-plot(circ2$orangeAverage, circ2$purpleAverage,
+plot(circ$orangeAverage, circ$purpleAverage,
      xlab="Orange Line", ylab="Purple Line",
      main="Average Ridership",cex.axis=1.5,
      cex.lab=1.5,cex.main=2)
-legend("topleft", paste("r =", signif(ct$estimate,3)), bty="n",cex=1.5)
+legend("topleft", paste0("r=", signif(ct$estimate,3)), 
+       bty="n",cex=1.5)
 ```
 
 ## Correlation
@@ -94,7 +100,7 @@ The T-test is performed using the `t.test()` function, which essentially tests f
 In this syntax, x and y are the column of data for each group.
 
 ```{r tt1, comment="",prompt=TRUE}
-tt = t.test(circ2$orangeAverage, circ2$purpleAverage)
+tt = t.test(circ$orangeAverage, circ$purpleAverage)
 tt
 ```
 
@@ -109,9 +115,8 @@ names(tt)
 You can also use the 'formula' notation.  In this syntax, it is `y ~ x`, where `x` is a factor with 2 levels or a binary variable and `y` is a vector of the same length.  
 
 
-```{r tt2, comment="",prompt=TRUE}
+```{r tt2, comment="",prompt=TRUE,cache=TRUE}
 http_data_dir = "http://www.aejaffe.com/winterR_2016/data/"
-
 cars = read.csv(paste0(http_data_dir, "kaggleCarAuction.csv"),
                 as.is=TRUE)
 tt2 = t.test(VehBCost~IsBadBuy, data=cars)
@@ -122,7 +127,7 @@ tt2$estimate
 
 You can add the t-statistic and p-value to a boxplot.
 
-```{r tt3, comment="",prompt=TRUE, fig.height=4,fig.width=4}
+```{r tt3, comment="",prompt=TRUE, fig.height=4,fig.width=4,cache=TRUE}
 boxplot(VehBCost~IsBadBuy, data=cars, 
         xlab="Bad Buy",ylab="Value")
 leg = paste("t=", signif(tt$statistic,3), 
@@ -197,13 +202,12 @@ fit = lm(VehOdo~VehicleAge, data=cars)
 print(fit)
 ```
 
-## Linear Regression
+## Linear Regression {.smaller}
 
 We can visualize the vehicle age/odometer relationshp using scatter plots or box plots (with regression lines).  The function `abline` will plot the regresion line on the plot.
 
----
-
-```{r regress4, comment="",prompt=TRUE, fig.height=4,fig.width=8}
+## Linear Regression
+```{r regress4, comment="",prompt=TRUE, fig.height=4,fig.width=8,cache=TRUE}
 library(scales) # we need this for the alpha command - make points transparent
 par(mfrow=c(1,2))
 plot(VehOdo ~ jitter(VehicleAge,amount=0.2), data=cars, pch = 19,
@@ -365,11 +369,112 @@ The `sample()` function is pretty useful for permutations
 sample(1:10, 5, replace=FALSE)
 ```
 
-Also, if you want to only plot a subset of the data (for speed/time or overplotting)
+## Sampling
 
----
+Also, if you want to only plot a subset of the data (for speed/time or overplotting)
 
 ```{r samp_plot, comment="",prompt=TRUE, fig.height=4,fig.width=4}
 samp.cars <- cars[ sample(nrow(cars), 10000), ]
 plot(VehOdo ~ jitter(VehBCost,amount=0.3), data= samp.cars)  
 ```
+
+## By popular demand
+
+* Principal Component Analysis (PCA)
+* Imputation
+
+## PCA
+
+Dimension reduction technique for identifying potentially hidden combinations of observed variables that explain variability in high dimensional data. 
+
+Example from "R-bloggers": http://www.r-bloggers.com/computing-and-visualizing-pca-in-r/
+
+## PCA
+
+```{r}
+data(iris)
+head(iris, 3)
+```
+
+## PCA
+
+```{r}
+# log transform 
+log.ir <- log(iris[, 1:4])
+ir.species <- iris[, 5]
+ir.pca <- prcomp(log.ir, center = TRUE, scale = TRUE) 
+```
+
+Centering - removing the mean - is almost always recommended, otherwise the first PC will represent the mean. Scaling is useful when columns/data are on different scales.
+
+## PCA
+
+So what does this do?
+
+```{r}
+print(ir.pca)
+summary(ir.pca)
+```
+
+## PCA 
+
+```{r}
+plot(ir.pca$x, col = as.numeric(ir.species),pch=19)
+legend("topleft", levels(ir.species), col=1:3, pch=15, nc=3)
+```
+
+## PCA 
+
+```{r}
+# devtools::install_github("ggbiplot", "vqv")
+ggbiplot::ggbiplot(ir.pca, obs.scale = 1, var.scale = 1, 
+    groups = ir.species, ellipse = TRUE, 
+    circle = TRUE) + scale_color_discrete(name = '') +
+    theme(legend.direction = 'horizontal', 
+               legend.position = 'top')
+```
+
+## Multiple Imputation
+
+Sometimes you want to "impute" missing data in a dataset if its missing completely at random (MCAR).
+
+There are several methods for performing imputation in a dataset, but one popular approach is "multiple imputation", which performs several imputation procedures and then takes the average across these runs. 
+Let's take a look at the `mi` package. This is motivated by this guide: http://thomasleeper.com/Rcourse/Tutorials/mi.html
+
+## Multiple Imputation
+
+```{r}
+set.seed(210)
+x = c(sample(1:20, 16, TRUE), rep(NA, 4))
+x
+mean(x, na.rm = TRUE)
+sd(x, na.rm = TRUE)/sqrt(sum(!is.na(x)))
+```
+
+## Multiple Imputation
+
+```{r}
+imp <- replicate(5, c(x[!is.na(x)], 
+    sample(x[!is.na(x)], 4, TRUE)))
+tail(imp)
+colMeans(imp)
+```
+
+## Multiple Imputation
+
+```{r}
+overallMean = mean(colMeans(imp))
+withinVar = mean(apply(imp,2,sd)/sqrt(length(x)))
+betweenVar = sum((colMeans(imp) - overallMean)^2)/(5-1)
+overallSE = sqrt(withinVar + ((1 + (1/5)) * betweenVar))
+
+c(mean(1:20), overallMean, mean(x, na.rm = TRUE))
+c(overallSE, sd(x, na.rm = TRUE)/sqrt(sum(!is.na(x))))
+```
+
+## Multiple Imputation
+
+Let's look at some multivariate examples in the vignette for the `mi` package:
+
+https://cran.r-project.org/web/packages/mi/vignettes/mi_vignette.pdf
+
