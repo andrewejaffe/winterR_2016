@@ -3,9 +3,9 @@ title: "Knitr"
 author: "John Muschelli"
 date: "January 5, 2016"
 output:
-  pdf_document:
-    toc: yes
   html_document:
+    toc: yes
+  pdf_document:
     toc: yes
 ---
 
@@ -158,6 +158,11 @@ xtab <- xtable(mod.yr)
 Well `xtable` can make html tables, so let's print this.  We must tell R that the results is actually an html output, so we say the results should be embedded in the html "asis" (aka just print out whatever R spits out).
 ```{r, results='asis'}
 print.xtable(xtab, type="html")
+```
+
+```{r, results='asis'}
+library(DT)
+datatable(summary(mod.type)$coef)
 ```
 
 OK, that's pretty good, but let's say we have all three models.  Another package called `stargazer` can put models together easily and pritn them out.  So `xtable` is really good when you are trying to print out a table (in html, otherwise make the table and use `write.csv` to get it in Excel and then format) really quickly and in a report.  But it doesn't work so well with *many* models together.  So let's use stargazer.  Again, you need to use `install.packages("stargazer")` if you don't have function.  
