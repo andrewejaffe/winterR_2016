@@ -45,7 +45,8 @@ Winter R 2016
 |---|---|---|---|---|
 | 5  | 2016-01-08 | Module 11  | [HTML](Statistics/lecture/Statistics.html), [PDF](Statistics/lecture/Statistics.pdf), [Code](Statistics/lecture/Statistics.R) | Statistics |
 | 5  | 2016-01-08 | Module 12  | [HTML](Functions/lecture/Functions.html), [PDF](Functions/lecture/Functions.pdf), [Code](Functions/lecture/Functions.R) | Functions |
-| 5  | 2016-01-08 | Module 13  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Code](Knitr/lecture/Knitr.Rmd), [Lab](Knitr/lab/illusion.Rmd) | Reproducible Research |
+| 5  | 2016-01-08 | Module 13a  | [HTML](Knitr/lecture/Knitr.html), [PDF](Knitr/lecture/Knitr.pdf), [Code](Knitr/lecture/Knitr.Rmd), [Lab](Knitr/lab/illusion.Rmd) | Reproducible Research (A) |
+| 5  | 2016-01-08 | Module 13b  | [HTML](Simple_Knitr/lecture/Simple_Knitr.html), [PDF](Simple_Knitr/lecture/Simple_Knitr.pdf), [Code](Simple_Knitr/lecture/Simple_Knitr.Rmd) | Reproducible Research (B)|
 | 5  | 2016-01-08 | HW Review  |  |  |
 |---|---|---|---|---|
 
